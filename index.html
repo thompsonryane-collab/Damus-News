@@ -253,8 +253,8 @@ textarea.code{width:100%;min-height:150px;font-size:12.5px;line-height:1.5;resiz
 .np-wrap{max-width:920px}
 #np-pages{display:grid;gap:20px}
 .np-page{display:block;width:100%;height:auto;background:#f7f3e8;border-radius:3px;box-shadow:0 14px 40px rgba(0,0,0,.42),0 0 0 1px rgba(0,0,0,.22)}
-.np-page .fR,.np-page .fB,.np-page .fI{font-family:"Times New Roman",Times,"Liberation Serif","Nimbus Roman",Tinos,serif}
-.np-page .fH,.np-page .fHB{font-family:Helvetica,Arial,"Liberation Sans","Nimbus Sans",Arimo,sans-serif}
+.np-page .fR,.np-page .fB,.np-page .fI{font-family:'Times New Roman',Times,'Liberation Serif','Nimbus Roman',Tinos,serif}
+.np-page .fH,.np-page .fHB{font-family:Helvetica,Arial,'Liberation Sans','Nimbus Sans',Arimo,sans-serif}
 .np-page .fB,.np-page .fHB{font-weight:700}.np-page .fI{font-style:italic}
 .np-page a{cursor:pointer}
 /* ══ ANALYST BUTTON — phones only, where the side panel is not shown ══ */
@@ -979,8 +979,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
 </div>
 
 <div id="overlays"></div>
-<button id="ai-fab" onclick="D.open('ai')" aria-label="Open the Damus analyst" title="Damus analyst"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg></button>
-<button id="top-caret" onclick="D.toTop()" aria-label="Back to top" title="Back to top"><svg width="18" height="18" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 7.5l4-4 4 4"/></svg></button>
+<button id='ai-fab' onclick='D.open(&quot;ai&quot;)' aria-label='Open the Damus analyst' title='Damus analyst'><svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M4 5h16v11H9l-5 4z'/></svg></button>
+<button id='top-caret' onclick='D.toTop()' aria-label='Back to top' title='Back to top'><svg width='18' height='18' viewBox='0 0 12 12' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M2 7.5l4-4 4 4'/></svg></button>
 <div id="toasts"></div>
 <input type="file" id="file-in" multiple hidden accept=".pdf,.jpg,.jpeg,.png,.webp,.gif,.txt,.md,.csv,.json,.html,.htm,image/*,application/pdf,text/*">
 
@@ -1373,7 +1373,7 @@ D.render.outage = function(){ if($('outage-frame')){ D.outageSync(); return; }
   $('body-outage').innerHTML='<iframe id="outage-frame" title="90-Day Outage Checklist" style="flex:1;width:100%;height:100%;border:0;background:var(--void)"></iframe>';
   var f=$('outage-frame'), html=(window.DAMUS_APPS&&DAMUS_APPS['outage-checklist'])||'';
   if(!html){ $('body-outage').innerHTML='<div class="ov-scroll"><div class="banner">The checklist file is missing from this build.</div></div>'; return; }
-  f.addEventListener('load',function(){ D.outageSync(); D.topFrame(f); try{ var doc=f.contentDocument; ['change','click'].forEach(function(n){ doc.addEventListener(n,function(){ setTimeout(D.outageSync,0); }); }); }catch(e){} });
+  f.addEventListener('load',function(){ D.outageSync(); if(D.topFrame) D.topFrame(f); try{ var doc=f.contentDocument; ['change','click'].forEach(function(n){ doc.addEventListener(n,function(){ setTimeout(D.outageSync,0); }); }); }catch(e){} });
   f.srcdoc=html.replace('<html lang="en">','<html lang="en" data-theme="'+(D.S.theme==='light'?'light':'dark')+'">'); };
 D.outageSync = function(){ try{ var f=$('outage-frame'); if(!f||!f.contentDocument) return; var doc=f.contentDocument; doc.documentElement.setAttribute('data-theme',D.S.theme==='light'?'light':'dark');
     var c=doc.getElementById('crit-n'), p=doc.getElementById('prog-txt'); if(!c||!p||!p.textContent) return; var crit=+c.textContent||0; $('tag-outage').textContent=p.textContent+' · '+crit+' CRITICAL OPEN';
@@ -1398,26 +1398,39 @@ D.feedCheck = function(manual){ return fetch('feed.json',{cache:'no-store'}).the
   .catch(function(){ if(manual) D.toast(location.protocol==='file:'?'Daily updates reach the published page. In this file, paste a feed into the box and tap Import.':'Could not read the daily feed right now.','warn',4600); }); };
 D.runItems = function(){ var r=D.S.feed&&D.S.feed.run; if(!r) return []; return (r.added||[]).concat(r.changed||[]).map(D.ev).filter(Boolean); };
 
+/* ── boot ── */
+D.boot = function(){ D.load();
+  ['fullscreenchange','webkitfullscreenchange'].forEach(function(n){ document.addEventListener(n,D.fsSync); });
+  /* installable desktop app: the manifest loads only from a web host, never from the restricted Claude page or a local file */
+  if(location.protocol!=='file:'&&!D.sandboxed){ var ml=document.createElement('link'); ml.rel='manifest'; ml.href='manifest.webmanifest'; document.head.appendChild(ml); } D.applyTheme(D.S.theme||'dark'); D.buildShell(); D.applySide(); D.fsSync(); D.chatInit(); D.initAI();
+  $('file-in').addEventListener('change',function(){ D.handleFiles(this.files); this.value=''; });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') D.close(); if(e.key==='Enter'&&!$('gate').classList.contains('off')) D.enter(); });
+  var tick=function(){ var d=new Date(); $('clock').textContent=d.toISOString().slice(11,16)+'Z · '+d.toLocaleDateString('en-US',{month:'short',day:'numeric'}); }; tick(); setInterval(tick,30000); D.feedCheck(); setInterval(D.feedCheck,30*60000);
+  if(window.innerWidth<=1180&&window.innerWidth>860){ $('dock').classList.add('closed'); document.body.classList.add('dock-closed'); } };
+D.boot();
+</script>
+<script>
+'use strict';
 /* ── DMS-11 newspaper: an edition typeset from the ledger. One layout feeds both the on-screen pages (SVG) and the exported file (a real PDF written here, no library).
       Text is measured with the standard Times and Helvetica width tables, so what is shown is what is exported. ── */
 D.NP = (function(){
   var P = {W:612,H:792,M:36,G:14,TOP:58,BOT:744};
   P.CW = (P.W-2*P.M-2*P.G)/3;
-  var RED = [.6,.13,.1], NB = '\u00a0';
-  var WD = {"R":"6y99bcdwdwn5lm509999dwfo6y996y7qdwdwdwdwdwdwdwdwdwdw7q7qfofofoccplk2ijijk2gzfgk2k299atk2gzopk2k2fgk2ijfggzk2k2q8k2k2gz997q99d1dw99ccdwccdwcc99dwdw7q7qdw7qlmdwdwdwdw99at7qdwdwk2dwdwccdc5kdcf19qdw9q99dwccrsdwdw99rsfg99op9qgz9q9q9999cccc9qdwrs99r8at99k29qcck26y99dwdwdwdw5kdw99l47odwfo99l499b4fo8c8c99dwcl6y998c8mdwkukukucck2k2k2k2k2k2opijgzgzgzgz99999999k2k2k2k2k2k2k2fok2k2k2k2k2k2fgdwccccccccccccijcccccccccc7q7q7q7qdwdwdwdwdwdwdwfodwdwdwdwdwdwdwdw","B":"6y99ffdwdwrsn57q9999dwfu6y996y7qdwdwdwdwdwdwdwdwdwdw9999fufufudwpuk2ijk2k2ijgzlmlmatdwlmijq8k2lmgzlmk2fgijk2k2rsk2k2ij997q99g5dw99dwfgccfgcc99dwfg7q99fg7qn5fgdwfgfgccat99fgdwk2dwdwccay64ayeg9qdw9q99dwdwrsdwdw99rsfg99rs9qij9q9q9999dwdw9qdwrs99rsat99k29qcck26y99dwdwdwdw64dw99kr8cdwfu99kr99b4fu8c8c99fgf06y998c96dwkukukudwk2k2k2k2k2k2rsk2ijijijijatatatatk2k2lmlmlmlmlmfulmk2k2k2k2k2gzfgdwdwdwdwdwdwk2cccccccccc7q7q7q7qdwfgdwdwdwdwdwfudwfgfgfgfgdwfgdw","I":"6y99bodwdwn5lm5y9999dwir6y996y7qdwdwdwdwdwdwdwdwdwdw9999iririrdwpkgzgzijk2gzgzk2k299ccijfgn5ijk2gzk2gzdwfgk2gzn5gzfgfgat7qatbqdw99dwdwccdwcc7qdwdw7q7qcc7qk2dwdwdwdwatat7qdwccijccccatb47nb4f19qdw9q99dwfgopdwdw99rsdw99q89qfg9q9q9999fgfg9qdwop99r8at99ij9qatfg6yatdwdwdwdw7ndw99l47odwir99l499b4ir8c8c99dwej6y998c8mdwkukukudwgzgzgzgzgzgzopijgzgzgzgz99999999k2ijk2k2k2k2k2irk2k2k2k2k2fggzdwdwdwdwdwdwdwijcccccccccc7q7q7q7qdwdwdwdwdwdwdwirdwdwdwdwdwccdwcc","H":"7q7q9vfgfgopij5b9999atg87q997q7qfgfgfgfgfgfgfgfgfgfg7q7qg8g8g8fgs7ijijk2k2ijgzlmk27qdwijfgn5k2lmijlmk2ijgzk2ijq8ijijgz7q7q7qd1fg99fgfgdwfgfg7qfgfg6666dw66n5fgfgfgfg99dw7qfgdwk2dwdwdw9a789ag89qfg9q66fg99rsfgfg99rsij99rs9qgz9q9q666699999qfgrs99rsdw99q89qdwij7q99fgfgfgfg78fg99khaafgg899kh99b4g8999999fgex7q9999a5fgn6n6n6gzijijijijijijrsk2ijijijij7q7q7q7qk2k2lmlmlmlmlmg8lmk2k2k2k2ijijgzfgfgfgfgfgfgopdwfgfgfgfg7q7q7q7qfgfgfgfgfgfgfgg8gzfgfgfgfgdwfgdw","HB":"7q99d6fgfgopk26m9999atg87q997q7qfgfgfgfgfgfgfgfgfgfg9999g8g8g8gzr3k2k2k2k2ijgzlmk27qfgk2gzn5k2lmijlmk2ijgzk2ijq8ijijgz997q99g8fg99fggzfggzfg99gzgz7q7qfg7qopgzgzgzgzatfg99gzfglmfgfgdwat7satg89qfg9q7qfgdwrsfgfg99rsij99rs9qgz9q9q7q7qdwdw9qfgrs99rsfg99q89qdwij7q99fgfgfgfg7sfg99khaafgg899kh99b4g8999999gzfg7q9999a5fgn6n6n6gzk2k2k2k2k2k2rsk2ijijijij7q7q7q7qk2k2lmlmlmlmlmg8lmk2k2k2k2ijijgzfgfgfgfgfgfgopfgfgfgfgfg7q7q7q7qgzgzgzgzgzgzgzg8gzgzgzgzgzfggzfg"}, wt = {};
-  Object.keys(WD).forEach(function(k){ var a=[], s=WD[k]; for(var i=0;i<s.length;i+=2) a.push(parseInt(s.substr(i,2),36)); wt[k]=a; });
+  var RED = [.6,.13,.1], NB = ' ';
+  var WD = {R:'250,333,408,500*2,833,778,180,333*2,500,564,250,333,250,278,500*10,278*2,564*3,444,921,722,667*2,722,611,556,722*2,333,389,722,611,889,722*2,556,722,667,556,611,722*2,944,722*2,611,333,278,333,469,500,333,444,500,444,500,444,333,500*2,278*2,500,278,778,500*4,333,389,278,500*2,722,500*2,444,480,200,480,541,350,500,350,333,500,444,1000,500*2,333,1000,556,333,889,350,611,350*2,333*2,444*2,350,500,1000,333,980,389,333,722,350,444,722,250,333,500*4,200,500,333,760,276,500,564,333,760,333,400,564,300*2,333,500,453,250,333,300,310,500,750*3,444,722*6,889,667,611*4,333*4,722*7,564,722*6,556,500,444*6,667,444*5,278*4,500*7,564,500*8',B:'250,333,555,500*2,1000,833,278,333*2,500,570,250,333,250,278,500*10,333*2,570*3,500,930,722,667,722*2,667,611,778*2,389,500,778,667,944,722,778,611,778,722,556,667,722*2,1000,722*2,667,333,278,333,581,500,333,500,556,444,556,444,333,500,556,278,333,556,278,833,556,500,556*2,444,389,333,556,500,722,500*2,444,394,220,394,520,350,500,350,333,500*2,1000,500*2,333,1000,556,333,1000,350,667,350*2,333*2,500*2,350,500,1000,333,1000,389,333,722,350,444,722,250,333,500*4,220,500,333,747,300,500,570,333,747,333,400,570,300*2,333,556,540,250,333,300,330,500,750*3,500,722*6,1000,722,667*4,389*4,722*2,778*5,570,778,722*5,611,556,500*6,722,444*5,278*4,500,556,500*5,570,500,556*4,500,556,500',I:'250,333,420,500*2,833,778,214,333*2,500,675,250,333,250,278,500*10,333*2,675*3,500,920,611*2,667,722,611*2,722*2,333,444,667,556,833,667,722,611,722,611,500,556,722,611,833,611,556*2,389,278,389,422,500,333,500*2,444,500,444,278,500*2,278*2,444,278,722,500*4,389*2,278,500,444,667,444*2,389,400,275,400,541,350,500,350,333,500,556,889,500*2,333,1000,500,333,944,350,556,350*2,333*2,556*2,350,500,889,333,980,389,333,667,350,389,556,250,389,500*4,275,500,333,760,276,500,675,333,760,333,400,675,300*2,333,500,523,250,333,300,310,500,750*3,500,611*6,889,667,611*4,333*4,722,667,722*5,675,722*5,556,611,500*7,667,444*5,278*4,500*7,675,500*5,444,500,444',H:'278*2,355,556*2,889,667,191,333*2,389,584,278,333,278*2,556*10,278*2,584*3,556,1015,667*2,722*2,667,611,778,722,278,500,667,556,833,722,778,667,778,722,667,611,722,667,944,667*2,611,278*3,469,556,333,556*2,500,556*2,278,556*2,222*2,500,222,833,556*4,333,500,278,556,500,722,500*3,334,260,334,584,350,556,350,222,556,333,1000,556*2,333,1000,667,333,1000,350,611,350*2,222*2,333*2,350,556,1000,333,1000,500,333,944,350,500,667,278,333,556*4,260,556,333,737,370,556,584,333,737,333,400,584,333*3,556,537,278,333*2,365,556,834*3,611,667*6,1000,722,667*4,278*4,722*2,778*5,584,778,722*4,667*2,611,556*6,889,500,556*4,278*4,556*7,584,611,556*4,500,556,500',HB:'278,333,474,556*2,889,722,238,333*2,389,584,278,333,278*2,556*10,333*2,584*3,611,975,722*4,667,611,778,722,278,556,722,611,833,722,778,667,778,722,667,611,722,667,944,667*2,611,333,278,333,584,556,333,556,611,556,611,556,333,611*2,278*2,556,278,889,611*4,389,556,333,611,556,778,556*2,500,389,280,389,584,350,556,350,278,556,500,1000,556*2,333,1000,667,333,1000,350,611,350*2,278*2,500*2,350,556,1000,333,1000,556,333,944,350,500,667,278,333,556*4,280,556,333,737,370,556,584,333,737,333,400,584,333*3,611,556,278,333*2,365,556,834*3,611,722*6,1000,722,667*4,278*4,722*2,778*5,584,778,722*4,667*2,611,556*6,889,556*5,278*4,611*7,584,611*5,556,611,556'}, wt = {};
+  Object.keys(WD).forEach(function(k){ var a=[]; WD[k].split(',').forEach(function(t){ var p=t.split('*'), n=+(p[1]||1); while(n--) a.push(+p[0]); }); wt[k]=a; });
   P.FONTS = {R:'Times-Roman',B:'Times-Bold',I:'Times-Italic',H:'Helvetica',HB:'Helvetica-Bold'};
 
   /* characters: everything is held to the Windows-1252 set the standard PDF fonts carry */
-  var CP = '\u20ac\u0081\u201a\u0192\u201e\u2026\u2020\u2021\u02c6\u2030\u0160\u2039\u0152\u008d\u017d\u008f\u0090\u2018\u2019\u201c\u201d\u2022\u2013\u2014\u02dc\u2122\u0161\u203a\u0153\u009d\u017e\u0178', cpm = {};
+  var CP = '€\u0081‚ƒ„…†‡ˆ‰Š‹Œ\u008dŽ\u008f\u0090‘’“”•–—˜™š›œ\u009džŸ', cpm = {};
   for(var ci=0;ci<CP.length;ci++) cpm[CP.charCodeAt(ci)] = 128+ci;
   function code(u){ return u<128?u:(u>=160&&u<256)?u:(cpm[u]||63); }
-  var SUB = {'\u0142':'l','\u0141':'L','\u0111':'d','\u0110':'D','\u0131':'i','\u00ad':'','\u2192':'->','\u2190':'<-','\u2265':'>=','\u2264':'<=','\u2248':'~','\u2212':'-','\u2010':'-','\u2011':'-','\u2012':'-','\u2015':'\u2014','\u2032':"'",'\u2033':'"','\u200b':'','\ufeff':''};
-  function clean(s){ s=String(s==null?'':s).replace(/[\u0142\u0141\u0111\u0110\u0131\u00ad\u2192\u2190\u2265\u2264\u2248\u2212\u2010-\u2012\u2015\u2032\u2033\u200b\ufeff]/g,function(c){ return SUB[c]; }).replace(/[\s\u00a0\u2002-\u200a\u202f]+/g,' ').trim();
+  var SUB = {'ł':'l','Ł':'L','đ':'d','Đ':'D','ı':'i','­':'','→':'->','←':'<-','≥':'>=','≤':'<=','≈':'~','−':'-','‐':'-','‑':'-','‒':'-','―':'—','′':"'",'″':'"','​':'','﻿':''};
+  function clean(s){ s=String(s==null?'':s).replace(/[łŁđĐı­→←≥≤≈−‐-‒―′″​﻿]/g,function(c){ return SUB[c]; }).replace(/[\s  -  ]+/g,' ').trim();
     var o=''; for(var i=0;i<s.length;i++){ var u=s.charCodeAt(i); if((u>=32&&u<127)||(u>160&&u<256)||(u>255&&cpm[u])){ o+=s[i]; continue; } if(u>=0xd800&&u<=0xdfff) continue;
-      var n=s[i].normalize?s[i].normalize('NFKD').replace(/[\u0300-\u036f]/g,''):''; o+=(n.length===1&&n.charCodeAt(0)>=32&&n.charCodeAt(0)<127)?n:'?'; } return o; }
+      var n=s[i].normalize?s[i].normalize('NFKD').replace(/[̀-ͯ]/g,''):''; o+=(n.length===1&&n.charCodeAt(0)>=32&&n.charCodeAt(0)<127)?n:'?'; } return o; }
   function tw(s,f,z,cs){ var a=wt[f], n=0; for(var i=0;i<s.length;i++) n+=a[code(s.charCodeAt(i))-32]||0; return n*z/1000+(cs||0)*s.length; }
-  function fit(s,f,z,w){ if(tw(s,f,z)<=w) return s; while(s.length>1&&tw(s+'\u2026',f,z)>w) s=s.slice(0,-1); return s.replace(/[\s,;:.\u00b7-]+$/,'')+'\u2026'; }
+  function fit(s,f,z,w){ if(tw(s,f,z)<=w) return s; while(s.length>1&&tw(s+'…',f,z)>w) s=s.slice(0,-1); return s.replace(/[\s,;:.·-]+$/,'')+'…'; }
 
   /* line breaking: fewest-leftover fit across the whole paragraph, so justified columns keep even spacing; bal also evens the last line (headlines) */
   function wrap(text,f,z,width,bal,ind,hy){ ind=ind||0; var ws=[], gl=[], out=[], sp=tw(' ',f,z);
@@ -1443,8 +1456,8 @@ D.NP = (function(){
   function stKey(e){ return D.STATUS[e.status]?e.status:'UNVERIFIED'; }
   function status(e,x,yb,width,tail,z){ z=z||6.4; var st=stKey(e), o=mark(st,x,yb-z*.8,z*.82), t=T(x+z*.82+3,yb,D.STATUS[st].label.toUpperCase(),'HB',z,{cs:.5,c:stc(st)}); o.push(t);
     var rest=tail?fit(tail,'H',z,width-(t.x+t.w+5-x)):''; if(rest) o.push(T(t.x+t.w+5,yb,rest,'H',z,{c:.35})); return o; }
-  function tail(s){ var e=s.evs[0]; return fdate(e.date)+(s.evs.length>1?' \u00b7 '+s.evs.length+' events':'')+(e.region?' \u00b7 '+clean(e.region):''); }
-  function lede(s){ var b=s.body.slice(); if(s.dateline&&b.length&&b[0].toUpperCase().indexOf(s.dateline.toUpperCase())!==0) b[0]=s.dateline.toUpperCase()+' \u2014 '+b[0]; return b; }
+  function tail(s){ var e=s.evs[0]; return fdate(e.date)+(s.evs.length>1?' · '+s.evs.length+' events':'')+(e.region?' · '+clean(e.region):''); }
+  function lede(s){ var b=s.body.slice(); if(s.dateline&&b.length&&b[0].toUpperCase().indexOf(s.dateline.toUpperCase())!==0) b[0]=s.dateline.toUpperCase()+' — '+b[0]; return b; }
   function caution(e,width){ var S=D.STATUS[stKey(e)]; if(S.w) return []; return wrap('Not established. '+S.label+': '+clean(S.def),'I',7.6,width).map(function(l){ return {h:9.3,ops:[T(0,7.2,l.s,'I',7.6,{c:RED})]}; }); }
   function sources(evs,width){ var z=7.6, seen={}, list=[];
     evs.forEach(function(e){ (e.sources||[]).forEach(function(s){ var n=fit(clean(s.name),'I',z,width*.9).replace(/ /g,NB); if(!n||seen[n]||list.length>=5) return; seen[n]=1; list.push({n:n,u:/^https?:\/\//i.test(s.url||'')?s.url:''}); }); });
@@ -1463,15 +1476,15 @@ D.NP = (function(){
     return [gap(8,1),{h:7,drop:1,keep:k,ops:[{k:'l',x1:0,y1:.4,x2:cw,y2:.4,lw:.5,c:.3}]}].concat(head,b,[gap(2)],sources(s.evs,cw),caution(e,cw)); }
   function brief(s,cw,first){ var e=s.evs[0], head=[]; wrap(s.headline,'B',10.4,cw,true).forEach(function(l){ head.push({h:11.8,ops:[T(0,9.2,l.s,'B',10.4)]}); });
     var b=body(s.body.slice(0,2),'R',8.8,10.5,cw,true), k=head.length+Math.min(2,b.length); head[0].keep=k-1;
-    var meta={h:11,ops:status(e,0,8,cw,fdate(e.date)+(e.region?' \u00b7 '+clean(e.region):'')+' \u00b7 '+e.id,5.8)};
+    var meta={h:11,ops:status(e,0,8,cw,fdate(e.date)+(e.region?' · '+clean(e.region):'')+' · '+e.id,5.8)};
     return (first?[]:[gap(5,1),{h:5,drop:1,keep:k,ops:[{k:'l',x1:0,y1:.3,x2:cw,y2:.3,lw:.3,c:.55}]}]).concat(head,b,[meta]); }
   function forecast(f,cw){ var p=Math.round(f.p*100), x=42, y=0, o=[T(0,12.5,p+'%','HB',13),{k:'r',x:0,y:16.5,w:32,h:2.6,fill:.86},{k:'r',x:0,y:16.5,w:Math.max(.6,32*f.p),h:2.6,fill:0}];
     wrap(clean(f.q),'R',8.9,cw-x).forEach(function(l){ o.push(T(x,y+8.2,l.s,'R',8.9)); y+=10.5; });
-    o.push(T(x,y+7,fit('Due '+fdate(f.due)+' \u00b7 '+((D.DOMAIN[f.dom]||{}).label||'Forecast'),'H',6.2,cw-x),'H',6.2,{c:.35})); y+=9; return {h:Math.max(y,21)+6,ops:o}; }
+    o.push(T(x,y+7,fit('Due '+fdate(f.due)+' · '+((D.DOMAIN[f.dom]||{}).label||'Forecast'),'H',6.2,cw-x),'H',6.2,{c:.35})); y+=9; return {h:Math.max(y,21)+6,ops:o}; }
   function legend(k,cw){ var S=D.STATUS[k], o=mark(k,0,1.2,5.4), y=9; o.push(T(9,6.4,S.label.toUpperCase(),'HB',6.4,{cs:.5,c:stc(k)}));
     wrap(clean(S.def)+(S.w?' Counts toward the threat indicator'+(S.w<1?' at reduced weight.':'.'):' Does not move the threat indicator.'),'R',8.6,cw-9).forEach(function(l){ o.push(T(9,y+7.6,l.s,'R',8.6)); y+=10.2; }); return {h:y+4,ops:o}; }
   function indexRow(e,cw,yr){ var x=32, y=0, o=mark(stKey(e),0,1.5,5), d=fdate(e.date), ls=wrap(clean(e.title),'R',8.2,cw-x); o.push(T(8.5,6.5,String(e.date).slice(0,4)===yr?d.replace(/,? \d{4}$/,''):d.replace(/ \d+,/,''),'H',6,{c:.3}));
-    ls.slice(0,2).forEach(function(l,i){ o.push(T(x,y+6.8,i===1&&ls.length>2?fit(l.s+' \u2026 more words','R',8.2,cw-x):l.s,'R',8.2)); y+=9.2; }); return {h:y+1.8,ops:o}; }
+    ls.slice(0,2).forEach(function(l,i){ o.push(T(x,y+6.8,i===1&&ls.length>2?fit(l.s+' … more words','R',8.2,cw-x):l.s,'R',8.2)); y+=9.2; }); return {h:y+1.8,ops:o}; }
   function flowItems(ed,cw){ var it=[];
     ed.stories.forEach(function(s,i){ it=it.concat(story(s,i<2,cw)); });
     if(ed.briefs.length){ it=it.concat(sec('IN BRIEF',cw,'In brief: '+ed.briefs.length+' short report'+(ed.briefs.length===1?'':'s'))); ed.briefs.forEach(function(b,i){ it=it.concat(brief(b,cw,!i)); });
@@ -1521,15 +1534,15 @@ D.NP = (function(){
   /* the edition → pages of ops */
   function build(ed){ var M=P.M, cw=P.CW, G=P.G, W=P.W, x1=M, x2=M+cw+G, x3=M+2*(cw+G), w2=2*cw+G, now=ed.at&&!isNaN(Date.parse(ed.at))?new Date(ed.at):new Date(), pages=[], pg={ops:[]}, o=pg.ops, Tt=D.threat();
     var dlong=now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'}), ai=ed.by==='ai', push=function(a){ a.forEach(function(q){ o.push(q); }); };
-    o.push({k:'l',x1:M,y1:M,x2:W-M,y2:M,lw:.5,c:0},T(M,M+10,'SEE AHEAD, JUST A LITTLE','HB',6.6,{cs:1}),T(W-M,M+10,ai?'AI EDITION \u00b7 WRITTEN BY CLAUDE':'LEDGER EDITION \u00b7 SET WITHOUT AI','HB',6.6,{cs:1,al:'r'}),T(W/2,M+66,'DAMUS NEWS','B',62,{cs:3,al:'c'}),
-      {k:'l',x1:M,y1:M+78,x2:W-M,y2:M+78,lw:2.2,c:0},{k:'l',x1:M,y1:M+81.6,x2:W-M,y2:M+81.6,lw:.5,c:0},T(M,M+92.5,dlong,'B',8.6),T(W/2,M+92.5,'THREAT INDICATOR: '+Tt.level.name+' \u00b7 '+Tt.score+' OF 100','HB',7,{cs:.8,al:'c'}),T(W-M,M+92.5,D.S.events.length+' events in the ledger','I',8.6,{al:'r'}),{k:'l',x1:M,y1:M+98,x2:W-M,y2:M+98,lw:.5,c:0});
+    o.push({k:'l',x1:M,y1:M,x2:W-M,y2:M,lw:.5,c:0},T(M,M+10,'SEE AHEAD, JUST A LITTLE','HB',6.6,{cs:1}),T(W-M,M+10,ai?'AI EDITION · WRITTEN BY CLAUDE':'LEDGER EDITION · SET WITHOUT AI','HB',6.6,{cs:1,al:'r'}),T(W/2,M+66,'DAMUS NEWS','B',62,{cs:3,al:'c'}),
+      {k:'l',x1:M,y1:M+78,x2:W-M,y2:M+78,lw:2.2,c:0},{k:'l',x1:M,y1:M+81.6,x2:W-M,y2:M+81.6,lw:.5,c:0},T(M,M+92.5,dlong,'B',8.6),T(W/2,M+92.5,'THREAT INDICATOR: '+Tt.level.name+' · '+Tt.score+' OF 100','HB',7,{cs:.8,al:'c'}),T(W-M,M+92.5,D.S.events.length+' events in the ledger','I',8.6,{al:'r'}),{k:'l',x1:M,y1:M+98,x2:W-M,y2:M+98,lw:.5,c:0});
     var y0=M+108, y=y0, L=ed.lead, e=L.evs[0], seen={}, fill=1; [L].concat(ed.stories,ed.briefs).forEach(function(s){ s.evs.forEach(function(v){ seen[v.id]=1; }); }); ed.more=Math.max(0,D.S.events.length-Object.keys(seen).length);
     o.push(T(x1,y+7,fit(L.kicker.toUpperCase(),'HB',7.4,w2),'HB',7.4,{cs:.9,c:.3})); y+=12;
     var hz=21, hl=[]; [34,30,27,24,21].some(function(z){ hz=z; hl=wrap(L.headline,'B',z,w2,true); return hl.length<=3; });
     hl.slice(0,5).forEach(function(l){ o.push(T(x1,y+hz*.84,l.s,'B',hz)); y+=hz*1.05; }); y+=3;
     if(L.deck){ wrap(L.deck,'I',12.4,w2,true).slice(0,4).forEach(function(l){ o.push(T(x1,y+11,l.s,'I',12.4,{c:.12})); y+=15; }); y+=3; }
     if(land().length){ var mh=w2*138/360, mp=mapOps(x1,y+3,w2,mh,L.evs); push(mp.ops); y+=mh+3;
-      wrap('The ledger on the map: '+mp.n+' of '+D.S.events.length+' events carry a location. Black, confirmed. Grey, reported. Red outline, not established. Ringed, the events in today\u2019s lead story.','H',6.2,w2).forEach(function(l){ o.push(T(x1,y+8,l.s,'H',6.2,{c:.35})); y+=7.8; }); y+=5; }
+      wrap('The ledger on the map: '+mp.n+' of '+D.S.events.length+' events carry a location. Black, confirmed. Grey, reported. Red outline, not established. Ringed, the events in today’s lead story.','H',6.2,w2).forEach(function(l){ o.push(T(x1,y+8,l.s,'H',6.2,{c:.35})); y+=7.8; }); y+=5; }
     place(status(e,0,8,w2,tail(L)),x1,y,o); y+=12; o.push({k:'l',x1:x1,y1:y,x2:x1+w2,y2:y,lw:.4,c:.3}); y+=6;
     var lb=body(lede(L),'R',9.5,11.6,cw,true).concat([gap(3)],sources(L.evs,cw),caution(e,cw)), mk2=function(h){ return [{x:x1,y:y,h:h},{x:x2,y:y,h:h}]; };
     var fl=mk2(balance(lb,0,mk2,P.BOT-y)), ni=flow(lb,0,fl,pg), used=Math.max(fl[0].used,fl[1].used||0);
@@ -1549,7 +1562,7 @@ D.NP = (function(){
         pick.slice(0,per*2).forEach(function(q,k){ var cx=k<per?x1:x2, cy=inside+17+(k<per?k:k-per)*10.6; a0.push(T(cx,cy+8,String(q.n),'HB',7.4),T(cx+12,cy+8,fit(q.t,'R',8.8,cw-12),'R',8.8)); }); } }
     var colo=ai?'Stories written by Claude from the Damus event ledger. Status labels come from the verification desk.':'Set from the Damus event ledger without AI. Status labels come from the verification desk.';
     pages.forEach(function(p,n){ var a=p.ops; if(n) a.push(T(M,46,'DAMUS NEWS','B',10,{cs:1}),T(W/2,46,dlong,'I',8.4,{al:'c'}),T(W-M,46,'PAGE '+(n+1),'HB',6.8,{cs:.6,al:'r'}),{k:'l',x1:M,y1:51,x2:W-M,y2:51,lw:.9,c:0});
-      a.push({k:'l',x1:M,y1:P.BOT+7,x2:W-M,y2:P.BOT+7,lw:.5,c:0},T(M,P.BOT+17,'DAMUS NEWS \u00b7 '+now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}).toUpperCase(),'HB',5.8,{cs:.5,c:.3}),T(W/2,P.BOT+17,colo,'H',5.8,{al:'c',c:.35}),T(W-M,P.BOT+17,'PAGE '+(n+1)+' OF '+pages.length,'HB',5.8,{cs:.5,al:'r',c:.3})); });
+      a.push({k:'l',x1:M,y1:P.BOT+7,x2:W-M,y2:P.BOT+7,lw:.5,c:0},T(M,P.BOT+17,'DAMUS NEWS · '+now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}).toUpperCase(),'HB',5.8,{cs:.5,c:.3}),T(W/2,P.BOT+17,colo,'H',5.8,{al:'c',c:.35}),T(W-M,P.BOT+17,'PAGE '+(n+1)+' OF '+pages.length,'HB',5.8,{cs:.5,al:'r',c:.3})); });
     return {pages:pages,by:ed.by,date:dlong,iso:P.iso(now),fill:fill}; }
   P.layout = function(ed){ var L=build(ed), n=ed.briefs.length; if(L.pages.length>1&&L.fill<.25) for(var k=1;k<=5&&n-k>=3;k++){ var e2={}, key; for(key in ed) e2[key]=ed[key]; e2.briefs=ed.briefs.slice(0,n-k); var L2=build(e2); if(L2.pages.length<L.pages.length) return L2; } return L; };
 
@@ -1558,7 +1571,7 @@ D.NP = (function(){
   function rgb(c){ if(typeof c==='number') c=[c,c,c]; return 'rgb('+c.map(function(v){ return Math.round(v*255); }).join(',')+')'; }
   P.svg = function(pg,n,total){ var s=['<svg class="np-page" viewBox="0 0 '+P.W+' '+P.H+'" aria-label="Newspaper page '+n+' of '+total+'">'];
     pg.ops.forEach(function(q){
-      if(q.k==='t') s.push('<text class="f'+q.f+'" x="'+nf(q.x)+'" y="'+nf(q.y)+'" font-size="'+nf(q.z)+'" fill="'+rgb(q.c)+'"'+(q.ws?' word-spacing="'+nf(q.ws)+'"':'')+(q.cs?' letter-spacing="'+nf(q.cs)+'"':'')+(q.w>1?' textLength="'+nf(q.w)+'" lengthAdjust="spacingAndGlyphs"':'')+'>'+esc(q.s.replace(/\u00a0/g,' '))+'</text>');
+      if(q.k==='t') s.push('<text class="f'+q.f+'" x="'+nf(q.x)+'" y="'+nf(q.y)+'" font-size="'+nf(q.z)+'" fill="'+rgb(q.c)+'"'+(q.ws?' word-spacing="'+nf(q.ws)+'"':'')+(q.cs?' letter-spacing="'+nf(q.cs)+'"':'')+(q.w>1?' textLength="'+nf(q.w)+'" lengthAdjust="spacingAndGlyphs"':'')+'>'+esc(q.s.replace(/ /g,' '))+'</text>');
       else if(q.k==='l') s.push('<line x1="'+nf(q.x1)+'" y1="'+nf(q.y1)+'" x2="'+nf(q.x2)+'" y2="'+nf(q.y2)+'" stroke="'+rgb(q.c||0)+'" stroke-width="'+nf(q.lw||.5)+'"'+(q.dash?' stroke-dasharray="0.6 1.8"':'')+'/>');
       else if(q.k==='r') s.push('<rect x="'+nf(q.x)+'" y="'+nf(q.y)+'" width="'+nf(q.w)+'" height="'+nf(q.h)+'" fill="'+(q.fill==null?'none':rgb(q.fill))+'"'+(q.stroke==null?'':' stroke="'+rgb(q.stroke)+'" stroke-width="'+nf(q.lw||.5)+'"')+'/>');
       else if(q.k==='o') s.push('<circle cx="'+nf(q.x)+'" cy="'+nf(q.y)+'" r="'+nf(q.r)+'" fill="'+(q.fill==null?'none':rgb(q.fill))+'"'+(q.stroke==null?'':' stroke="'+rgb(q.stroke)+'" stroke-width="'+nf(q.lw||.5)+'"')+'/>');
@@ -1634,12 +1647,12 @@ D.render.paper = function(){ var ed=D.paperEdition(), st=D.S.paper, eng=D.engine
   var old=ai&&L.iso!==D.NP.iso(new Date()), moved=ai&&st.sig!==D.NP.sig();
   var note=ai?(old||moved?'<b>'+(old?'This edition was written on '+esc(L.date)+(moved?', and the ledger has changed since.':'.'):'The ledger has changed since Claude wrote this edition.')+'</b> Status labels, the threat box and the forecast board are current. Rewrite to bring the stories up to date.':'Claude chose the lead, grouped the events and wrote the copy. Status labels, sources, the map, the threat box and the forecast board are drawn straight from the ledger.')
     :(eng==='none'?'<b>Claude is not connected in this view</b>, so this edition is set straight from the ledger: headlines and summaries as logged, ranked by severity, status and recency. Open Settings to connect, then have Claude write it.':'This edition is set straight from the ledger: headlines and summaries as logged. Have Claude pick the lead, group the events and write the stories.');
-  $('tag-paper').textContent=(ai?'AI EDITION':'LEDGER EDITION')+' \u00b7 '+n+' PAGE'+(n===1?'':'S');
-  box.innerHTML='<div class="ov-scroll"><div class="wrap np-wrap"><div class="panel"><div class="p-h">Today\u2019s edition<span class="r" id="np-status">'+(ai?'written by Claude \u00b7 '+esc(when):'ledger edition')+'</span></div><div class="row"><button class="btn cy" id="np-write" onclick="D.paperWrite()"'+(eng==='none'?' disabled':'')+'>'+(ai?'Rewrite with Claude':'Write edition with Claude')+'</button><button class="btn am" onclick="D.paperPDF()">Export PDF</button>'+(ai?'<button class="btn" onclick="D.paperPlain()">Back to ledger edition</button>':'')+'</div><p class="note" style="margin-top:10px">'+note+'</p></div><div id="np-pages">'+L.pages.map(function(p,i){ return D.NP.svg(p,i+1,n); }).join('')+'</div></div></div>'; };
+  $('tag-paper').textContent=(ai?'AI EDITION':'LEDGER EDITION')+' · '+n+' PAGE'+(n===1?'':'S');
+  box.innerHTML='<div class="ov-scroll"><div class="wrap np-wrap"><div class="panel"><div class="p-h">Today’s edition<span class="r" id="np-status">'+(ai?'written by Claude · '+esc(when):'ledger edition')+'</span></div><div class="row"><button class="btn cy" id="np-write" onclick="D.paperWrite()"'+(eng==='none'?' disabled':'')+'>'+(ai?'Rewrite with Claude':'Write edition with Claude')+'</button><button class="btn am" onclick="D.paperPDF()">Export PDF</button>'+(ai?'<button class="btn" onclick="D.paperPlain()">Back to ledger edition</button>':'')+'</div><p class="note" style="margin-top:10px">'+note+'</p></div><div id="np-pages">'+L.pages.map(function(p,i){ return D.NP.svg(p,i+1,n); }).join('')+'</div></div></div>'; };
 D.paperWrite = function(){ if(D.engine()==='none'){ D.toast('Connect Claude in Settings first','warn'); return; } if(D.ai.busy){ D.toast('Claude is busy with another request. Try again in a moment.','warn'); return; } D.ai.busy=true;
-  var say=function(t){ var el=$('np-status'); if(el) el.textContent=t; }, b=$('np-write'), q=D.NP.prompt(); if(b) b.disabled=true; say('Claude is writing the edition\u2026');
-  D.ask({system:q.system,prompt:q.prompt,max:4500,onText:function(t){ say('Claude is writing the edition\u2026 '+String(t||'').length.toLocaleString('en-US')+' characters'); }})
-    .then(function(r){ var raw; try{ raw=D.json(r.text); }catch(e){ throw new Error('Claude\u2019s draft could not be read. Try again.'); } if(!D.NP.norm(raw)) throw new Error('The draft had no lead story tied to a ledger event. Try again.'); D.S.paper={at:new Date().toISOString(),sig:D.NP.sig(),ed:raw}; D.save(); D.toast('Edition written','ok'); })
+  var say=function(t){ var el=$('np-status'); if(el) el.textContent=t; }, b=$('np-write'), q=D.NP.prompt(); if(b) b.disabled=true; say('Claude is writing the edition…');
+  D.ask({system:q.system,prompt:q.prompt,max:4500,onText:function(t){ say('Claude is writing the edition… '+String(t||'').length.toLocaleString('en-US')+' characters'); }})
+    .then(function(r){ var raw; try{ raw=D.json(r.text); }catch(e){ throw new Error('Claude’s draft could not be read. Try again.'); } if(!D.NP.norm(raw)) throw new Error('The draft had no lead story tied to a ledger event. Try again.'); D.S.paper={at:new Date().toISOString(),sig:D.NP.sig(),ed:raw}; D.save(); D.toast('Edition written','ok'); })
     .catch(function(e){ D.toast((e&&e.message)||'Claude request failed','bad',4600); })
     .then(function(){ D.ai.busy=false; if(D.ui.open==='paper') D.render.paper(); }); };
 D.paperPlain = function(){ D.S.paper=null; D.save(); D.render.paper(); };
@@ -1648,7 +1661,6 @@ D.paperPDF = function(){ var L=D.ui.paper; if(!L){ D.toast('Nothing to export ye
   if(D.sandboxed&&window.claude&&typeof window.claude.use==='function'){ window.claude.use('downloads').then(function(dl){ if(!dl) throw {code:'unavailable'}; return dl.save({filename:name,data:blob}); }).then(function(){ D.toast('PDF saved: '+name,'ok',3200); })
       .catch(function(e){ var c=e&&e.code; D.toast(c==='declined'?'Save was declined. Tap Export PDF to try again.':c==='rate_limited'?'A save prompt is already open. Answer it, then try again.':'This view cannot save files. Open the web-hosted Damus site to export the PDF.','warn',4600); }); return; }
   direct(); };
-
 /* ── back to top: one caret for the hub, every overlay page and the embedded checklist; it appears once the page in view is scrolled past D.TOP_AT px ── */
 D.TOP_AT = 140; D.topLast = null; D.topRaf = 0;
 D.topTarget = function(){ if(!$('gate').classList.contains('off')) return null; var id=D.ui.open;
@@ -1666,17 +1678,7 @@ D.topFrame = function(f){ try{ f.contentWindow.addEventListener('scroll',D.topQu
 D.topInit = function(){ document.addEventListener('scroll',function(e){ var t=e.target; if(t&&t.classList&&(t.id==='hub-scroll'||t.classList.contains('ov-scroll'))) D.topLast=t; D.topQueue(); },{capture:true,passive:true});
   ['click','input','keyup'].forEach(function(n){ document.addEventListener(n,function(){ setTimeout(D.topQueue,0); },true); }); window.addEventListener('resize',D.topQueue);
   ['open','close','enter'].forEach(function(k){ var fn=D[k]; if(typeof fn!=='function') return; D[k]=function(){ var r=fn.apply(this,arguments); D.topQueue(); setTimeout(D.topQueue,450); return r; }; }); D.topQueue(); };
-
-/* ── boot ── */
-D.boot = function(){ D.load();
-  ['fullscreenchange','webkitfullscreenchange'].forEach(function(n){ document.addEventListener(n,D.fsSync); });
-  /* installable desktop app: the manifest loads only from a web host, never from the restricted Claude page or a local file */
-  if(location.protocol!=='file:'&&!D.sandboxed){ var ml=document.createElement('link'); ml.rel='manifest'; ml.href='manifest.webmanifest'; document.head.appendChild(ml); } D.applyTheme(D.S.theme||'dark'); D.buildShell(); D.applySide(); D.fsSync(); D.chatInit(); D.initAI(); D.topInit();
-  $('file-in').addEventListener('change',function(){ D.handleFiles(this.files); this.value=''; });
-  document.addEventListener('keydown',function(e){ if(e.key==='Escape') D.close(); if(e.key==='Enter'&&!$('gate').classList.contains('off')) D.enter(); });
-  var tick=function(){ var d=new Date(); $('clock').textContent=d.toISOString().slice(11,16)+'Z · '+d.toLocaleDateString('en-US',{month:'short',day:'numeric'}); }; tick(); setInterval(tick,30000); D.feedCheck(); setInterval(D.feedCheck,30*60000);
-  if(window.innerWidth<=1180&&window.innerWidth>860){ $('dock').classList.add('closed'); document.body.classList.add('dock-closed'); } };
-D.boot();
+D.topInit();
 </script>
 </body>
 </html>
