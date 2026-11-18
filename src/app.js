@@ -138,14 +138,14 @@ D.APPS = [
 ];
 D.render = {};
 D.buildShell = function(){
-  $('overlays').innerHTML = D.APPS.map(function(a){ return '<div class="app-overlay" id="ov-'+a.id+'" aria-hidden="true"><div class="ov-chrome"><button class="ov-back" onclick="D.close()">&#8592; HUB</button><span class="ov-name">'+a.name+'</span><span class="ov-tag" id="tag-'+a.id+'"></span></div><div class="ov-body" id="body-'+a.id+'"></div></div>'; }).join('');
+  $('overlays').innerHTML = D.APPS.map(function(a){ return '<div class="app-overlay" id="ov-'+a.id+'" aria-hidden="true"><div class="ov-chrome"><button class="ov-back" onclick="D.close()">&#8592; HUB</button><span class="ov-name">'+a.name+'</span><span class="ov-tag" id="tag-'+a.id+'"></span><button class="c-btn icon fs-btn" onclick="D.toggleFull()" aria-label="Enter full screen" title="Full screen"></button></div><div class="ov-body" id="body-'+a.id+'"></div></div>'; }).join('');
   D.renderHub();
 };
 D.renderHub = function(){ var T=D.threat(); var c=D.counts();
   $('card-grid').innerHTML = D.APPS.map(function(a){ var b=a.badge?a.badge():null; return '<button class="app-card" onclick="D.open(\''+a.id+'\')"><span class="ph-ico" style="--g1:'+a.g[0]+';--g2:'+a.g[1]+'"><svg viewBox="0 0 24 24" aria-hidden="true">'+a.ico+'</svg>'+(b?'<span class="tile-badge">'+b+'</span>':'')+'</span><span class="ph-lbl">'+a.label+'</span><span class="ph-code">'+a.code+'</span></button>'; }).join('');
   var lv=T.level; var nextF=D.S.forecasts.filter(function(f){return f.outcome==null;}).sort(function(a,b){return dnum(a.due)-dnum(b.due);})[0];
-  $('hub-side').innerHTML = '<div class="hub-sec">Threat indicator</div><button class="hk" style="--acc:var('+lv.col+')" onclick="D.open(\'threat\')">'+D.gauge(T)+'<div class="thr-lvl" style="color:var('+lv.col+')">'+lv.name+'</div><div class="thr-sub">'+lv.say+' Built from '+T.counted+' confirmed or reported events.</div></button>'+
-    (function(){ var fd=D.S.feed, r=fd&&fd.run; return '<div class="hub-sec">Daily update</div><button class="hk" style="--acc:var(--cyan)" onclick="D.open(\'brief\')"><div class="hk-l">'+(r?fdate(r.date||r.at)+' · '+((r.added||[]).length+(r.changed||[]).length)+' items':'Runs daily at 4 pm Eastern')+'</div><div class="hk-s">'+esc(r?String(r.summary||'').slice(0,230):'No update published yet. The first run will appear here.')+'</div></button>'; })()+'<div class="hub-sec">Ledger</div><div class="hk-grid">'+
+  $('hub-side-body').innerHTML = '<div class="hub-sec">Threat indicator</div><button class="hk" style="--acc:var('+lv.col+')" onclick="D.open(\'threat\')">'+D.gauge(T)+'<div class="thr-lvl" style="color:var('+lv.col+')">'+lv.name+'</div><div class="thr-sub">'+lv.say+' Built from '+T.counted+' confirmed or reported events.</div></button>'+
+    (function(){ var fd=D.S.feed, r=fd&&fd.run; return '<div class="hub-sec">Daily update</div><button class="hk" style="--acc:var(--cyan)" onclick="D.open(\'brief\')"><div class="hk-l">'+(r?fdate(r.date||r.at)+' · '+((r.added||[]).length+(r.changed||[]).length)+' items':'Runs daily at 4 pm Eastern')+'</div><div class="hk-s clamp">'+esc(r?String(r.summary||''):'No update published yet. The first run will appear here.')+'</div></button>'; })()+'<div class="hub-sec">Ledger</div><div class="hk-grid">'+
     '<button class="hk" style="--acc:var(--sage)" onclick="D.openLedger(\'CONFIRMED\')"><div class="hk-l">Confirmed</div><div class="hk-v">'+c.CONFIRMED+'</div></button>'+
     '<button class="hk" style="--acc:var(--cyan)" onclick="D.openLedger(\'REPORTED\')"><div class="hk-l">Reported</div><div class="hk-v">'+c.REPORTED+'</div></button>'+
     '<button class="hk" style="--acc:var(--amber)" onclick="D.open(\'verify\')"><div class="hk-l">Unverified</div><div class="hk-v">'+c.UNVERIFIED+'</div></button>'+
@@ -165,6 +165,16 @@ D.enter = function(){ $('gate').classList.add('off'); };
 D.applyTheme = function(t){ document.documentElement.setAttribute('data-theme',t); D.S.theme=t; var m=document.querySelector('meta[name="theme-color"]'); if(m) m.setAttribute('content',t==='light'?'#f7f9fb':'#0e1824'); if(D.map) D.mapBase(); if(D.outageSync) D.outageSync(); };
 D.toggleTheme = function(){ D.applyTheme(D.S.theme==='light'?'dark':'light'); D.save(); };
 D.toggleDock = function(){ var c=$('dock').classList.toggle('closed'); document.body.classList.toggle('dock-closed',c); };
+/* right status panel: collapse to a caret tab, remembered between visits */
+D.applySide = function(){ var c=!!D.S.sideClosed; $('hub-side').classList.toggle('closed',c); var b=$('side-caret'); b.setAttribute('aria-expanded',String(!c)); b.setAttribute('aria-label',c?'Expand the status panel':'Collapse the status panel'); };
+D.toggleSide = function(){ D.S.sideClosed=!D.S.sideClosed; D.save(); D.applySide(); };
+/* full screen: only ever requested from a click, and a refusal is reported instead of failing silently */
+D.FS_IN='<svg width="13" height="13" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4.400,1 1,1 1,4.400"/><polyline points="7.600,1 11,1 11,4.400"/><polyline points="4.400,11 1,11 1,7.600"/><polyline points="7.600,11 11,11 11,7.600"/></svg>';
+D.FS_OUT='<svg width="13" height="13" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1,4.400 4.400,4.400 4.400,1"/><polyline points="11,4.400 7.600,4.400 7.600,1"/><polyline points="1,7.600 4.400,7.600 4.400,11"/><polyline points="11,7.600 7.600,7.600 7.600,11"/></svg>';
+D.isFull = function(){ return !!(document.fullscreenElement||document.webkitFullscreenElement); };
+D.fsSync = function(){ var on=D.isFull(); [].forEach.call(document.querySelectorAll('.fs-btn'),function(b){ b.innerHTML=on?D.FS_OUT:D.FS_IN; b.setAttribute('aria-label',on?'Exit full screen':'Enter full screen'); b.title=on?'Exit full screen':'Full screen'; }); if(D.map) setTimeout(function(){ D.map.invalidateSize(); },200); };
+D.toggleFull = function(){ var d=document, el=d.documentElement, no=function(){ D.toast('Full screen is not available in this view','warn'); };
+  try{ if(D.isFull()){ (d.exitFullscreen||d.webkitExitFullscreen).call(d); return; } var rq=el.requestFullscreen||el.webkitRequestFullscreen; if(!rq){ no(); return; } var pr=rq.call(el); if(pr&&pr.catch) pr.catch(no); }catch(e){ no(); } };
 
 /* ── event card + detail ── */
 D.sevBars = function(n){ var s=''; for(var i=1;i<=5;i++) s+='<i class="'+(i<=n?'on':'')+'"></i>'; return '<span class="sev" title="Severity '+n+' of 5">'+s+'</span>'; };
@@ -400,8 +410,9 @@ D.runItems = function(){ var r=D.S.feed&&D.S.feed.run; if(!r) return []; return 
 
 /* ── boot ── */
 D.boot = function(){ D.load();
+  ['fullscreenchange','webkitfullscreenchange'].forEach(function(n){ document.addEventListener(n,D.fsSync); });
   /* installable desktop app: the manifest loads only from a web host, never from the restricted Claude page or a local file */
-  if(location.protocol!=='file:'&&!D.sandboxed){ var ml=document.createElement('link'); ml.rel='manifest'; ml.href='manifest.webmanifest'; document.head.appendChild(ml); } D.applyTheme(D.S.theme||'dark'); D.buildShell(); D.chatInit(); D.initAI();
+  if(location.protocol!=='file:'&&!D.sandboxed){ var ml=document.createElement('link'); ml.rel='manifest'; ml.href='manifest.webmanifest'; document.head.appendChild(ml); } D.applyTheme(D.S.theme||'dark'); D.buildShell(); D.applySide(); D.fsSync(); D.chatInit(); D.initAI();
   $('file-in').addEventListener('change',function(){ D.handleFiles(this.files); this.value=''; });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape') D.close(); if(e.key==='Enter'&&!$('gate').classList.contains('off')) D.enter(); });
   var tick=function(){ var d=new Date(); $('clock').textContent=d.toISOString().slice(11,16)+'Z · '+d.toLocaleDateString('en-US',{month:'short',day:'numeric'}); }; tick(); setInterval(tick,30000); D.feedCheck(); setInterval(D.feedCheck,30*60000);
