@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>90-Day Outage Checklist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: field-manual checklist. One column, sticky progress bar, collapsible trade sections, big tap rows. */
+:root{
+  --bg:#edf0f3; --surface:#ffffff; --ink:#13202b; --muted:#5a6a78; --line:#d3dae1;
+  --accent:#1f56d6; --on-accent:#ffffff; --crit:#c2351f; --good:#1d7a4b; --warn:#a96b0a;
+  --display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0d1319; --surface:#151e27; --ink:#e7edf2; --muted:#93a3b1; --line:#263543;
+    --accent:#7aa8ff; --on-accent:#0d1319; --crit:#ff8068; --good:#4cc38a; --warn:#e3ad3d;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d1319; --surface:#151e27; --ink:#e7edf2; --muted:#93a3b1; --line:#263543;
+  --accent:#7aa8ff; --on-accent:#0d1319; --crit:#ff8068; --good:#4cc38a; --warn:#e3ad3d;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.45 var(--body);padding-bottom:96px}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+header{padding:28px 0 8px}
+.eyebrow{font:600 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+h1{font:700 34px/1.05 var(--display);margin:0 0 12px;text-wrap:balance}
+.lede{margin:0 0 14px;color:var(--muted);max-width:60ch}
+.basis{display:grid;grid-template-columns:1fr;gap:8px;margin:0;padding:0;list-style:none}
+.basis li{display:flex;gap:10px;font-size:14px}
+.basis b{font:600 12px/1.6 var(--mono);color:var(--muted);min-width:64px;text-transform:uppercase;letter-spacing:.04em}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px}
+.calc{margin:18px 0;padding:16px}
+.calc h2{font:700 20px/1.1 var(--display);margin:0 0 4px}
+.calc p{margin:0 0 14px;color:var(--muted);font-size:14px}
+.inputs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px;font-weight:500}
+.field input{width:100%;height:46px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:0 12px;font:500 17px var(--mono)}
+.field input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg)}
+.tile .n{font:600 22px/1.1 var(--mono);font-variant-numeric:tabular-nums;word-break:break-word}
+.tile .l{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.3}
+.tile.warn .n{color:var(--warn)}
+.tile.crit .n{color:var(--crit)}
+[hidden]{display:none !important}
+.setup{margin:18px 0 0;padding:16px}
+.setup h2{font:700 20px/1.1 var(--display);margin:0 0 4px}
+.setup p{margin:0 0 14px;color:var(--muted);font-size:14px}
+.selects{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.field select{width:100%;height:46px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:0 10px;font:500 15px var(--body)}
+.field select:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.flags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.flag{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:0 14px;min-height:40px;font-size:14px;font-weight:500}
+.flag[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.flag:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.setup .hint{margin:12px 0 0;color:var(--warn);font-size:14px}
+.calc .assume{margin:12px 0 0;font-size:13px}
+
+.jump{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.jump button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 12px;min-height:40px;font-size:13px;font-weight:500}
+
+.toolbar{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 0 10px}
+.prog{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.meter{flex:1;height:10px;border-radius:999px;background:var(--line);overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--good);border-radius:999px;transition:width .25s}
+.prog .mono{font-size:14px;font-weight:600;white-space:nowrap}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:0 14px;min-height:40px;font-size:14px;font-weight:500;white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip.ghost{background:transparent}
+.critleft{color:var(--crit);font-weight:600}
+
+main{padding-top:16px;display:flex;flex-direction:column;gap:14px}
+.sec{overflow:hidden}
+.sec h2{margin:0}
+.sec-h{width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;padding:14px 16px 10px;text-align:left;min-height:52px}
+.sec-title{flex:1;font:700 20px/1.1 var(--display)}
+.sec-count{font-size:13px;font-weight:600;color:var(--muted)}
+.sec.complete .sec-count{color:var(--good)}
+.chev{width:18px;height:18px;flex:none;transition:transform .2s;color:var(--muted)}
+.sec.collapsed .chev{transform:rotate(-90deg)}
+.bar{height:4px;background:var(--line);margin:0 16px}
+.bar i{display:block;height:100%;width:0;background:var(--good);transition:width .25s}
+.intro{margin:10px 16px 6px;font-size:14px;color:var(--muted)}
+.items{list-style:none;margin:0;padding:0}
+.item{border-top:1px solid var(--line)}
+.item:first-child{border-top:0}
+.item.hide{display:none}
+.row{position:relative;display:grid;grid-template-columns:30px 1fr;gap:12px;padding:13px 16px;min-height:52px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.row:active{background:var(--bg)}
+.cb{position:absolute;opacity:0;width:1px;height:1px}
+.box{width:28px;height:28px;border:2px solid var(--muted);border-radius:8px;display:block;margin-top:0;position:relative;background:var(--surface)}
+.cb:focus-visible + .box{outline:3px solid var(--accent);outline-offset:2px}
+.cb:checked + .box{background:var(--good);border-color:var(--good)}
+.cb:checked + .box::after{content:"";position:absolute;left:8px;top:2px;width:7px;height:14px;border:solid var(--on-accent);border-width:0 3px 3px 0;transform:rotate(45deg)}
+.txt .t{display:block;font-weight:500}
+.txt .n{display:block;margin-top:3px;font-size:14px;color:var(--muted)}
+.cb:checked ~ .txt .t{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
+.tag{display:inline-block;font:600 10px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:3px 6px;border-radius:5px;margin-right:6px;vertical-align:2px}
+.tag.c{background:var(--crit);color:var(--bg)}
+.tag.o{border:1px solid var(--line);color:var(--muted)}
+.cb:checked ~ .txt .tag.c{background:var(--line);color:var(--muted)}
+.v{font-family:var(--mono);font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.empty{padding:28px 16px;text-align:center;color:var(--muted)}
+body.filtering .sec.collapsed .items{display:block}
+.sec.collapsed .items,.sec.collapsed .intro{display:none}
+.sec.nomatch{display:none}
+
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 8px}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:0 16px;min-height:46px;font-weight:600}
+.btn.primary{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.btn.danger{color:var(--crit)}
+.fine{font-size:13px;color:var(--muted);margin:14px 0 0}
+
+.modal{position:fixed;inset:0;background:rgba(5,10,15,.55);display:none;align-items:flex-end;justify-content:center;z-index:50;padding:16px}
+.modal.on{display:flex}
+.sheet{width:100%;max-width:520px;background:var(--surface);border-radius:16px;padding:18px;border:1px solid var(--line)}
+.sheet h3{font:700 20px/1.1 var(--display);margin:0 0 8px}
+.sheet p{margin:0 0 14px;color:var(--muted)}
+.sheet textarea{width:100%;height:220px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);padding:10px;font:13px/1.4 var(--mono)}
+.sheet .btns{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:12px 16px;border-radius:10px;font-weight:500;opacity:0;pointer-events:none;transition:.2s;z-index:60}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media (min-width:560px){
+  .tiles{grid-template-columns:repeat(4,1fr)}
+  .inputs{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important}}
+@media print{
+  .toolbar,.jump,.actions,.modal,.toast{display:none}
+  .sec.collapsed .items,.sec.collapsed .intro{display:block}
+  body{background:#fff;color:#000}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Grid-down readiness</p>
+    <h1>90-Day Outage Checklist</h1>
+    <p class="lede">Pre-event checks for a long regional blackout at home. Describe your household below and the list adapts to it. Work top to bottom, or filter to Critical first.</p>
+    <ul class="basis">
+      <li><b>Window</b><span>90 days with no grid power and thin supply lines</span></li>
+      <li><b>Scope</b><span>One household: house, apartment or condo, with or without a generator</span></li>
+      <li><b>Order</b><span>Critical items first, then build out in 14, 30 and 90-day blocks</span></li>
+    </ul>
+  </header>
+
+  <section class="card setup" aria-labelledby="setup-h">
+    <h2 id="setup-h">Your setup</h2>
+    <p>Pick what matches your home. Items that do not apply are removed from the list and the counts.</p>
+    <div class="selects">
+      <div class="field"><label for="pf-home">Home</label><select id="pf-home" data-pf="home"><option value="house">House</option><option value="apt">Apartment or condo</option></select></div>
+      <div class="field"><label for="pf-gen">Generator</label><select id="pf-gen" data-pf="gen"><option value="none">None</option><option value="gas">Gasoline</option><option value="lp">Propane</option><option value="ng">Natural gas line</option><option value="diesel">Diesel</option></select></div>
+      <div class="field"><label for="pf-heat">Heating</label><select id="pf-heat" data-pf="heat"><option value="fuel">Furnace or boiler</option><option value="elec">Electric or heat pump</option><option value="wood">Wood or pellet stove</option></select></div>
+      <div class="field"><label for="pf-water">Water</label><select id="pf-water" data-pf="water"><option value="city">City or town supply</option><option value="well">Private well</option></select></div>
+      <div class="field"><label for="pf-cook">Cooking</label><select id="pf-cook" data-pf="cook"><option value="gas">Gas range</option><option value="elec">Electric range</option></select></div>
+    </div>
+    <div class="flags" role="group" aria-label="What you have">
+      <button class="flag" data-flag="batt" aria-pressed="false">Power station or battery bank</button>
+      <button class="flag" data-flag="hbatt" aria-pressed="false">Whole-home battery</button>
+      <button class="flag" data-flag="solar" aria-pressed="false">Solar panels</button>
+      <button class="flag" data-flag="sump" aria-pressed="false">Sump pump</button>
+      <button class="flag" data-flag="fire" aria-pressed="false">Fireplace</button>
+      <button class="flag" data-flag="car" aria-pressed="false">Vehicle</button>
+    </div>
+    <p class="hint" id="setup-hint" hidden></p>
+  </section>
+
+  <section class="card calc" aria-labelledby="calc-h">
+    <h2 id="calc-h">Your numbers</h2>
+    <p>Change these. Quantities in the checklist update to match.</p>
+    <div class="inputs">
+      <div class="field"><label for="in-people">People</label><input id="in-people" type="number" inputmode="numeric" min="1" max="30" step="1"></div>
+      <div class="field"><label for="in-pets">Pets</label><input id="in-pets" type="number" inputmode="numeric" min="0" max="30" step="1"></div>
+      <div class="field" data-need="gen"><label for="in-hrs">Generator hours per day</label><input id="in-hrs" type="number" inputmode="decimal" min="0" max="24" step="0.5"></div>
+      <div class="field" data-need="gen"><label for="in-kw">Average load while running (kW)</label><input id="in-kw" type="number" inputmode="decimal" min="0.2" max="20" step="0.1"></div>
+      <div class="field" data-need="gen"><label for="in-interval">Oil change every (hours)</label><input id="in-interval" type="number" inputmode="numeric" min="10" max="500" step="5"></div>
+    </div>
+    <div class="tiles">
+      <div class="tile"><div class="n v" data-k="water14">0</div><div class="l">gal stored drinking water (14 days)</div></div>
+      <div class="tile"><div class="n v" data-k="waterTotal">0</div><div class="l">gal total need, drink and hygiene, 90 days</div></div>
+      <div class="tile"><div class="n v" data-k="kcal">0</div><div class="l">kcal of food for 90 days</div></div>
+      <div class="tile" data-need="gen"><div class="n v" data-k="genHrs">0</div><div class="l">generator run hours over 90 days</div></div>
+      <div class="tile crit" data-need="gen"><div class="n v" data-k="oilChanges">0</div><div class="l">oil changes during the event</div></div>
+      <div class="tile warn" data-need="gen"><div class="n v" data-k="lifeRange">0</div><div class="l">of engine rated life used (1,000 to 2,000 h)</div></div>
+      <div class="tile" data-need="gen"><div class="n v" data-k="kwh">0</div><div class="l">kWh generated over 90 days</div></div>
+      <div class="tile warn" data-need="gen"><div class="n v" data-k="fuelNum">0</div><div class="l" data-k="fuelLbl"></div></div>
+    </div>
+    <p class="assume" data-need="gen">Fuel figures assume roughly 0.22 gal of gasoline, 0.30 gal of propane, 0.27 therm of natural gas or 0.09 gal of diesel per kWh. Small generators vary widely, so check your unit's spec sheet.</p>
+  </section>
+
+  <div class="jump" id="jump" aria-label="Jump to section"></div>
+</div>
+
+<div class="toolbar">
+  <div class="wrap">
+    <div class="prog">
+      <div class="meter" role="progressbar" aria-label="Overall progress" aria-valuemin="0" aria-valuemax="100" id="meter"><i id="meter-i"></i></div>
+      <span class="mono" id="prog-txt">0/0</span>
+    </div>
+    <div class="chips" id="chips">
+      <button class="chip" data-f="all" aria-pressed="true">All</button>
+      <button class="chip" data-f="crit" aria-pressed="false">Critical open <span class="critleft mono" id="crit-n"></span></button>
+      <button class="chip" data-f="open" aria-pressed="false">Open</button>
+      <button class="chip" data-f="done" aria-pressed="false">Done</button>
+      <button class="chip ghost" id="toggle-all">Collapse all</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <main id="main"></main>
+  <div class="empty" id="empty" hidden>Nothing matches this filter.</div>
+
+  <div class="actions">
+    <button class="btn primary" id="copy">Copy open items</button>
+    <button class="btn danger" id="reset">Reset all checks</button>
+  </div>
+  <p class="fine">Checks and numbers save on this device and browser only. This is a planning aid. Electrical, gas and carbon monoxide work belongs to licensed trades and your equipment manuals. Rules for generators, fuel storage and electrical work vary by place, so check local codes. Quantities and run-time figures are estimates.</p>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="m-title">
+  <div class="sheet" id="sheet"></div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+/* [priority, text, note, when]  priority 1 = critical, 2 = important, 3 = optional.
+   "when" names a rule in PRED; the item shows only when that rule is true for the chosen setup. */
+const SECTIONS = [
+{id:"gen", when:"gen", title:"Generator & fuel", intro:"The generator is the backbone of day-time power. Fuel logistics decide whether it keeps running.", items:[
+ [1,"Generator on hand and load-tested, not just started","Run 30 minutes under a real load (heating equipment, fridge, router). Repeat quarterly."],
+ [1,"Break-in oil change done at about 25 run hours","Most small engines want the first change early. Confirm in the manual."],
+ [1,"Natural gas hookup installed and inspected","Licensed gas fitter, permit, correct hose and regulator. Confirm the line and meter can supply the generator's BTU draw.","ng"],
+ [2,"Gas use estimated at {{fuelQty}} over 90 days","Utility gas usually keeps flowing in a blackout, but it is not guaranteed. Keep a second fuel ready.","ng"],
+ [1,"Propane supply sized: about {{fuelQty}} over 90 days","That is roughly {{cyl}} 20-lb cylinders at about 4.7 gal each. A large tank needs a licensed installer. Check the unit's derated output on propane.","lp"],
+ [1,"Gasoline plan: about {{fuelQty}} over 90 days","You cannot safely store this much at home. Local fire codes limit gasoline storage, often to around 25 gal. Plan resupply, cut run hours, or add battery and solar.","gs"],
+ [2,"Stored gasoline in approved cans with stabilizer, each can dated","Rotate every 6 months. Store away from living space and ignition sources.","gs"],
+ [1,"Diesel plan: about {{fuelQty}} over 90 days","Diesel stores longer than gasoline but still needs stabilizer and biocide. Check local limits on tank size and placement.","ds"],
+ [1,"Siting approved: 20+ ft from windows, doors and vents, exhaust pointed away","Check local setback and noise rules before you commit to a spot."],
+ [1,"Generator chained to something structural and covered from rain","Regional outages make portable generators theft targets. Use a rain-rated cover or enclosure."],
+ [2,"Second fuel on hand if the generator is dual-fuel or tri-fuel","Gasoline in approved cans with stabilizer, or 2+ full 20-lb propane cylinders with hose and regulator. Date and rotate.","multifuel"],
+ [2,"Written plan for what you do if your primary fuel runs short","Which fuel, how many hours a day, how you refill. Decide now, not on day 12."],
+ [2,"ABC fire extinguisher within reach of the generator",""],
+ [2,"Electric-start battery kept charged, with a jump pack on hand","A dead start battery means a dead generator."]
+]},
+{id:"cons", when:"gen", title:"Generator consumables", intro:"Ninety days is hundreds of run hours. The engine, not the fuel, is what wears out first.", items:[
+ [1,"Engine oil stocked for {{oilChanges}} changes over {{genHrs}} run hours","Multiply by the oil capacity in your manual and buy the grade it specifies."],
+ [1,"Spare spark plugs: 3 or more","Diesel engines have none; stock fuel filters instead."],
+ [1,"Spare air filters: 3 or more",""],
+ [2,"Drain pan, funnel, rags, gloves, sealed container for used oil","Hot-drain after shutdown. Store used oil safely until you can recycle it."],
+ [2,"Gas-rated spare hose, fittings and thread sealant","","gasfuel"],
+ [2,"Fuel stabilizer for any stored gasoline or diesel",""],
+ [2,"Practice one full oil change before the event","Time it and write the steps on a card kept with the oil."],
+ [2,"Printed manual and maintenance schedule in the plan binder",""],
+ [2,"Engine life budget decided: 90 days uses about {{lifeRange}} of rated life","Small engines are often rated around 1,000 to 2,000 hours. Decide on a second unit, rental plan or more battery to cut run time."],
+ [3,"Second generator or alternate charging path in case the first fails","A cheap second inverter unit or a solar charging setup removes a single point of failure."]
+]},
+{id:"bat", title:"Batteries & solar", intro:"Batteries give you silent, indoor-safe power. Know exactly what each one can and cannot do.", items:[
+ [1,"Backup power decided: what runs, for how long, and how it recharges","With no generator the options are a battery power station, a vehicle inverter, portable solar, or going without. Size it against the essential-loads list.","nogen"],
+ [1,"Essential-loads list written with running and surge watts","Fridge, freezer, heating equipment, sump or well pump, router, lights, phones, medical gear."],
+ [1,"Batteries fully charged, firmware current, one full overnight discharge tested","Check real runtime against your essential-loads list.","anybatt"],
+ [1,"Generator-to-battery recharge tested and timed","Log how many generator hours it takes to refill.","genbatt"],
+ [2,"Know whether your whole-home battery can recharge from a generator","Some cannot. Without working solar, plan on one discharge cycle and then nothing.","hbatt"],
+ [2,"Solar set up to run during an outage","Most grid-tied inverters shut off when the grid fails. Ask the installer about battery backup or islanding and get it in writing.","solar"],
+ [2,"Battery storage and charging within the temperature range in the manual","Lithium packs often will not charge below freezing. Keep them in conditioned space in winter.","anybatt"],
+ [3,"Portable folding solar panels and cables for batteries and power banks",""],
+ [3,"Heavy-gauge extension cords, labeled and inspected","Right gauge for the length and load. Retire damaged cords."]
+]},
+{id:"elec", when:"panel", title:"Panel, inlet & interlock", intro:"This is where people get hurt. Backfeeding the grid can kill a lineworker.", items:[
+ [1,"Inlet box and interlock kit (or transfer switch) installed by a licensed electrician, permitted and inspected","Never backfeed through a dryer outlet or a male-to-male cord."],
+ [1,"Written startup and shutdown steps taped inside the panel door","Main breaker off first, generator on second, loads added one at a time."],
+ [1,"Critical circuits labeled on the panel","Heating equipment, fridge, freezer, sump or well pump, router, kitchen outlets, one bedroom and one bath."],
+ [1,"Generator-rated inlet cord with the correct plug, long enough to reach the pad",""],
+ [2,"Load-shedding rules posted","No electric dryer, range or central A/C on generator or battery unless the math is checked."],
+ [2,"Grounding and neutral configuration confirmed with the electrician","Inverter units vary. Follow the manual."],
+ [2,"Whole-home surge protection installed","Restoration can bring voltage spikes. Unplug sensitive electronics during the outage."],
+ [2,"Outlet tester and multimeter on hand",""],
+ [3,"One lamp left switched on so you can see when grid power returns",""]
+]},
+{id:"water", title:"Water & sanitation", intro:"Water runs out before food does. Sanitation is the part nobody plans.", items:[
+ [1,"Stored drinking water: {{water14}} gal (14 days at 1 gal per person per day, plus pets)","Food-grade containers, dated, away from sunlight and fuels."],
+ [1,"Two purification methods that work without power","Gravity filter (hollow-fiber, 0.1 micron) plus unscented household bleach. Boiling is the third."],
+ [1,"Bucket toilet kit: seat, 5-gal buckets, heavy bags, absorbent, disinfectant","Sewer lift stations and water pressure can fail. Do not rely on flushing."],
+ [1,"Well pump on backup power, with its starting watts known","A well pump delivers no water without power. Check the nameplate and surge draw, and store extra water in case it fails.","well"],
+ [2,"90-day water need mapped: {{waterTotal}} gal for drinking and hygiene","You will not store all of it. List refill sources: creeks, rain catchment, neighbors, the water-heater tank."],
+ [2,"Tank water heater known as a 30 to 80 gal reserve","Learn how to isolate it and drain it from the bottom valve. Tankless heaters hold no reserve."],
+ [2,"Bleach dose card in the binder","CDC guidance for clear water is about 8 drops of 6% unscented bleach per gallon, 30 minutes of contact. Check the label strength."],
+ [2,"Hygiene supplies for 90 days","Soap, hand sanitizer, toothpaste, wipes, menstrual products, diapers if needed, contractor bags, dish soap."],
+ [2,"Boil-water plan for when pressure returns","Pressure loss can let contamination in. Treat water until the utility says it is safe.","city"],
+ [3,"Rain catchment: tarp, screened barrels, a way to treat it","Treat all collected rainwater before drinking."],
+ [3,"Laundry plan: buckets, plunger, washboard, clothesline, extra underwear and socks",""],
+ [3,"Solar shower bag or a safe way to heat bathing water",""]
+]},
+{id:"food", title:"Food & cooking", intro:"Build in blocks: 14 days, then 30, then 90. Eat from it so you know it works.", items:[
+ [1,"First 14 days of shelf-stable food stored and eaten once as a test","Cook it the way you will during an outage."],
+ [1,"Pantry built toward {{kcal}} kcal for 90 days (2,000 kcal per person per day)","Rice, beans, oats, pasta, canned protein, oil, sugar, salt, flour, powdered milk. Add in 30-day blocks."],
+ [1,"Gas range lighting tested with a match and the power off","Know which burners work and whether the oven does. Ventilate. Never heat the home with the range.","gascook"],
+ [1,"A way to cook with the power off, tested","An electric range is dead in an outage. Use a camp stove outdoors or with the ventilation its maker specifies.","eleccook"],
+ [1,"Fridge and freezer thermometers installed","Common guidance: a closed fridge holds about 4 hours, a full freezer about 48."],
+ [2,"Backup stove and fuel for 90 days of one hot meal a day","Use propane or butane stoves outdoors or with strong ventilation. Store fuel away from living space."],
+ [2,"Cookware that works without power: lidded pots, cast iron, two manual can openers, thermos",""],
+ [2,"Pantry inventory sheet with dates, rotated first in, first out",""],
+ [2,"Cooler and frozen water jugs staged","Fill empty freezer space with water jugs. They keep it colder and become drinking water."],
+ [2,"Special diets, infant formula and pet food covered for 90 days",""],
+ [2,"Pest-proof storage bins for rodents and insects",""],
+ [3,"Multivitamins, electrolyte packets and salt",""],
+ [3,"Seeds and basic garden tools in case the outage reaches growing season",""],
+ [3,"Comfort food: coffee, tea, chocolate, spices","Morale matters around day 60."]
+]},
+{id:"heat", title:"Heat, cooling & home", intro:"Most heating systems need electricity, even gas ones. Know what yours needs and what you do without it.", items:[
+ [1,"Furnace blower or boiler circulator on a backed-up circuit","A furnace needs power to move air. A hot-water system needs its circulator pump and controls. Check nameplate watts.","fuelheat"],
+ [1,"Plan for heat without your electric system","Heat pumps and electric resistance heat draw more than most generators or batteries can supply for long. Plan a warm room and a safe secondary heat source.","elecheat"],
+ [1,"Wood or pellet stove ready, with a season of dry fuel","Pellet stoves need electricity for the auger and fans. Cord wood needs months to dry.","woodheat"],
+ [1,"Sump pump on backup power with a tested float","Add a battery-backed pump or put the circuit on backup power.","sump"],
+ [1,"Freeze plan: how to drain pipes, water heater and traps if heat is lost","Find the main shutoff and the low points. Keep non-toxic RV antifreeze for traps.","house"],
+ [1,"Know your building's outage plan","Ask management about backup power for elevators, water pumps, heat and door access, and where residents go if the building loses heat.","apt"],
+ [1,"Warm-room plan and cold-weather gear","Pick one room, close it off, and stock sleeping bags rated for local lows, wool layers, hats and hand warmers."],
+ [2,"Any fuel-burning heater is rated for indoor use with oxygen-depletion shutoff, and runs only with working CO alarms","Ventilate as the manufacturer specifies. If in doubt, don't."],
+ [2,"Window film, draft stoppers and thermal curtains",""],
+ [2,"Summer cooling plan: battery fans, shade, hydration, cooling towels","Know the signs of heat illness. A window A/C unit on backup power costs run hours."],
+ [2,"Know whether your water heater works without power","Standing-pilot gas units keep heating. Power-vent, electronic-ignition, tankless and electric units need electricity."],
+ [3,"Chimney inspected and swept before you burn anything","Older masonry flues can be cracked or unlined. Don't burn until inspected.","flue"],
+ [3,"Dead limbs trimmed near the house and lines, gutters and downspouts clear","","house"]
+]},
+{id:"comms", title:"Communications & information", intro:"Assume cell service degrades. Plan for paper, radio and a backup link.", items:[
+ [1,"Phone charging plan: three or more power banks, car chargers, a solar option","Turn on Wireless Emergency Alerts. Download offline maps of your area."],
+ [1,"Weather radio with battery or hand-crank power","In the US, a NOAA weather radio programmed for your county."],
+ [1,"Family communication plan with an out-of-area contact and two meeting points","Texts get through more often than calls. Write it down."],
+ [2,"Internet backup on backed-up power: satellite terminal or cellular hotspot","A satellite dish draws roughly 50 to 100 W depending on model. A small UPS rides out power transfers. Cell networks can degrade as tower batteries run down."],
+ [2,"Signed up for your city or county emergency alerts and your electric utility's outage tools","Find your local alert system and your utility's outage map now, and bookmark both."],
+ [2,"Know your phone's satellite emergency features","Many recent phones can text emergency services by satellite. Practice with the built-in demo, with a clear view of the sky."],
+ [2,"Printed contact list, area map and plan binder","Phones die. Paper doesn't."],
+ [3,"Two-way radios (FRS or GMRS) with agreed channels and check-in times","In the US, GMRS needs an FCC license."],
+ [3,"Offline library: first aid, repair guides and manuals on a charged device",""],
+ [3,"Amateur radio license and a basic rig",""]
+]},
+{id:"med", title:"Medical & health", intro:"Ninety days outlasts most prescriptions and every pharmacy plan.", items:[
+ [1,"90-day supply of prescriptions, rotated before expiry","Ask your prescriber and pharmacy about an emergency early-refill override."],
+ [1,"Plan for refrigerated medicines, if anyone takes them","A small powered fridge, or a cooler with frozen packs and a thermometer. Ask your pharmacist about limits for each drug."],
+ [1,"Power plan for any medical devices (CPAP, oxygen, nebulizer, mobility)","Know battery hours. Ask your utility about medical-priority registration."],
+ [2,"First aid kit with trauma supplies","Tourniquet, pressure bandage, gauze, tape, gloves, splint, burn gel, eyewash."],
+ [2,"Written health sheet per person: allergies, conditions, medicines, doctors","Keep it in the binder and the go-bag."],
+ [2,"OTC stock: pain relief, anti-diarrheal, antihistamine, oral rehydration, thermometer",""],
+ [2,"CPR, first aid and Stop the Bleed training current",""],
+ [3,"Spare glasses, contact supplies, hearing-aid batteries, dental emergency kit",""],
+ [3,"N95 masks, gloves and disinfectant",""],
+ [3,"Morale plan: routines, books, games, exercise, sleep schedule","Ninety days is long. Plan for boredom and stress."]
+]},
+{id:"safe", title:"Safety & security", intro:"The two big killers in long outages are carbon monoxide and fire.", items:[
+ [1,"Battery-powered CO alarms on every level and near bedrooms, with spare batteries","Test monthly. Never run a generator in a garage, even with the door open."],
+ [1,"Smoke alarms working, extinguishers in the kitchen and near any fuel or generator","Everyone knows two ways out of every bedroom."],
+ [1,"Gas shutoff located (meter or tank valve), tool staged, every adult has practiced it","If you smell gas: leave first, call from outside.","anygas"],
+ [1,"Lighting for every person: headlamp plus lantern, with a battery stockpile","Use LED. Avoid candles; one unattended flame is a house fire."],
+ [2,"Doors and windows secured: reinforced strike plates, 3-inch screws, window locks",""],
+ [2,"Low-profile outage posture","Don't advertise your power, supplies or schedule."],
+ [2,"Exterior motion lighting or battery cameras",""],
+ [2,"Know how to open the garage door by hand","Find the manual-release cord and try it.","house"],
+ [3,"Combustible gas and CO detector near gas appliances","","anygas"]
+]},
+{id:"docs", title:"Documents & cash", intro:"When card readers and networks fail, paper and cash still work.", items:[
+ [1,"Cash reserve in small bills, stored safely","Card readers and ATMs fail early. Pick an amount that covers two weeks of basics."],
+ [1,"Paper copies of IDs, insurance, deed or lease, medical and bank contacts in a waterproof pouch","Add an encrypted USB copy."],
+ [2,"Home inventory photos or video stored off-site","Needed for insurance claims."],
+ [2,"Insurance reviewed for spoiled food, equipment damage and storm limits","Flood is typically excluded from standard home and renters policies."],
+ [3,"Work continuity plan: remote fallback, emergency contacts, laptop power","A satellite or cellular link plus a battery can keep a laptop running."]
+]},
+{id:"veh", title:"Vehicles & mobility", intro:"Gas stations need electricity too. Plan to move on your own terms.", items:[
+ [1,"Fuel tank kept above half, or EV above 80%, topped up before forecast events","Pumps and chargers need power. Stations can be dry or closed.","car"],
+ [2,"Vehicle kit: jump pack, tire inflator, tools, blankets, water, flashlight, charger","","car"],
+ [2,"Go-bags for each person (72 hours), two evacuation routes, a destination outside the region",""],
+ [2,"Know your local shelters and warming or cooling centers",""],
+ [3,"Bicycle or hand cart with repair kit for hauling water and supplies","Roads and fuel can be limited."],
+ [3,"Vehicle maintenance current: tires, wipers, fluids, battery","","car"],
+ [3,"12V power inverter for charging devices (run vehicles outdoors only)","","car"]
+]},
+{id:"house", title:"Tools & household", intro:"The small stuff that stops a bad day from becoming a bad week.", items:[
+ [1,"Fire starting in several places: lighters, matches, spares",""],
+ [2,"Tool kit: wrenches (and a gas shutoff wrench if you have gas), pry bar, saw, shovel, tape, zip ties, rope, tarps, plastic sheeting",""],
+ [2,"PPE: work gloves, goggles, P100 or N95 respirators, hearing protection",""],
+ [2,"Trash plan for weeks with no pickup","Heavy bags, lidded bins, a disposal route."],
+ [2,"Pets covered: 90 days of food, meds, carrier, leash, litter, records",""],
+ [2,"Infant, elder or special-needs supplies covered for 90 days",""],
+ [3,"Repair supplies: pipe clamps, sealant, fasteners, boards for windows",""],
+ [3,"Books, cards, board games and kids' activities",""],
+ [3,"Clothing reserve: socks, rain gear, boots",""]
+]},
+{id:"ppl", title:"Neighbors & skills", intro:"Nobody rides out ninety days alone. Build the network before you need it.", items:[
+ [2,"Meet neighbors and note medical needs and skills (nurse, electrician, tradesperson)","Share the plan before you need it."],
+ [2,"Generator courtesy plan: daytime runs, quiet pad, neighbors warned","Local nighttime noise limits may apply. Let the battery carry the night.","gen"],
+ [2,"Mutual-aid agreement with one or two nearby households","Trade skills and supplies. Don't count on strangers."],
+ [3,"Skills inventory: who can cook from scratch, purify water, give first aid, fix electrical",""],
+ [3,"Local hazards known: flood-prone spots, trees near lines, nearest hospital and fire station",""]
+]},
+{id:"drill", title:"Test, drill & maintain", intro:"A plan that was never run is a guess.", items:[
+ [1,"One-page outage playbook posted where everyone can find it, and in the binder","Every adult can follow it without you."],
+ [1,"24-hour grid-down drill: main breaker off or everything unplugged, full plan live","Log everything that fails."],
+ [2,"72-hour or weekend drill after the first round of fixes",""],
+ [2,"Monthly: test alarms and lights, and check stored water and batteries",""],
+ [2,"Monthly: run the generator under load for 30 minutes","","gen"],
+ [2,"Run log started: hours, fuel used, oil changes, battery cycles","","power"],
+ [2,"Quarterly: rotate stored fuel, check propane, test inverter and transfer","","gen"],
+ [3,"Annual: rotate pantry and water, check medicine dates, update contacts, re-read this list",""],
+ [3,"After every real outage: write down what failed and update this list",""]
+]},
+{id:"day0", title:"First 24 hours", intro:"Pin this one. Use it when the lights actually go out.", items:[
+ [1,"Check hazards first: gas smell, downed lines, CO alarms, fire","Gas smell means leave, then call from outside."],
+ [1,"Confirm it is an outage and not your breaker; report it to the utility",""],
+ [1,"Fill bathtub and containers while water pressure is still on",""],
+ [1,"Follow the written startup: main breaker off, interlock, generator outside, then loads one at a time","","gen"],
+ [2,"Charge everything while power is available",""],
+ [2,"Consolidate fridge and freezer, add frozen water jugs, stop opening doors",""],
+ [2,"Set the schedule: generator by day, battery by night, quiet hours","","gen"],
+ [2,"Set the schedule: what runs on battery, when, and what stays off","","nogen"],
+ [2,"Check on neighbors, especially anyone with medical needs",""],
+ [2,"Start the run log and set rationing triggers for water, fuel and food",""],
+ [2,"Test comms: internet backup, alerts, radio",""]
+]}
+];
+
+/* Rules that decide whether an item applies to the chosen setup. */
+const PRED = {
+  gen: p => p.gen !== "none",
+  nogen: p => p.gen === "none",
+  ng: p => p.gen === "ng",
+  lp: p => p.gen === "lp",
+  gs: p => p.gen === "gas",
+  ds: p => p.gen === "diesel",
+  gasfuel: p => p.gen === "ng" || p.gen === "lp",
+  multifuel: p => p.gen !== "none" && p.gen !== "diesel",
+  panel: p => p.home === "house" && p.gen !== "none",
+  house: p => p.home === "house",
+  apt: p => p.home === "apt",
+  anybatt: p => p.batt || p.hbatt,
+  genbatt: p => p.gen !== "none" && (p.batt || p.hbatt),
+  hbatt: p => p.hbatt,
+  solar: p => p.solar,
+  sump: p => p.sump,
+  flue: p => p.fire || p.heat === "wood",
+  car: p => p.car,
+  fuelheat: p => p.heat === "fuel",
+  elecheat: p => p.heat === "elec",
+  woodheat: p => p.heat === "wood",
+  well: p => p.water === "well",
+  city: p => p.water === "city",
+  gascook: p => p.cook === "gas",
+  eleccook: p => p.cook === "elec",
+  anygas: p => p.gen === "ng" || p.gen === "lp" || p.cook === "gas" || p.heat === "fuel",
+  power: p => p.gen !== "none" || p.batt || p.hbatt
+};
+/* Planning-grade fuel use per kWh generated. Real units vary; the page says so. */
+const FUEL = {
+  ng:{per:0.27, unit:"therms", name:"natural gas"},
+  lp:{per:0.30, unit:"gal", name:"propane"},
+  gas:{per:0.22, unit:"gal", name:"gasoline"},
+  diesel:{per:0.09, unit:"gal", name:"diesel"}
+};
+const OPTS = {home:["house","apt"], gen:["none","gas","lp","ng","diesel"], heat:["fuel","elec","wood"], water:["city","well"], cook:["gas","elec"]};
+const FLAGS = ["batt","hbatt","solar","sump","fire","car"];
+
+const KEY = "outage90-v2";
+let S = {checked:{}, inputs:{people:2, pets:0, hrs:5, kw:2.5, interval:50},
+  profile:{home:"house", gen:"gas", heat:"fuel", water:"city", cook:"gas", batt:true, hbatt:false, solar:false, sump:false, fire:false, car:true},
+  collapsed:{}, filter:"all"};
+const LIM = {people:[1,30,2], pets:[0,30,0], hrs:[0,24,5], kw:[0.2,20,2.5], interval:[10,500,50]};
+function clampNum(k, v){
+  const [lo, hi, def] = LIM[k];
+  const n = parseFloat(v);
+  return Number.isFinite(n) ? Math.min(hi, Math.max(lo, n)) : def;
+}
+try{
+  const raw = localStorage.getItem(KEY);
+  if(raw){
+    const o = JSON.parse(raw);
+    if(o.checked && typeof o.checked === "object") S.checked = o.checked;
+    if(o.collapsed && typeof o.collapsed === "object") S.collapsed = o.collapsed;
+    if(o.inputs) for(const k in LIM) S.inputs[k] = clampNum(k, o.inputs[k]);
+    if(o.profile && typeof o.profile === "object"){
+      for(const k in OPTS) if(OPTS[k].includes(o.profile[k])) S.profile[k] = o.profile[k];
+      FLAGS.forEach(k => { if(typeof o.profile[k] === "boolean") S.profile[k] = o.profile[k]; });
+    }
+    if(["all","crit","open","done"].includes(o.filter)) S.filter = o.filter;
+  }
+}catch(e){}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt = n => Math.round(n).toLocaleString("en-US");
+const applies = w => !w || PRED[w](S.profile);
+/* sections and items that apply to the chosen setup; ids stay tied to the original position */
+function active(){
+  return SECTIONS.filter(sec => applies(sec.when)).map(sec => ({sec, items: sec.items.map((it, i) => ({it, id: sec.id + "-" + i})).filter(x => applies(x.it[3]))})).filter(x => x.items.length);
+}
+
+function calc(){
+  const {people:p, pets:q, hrs:h, kw, interval:iv} = S.inputs;
+  const genHrs = Math.round(h*90);
+  const lo = Math.round(genHrs/2000*100), hi = Math.round(genHrs/1000*100);
+  const kwh = genHrs*kw;
+  const f = FUEL[S.profile.gen] || FUEL.gas;
+  const fuel = kwh*f.per;
+  return {
+    water14: fmt(Math.ceil((p + q*0.5)*14)),
+    waterTotal: fmt(Math.ceil((p*2 + q*0.5)*90)),
+    kcal: fmt(p*2000*90),
+    genHrs: fmt(genHrs),
+    oilChanges: fmt(Math.ceil(genHrs/iv)),
+    lifeRange: lo + "% to " + hi + "%",
+    kwh: fmt(kwh),
+    fuelNum: fmt(fuel),
+    fuelLbl: f.unit + " of " + f.name + " over 90 days (est.)",
+    fuelQty: fmt(fuel) + " " + f.unit + " of " + f.name,
+    cyl: fmt(Math.ceil(fuel/4.7))
+  };
+}
+function tpl(s){ return esc(s).replace(/\{\{(\w+)\}\}/g, '<span class="v" data-k="$1"></span>'); }
+function plain(s, c){ return s.replace(/\{\{(\w+)\}\}/g, (m,k) => c[k]); }
+
+function build(){
+  const jump = $("#jump"), main = $("#main");
+  let jh = "", mh = "";
+  active().forEach(({sec, items:list}) => {
+    jh += `<button data-jump="${sec.id}">${esc(sec.title)}</button>`;
+    const items = list.map(({it, id}) => {
+      const tag = it[0] === 1 ? '<span class="tag c">Critical</span>' : it[0] === 3 ? '<span class="tag o">Optional</span>' : "";
+      const note = it[2] ? `<span class="n">${tpl(it[2])}</span>` : "";
+      return `<li class="item" data-id="${id}" data-p="${it[0]}"><label class="row"><input class="cb" type="checkbox" id="cb-${id}" data-id="${id}"><span class="box" aria-hidden="true"></span><span class="txt"><span class="t">${tag}${tpl(it[1])}</span>${note}</span></label></li>`;
+    }).join("");
+    mh += `<section class="card sec" id="sec-${sec.id}" data-sec="${sec.id}">
+      <h2><button class="sec-h" aria-expanded="true" aria-controls="items-${sec.id}"><span class="sec-title">${esc(sec.title)}</span><span class="sec-count mono"></span><svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h2>
+      <div class="bar"><i></i></div>
+      <p class="intro">${esc(sec.intro)}</p>
+      <ul class="items" id="items-${sec.id}">${items}</ul>
+    </section>`;
+  });
+  jump.innerHTML = jh;
+  main.innerHTML = mh;
+}
+
+function refreshSetup(){
+  const p = S.profile;
+  $$("[data-pf]").forEach(el => { el.value = p[el.dataset.pf]; });
+  $$("[data-flag]").forEach(b => b.setAttribute("aria-pressed", String(!!p[b.dataset.flag])));
+  $$('[data-need="gen"]').forEach(el => { el.hidden = p.gen === "none"; });
+  const hint = $("#setup-hint");
+  const msg = p.home === "apt" && p.gen !== "none" ? "Most apartments and condos cannot run a fuel generator safely or within building rules. A battery power station is the usual choice." : "";
+  hint.textContent = msg; hint.hidden = !msg;
+}
+
+function refreshValues(){
+  const c = calc();
+  $$("[data-k]").forEach(el => { el.textContent = c[el.dataset.k]; });
+}
+
+function refresh(){
+  let total = 0, done = 0, critOpen = 0, shown = 0;
+  const act = active();
+  act.forEach(({sec}) => {
+    const el = $("#sec-" + sec.id);
+    let t = 0, d = 0, vis = 0;
+    $$(".item", el).forEach(li => {
+      const id = li.dataset.id, chk = !!S.checked[id], p = +li.dataset.p;
+      $("input", li).checked = chk;
+      t++; if(chk) d++; else if(p === 1) critOpen++;
+      const f = S.filter;
+      const show = f === "all" || (f === "open" && !chk) || (f === "done" && chk) || (f === "crit" && p === 1 && !chk);
+      li.classList.toggle("hide", !show);
+      if(show) vis++;
+    });
+    total += t; done += d; shown += vis;
+    $(".sec-count", el).textContent = d + "/" + t;
+    $(".bar i", el).style.width = (t ? d/t*100 : 0) + "%";
+    el.classList.toggle("complete", d === t);
+    el.classList.toggle("nomatch", vis === 0);
+    el.classList.toggle("collapsed", !!S.collapsed[sec.id]);
+    $(".sec-h", el).setAttribute("aria-expanded", String(!S.collapsed[sec.id]));
+  });
+  const pct = total ? done/total*100 : 0;
+  $("#meter-i").style.width = pct + "%";
+  $("#meter").setAttribute("aria-valuenow", String(Math.round(pct)));
+  $("#prog-txt").textContent = done + "/" + total + " (" + Math.round(pct) + "%)";
+  $("#crit-n").textContent = critOpen;
+  document.body.classList.toggle("filtering", S.filter !== "all");
+  $$(".chip[data-f]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.f === S.filter)));
+  $("#empty").hidden = shown !== 0;
+  const allCollapsed = act.every(x => S.collapsed[x.sec.id]);
+  $("#toggle-all").textContent = allCollapsed ? "Expand all" : "Collapse all";
+}
+function rebuild(){ build(); refreshSetup(); refreshValues(); refresh(); }
+
+function toast(msg){
+  const t = $("#toast"); t.textContent = msg; t.classList.add("on");
+  clearTimeout(toast.h); toast.h = setTimeout(() => t.classList.remove("on"), 1800);
+}
+function openModal(html){ $("#sheet").innerHTML = html; $("#modal").classList.add("on"); const b = $("#sheet button, #sheet textarea"); if(b) b.focus(); }
+function closeModal(){ $("#modal").classList.remove("on"); $("#sheet").innerHTML = ""; }
+
+function openItemsText(){
+  const c = calc();
+  const lines = ["90-DAY OUTAGE CHECKLIST: OPEN ITEMS", "(! = critical)", ""];
+  let n = 0;
+  active().forEach(({sec, items}) => {
+    const open = items.filter(x => !S.checked[x.id]);
+    if(!open.length) return;
+    lines.push(sec.title.toUpperCase());
+    open.forEach(({it}) => { lines.push((it[0] === 1 ? "! " : "- ") + plain(it[1], c)); n++; });
+    lines.push("");
+  });
+  lines[0] += " (" + n + ")";
+  return {text: lines.join("\n"), n};
+}
+
+document.addEventListener("click", e => {
+  const flag = e.target.closest("[data-flag]");
+  if(flag){ const k = flag.dataset.flag; S.profile[k] = !S.profile[k]; save(); rebuild(); return; }
+  const hdr = e.target.closest(".sec-h");
+  if(hdr){
+    const id = hdr.closest(".sec").dataset.sec;
+    S.collapsed[id] = !S.collapsed[id]; save(); refresh(); return;
+  }
+  const jp = e.target.closest("[data-jump]");
+  if(jp){
+    const id = jp.dataset.jump;
+    if(S.collapsed[id]){ S.collapsed[id] = false; save(); refresh(); }
+    const el = $("#sec-" + id);
+    const off = $(".toolbar").offsetHeight + 8;
+    window.scrollTo({top: el.getBoundingClientRect().top + window.scrollY - off, behavior: "smooth"});
+    return;
+  }
+  const chip = e.target.closest(".chip[data-f]");
+  if(chip){ S.filter = chip.dataset.f; save(); refresh(); return; }
+  if(e.target.closest("#toggle-all")){
+    const act = active();
+    const all = act.every(x => S.collapsed[x.sec.id]);
+    act.forEach(x => { S.collapsed[x.sec.id] = !all; });
+    save(); refresh(); return;
+  }
+  if(e.target.closest("#copy")){
+    const {text, n} = openItemsText();
+    if(!n){ toast("Nothing open. Everything is checked."); return; }
+    let ok = false;
+    try{
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(() => toast(n + " open items copied"), () => fallbackCopy(text));
+        ok = true;
+      }
+    }catch(err){}
+    if(!ok) fallbackCopy(text);
+    return;
+  }
+  if(e.target.closest("#reset")){
+    openModal('<h3 id="m-title">Reset all checks?</h3><p>This clears every checkmark on this device. Your setup and numbers stay.</p><div class="btns"><button class="btn" data-m="cancel">Cancel</button><button class="btn danger" data-m="reset">Reset all</button></div>');
+    return;
+  }
+  const m = e.target.closest("[data-m]");
+  if(m){
+    if(m.dataset.m === "reset"){ S.checked = {}; save(); refresh(); toast("Checks cleared"); }
+    closeModal(); return;
+  }
+  if(e.target === $("#modal")) closeModal();
+});
+function fallbackCopy(text){
+  openModal('<h3 id="m-title">Copy open items</h3><p>Select all and copy.</p><textarea id="ta" readonly></textarea><div class="btns"><button class="btn primary" data-m="cancel">Done</button></div>');
+  const ta = $("#ta"); ta.value = text; ta.focus(); ta.select();
+}
+document.addEventListener("keydown", e => { if(e.key === "Escape") closeModal(); });
+
+document.addEventListener("change", e => {
+  const pf = e.target.closest("[data-pf]");
+  if(pf){ const k = pf.dataset.pf; if(OPTS[k].includes(pf.value)){ S.profile[k] = pf.value; save(); rebuild(); } return; }
+  const cb = e.target.closest(".cb");
+  if(!cb) return;
+  if(cb.checked) S.checked[cb.dataset.id] = true; else delete S.checked[cb.dataset.id];
+  save(); refresh();
+});
+
+const IN = {people:"#in-people", pets:"#in-pets", hrs:"#in-hrs", kw:"#in-kw", interval:"#in-interval"};
+Object.keys(IN).forEach(k => {
+  const el = $(IN[k]);
+  el.value = S.inputs[k];
+  el.addEventListener("input", () => {
+    if(el.value === "") return;
+    S.inputs[k] = clampNum(k, el.value);
+    save(); refreshValues();
+  });
+  el.addEventListener("blur", () => { el.value = S.inputs[k]; });
+});
+
+rebuild();
+</script>
+</body>
+</html>
