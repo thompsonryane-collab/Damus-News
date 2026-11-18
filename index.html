@@ -249,6 +249,25 @@ textarea.code{width:100%;min-height:150px;font-size:12.5px;line-height:1.5;resiz
 #toasts{position:fixed;left:50%;bottom:calc(24px + var(--sab));transform:translateX(-50%);z-index:3000;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
 .toast{font-family:var(--sans);font-size:13.5px;padding:9px 16px;border-radius:20px;background:var(--card-bg);border:1px solid var(--border2);color:var(--txh);opacity:0;transform:translateY(8px);transition:opacity .25s,transform .25s;max-width:min(90vw,520px);text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.35)}
 .toast.show{opacity:1;transform:none}.toast.ok{border-color:var(--sage)}.toast.warn{border-color:var(--amber)}.toast.bad{border-color:var(--red)}
+/* ══ NEWSPAPER ══ */
+.np-wrap{max-width:920px}
+#np-pages{display:grid;gap:20px}
+.np-page{display:block;width:100%;height:auto;background:#f7f3e8;border-radius:3px;box-shadow:0 14px 40px rgba(0,0,0,.42),0 0 0 1px rgba(0,0,0,.22)}
+.np-page .fR,.np-page .fB,.np-page .fI{font-family:"Times New Roman",Times,"Liberation Serif","Nimbus Roman",Tinos,serif}
+.np-page .fH,.np-page .fHB{font-family:Helvetica,Arial,"Liberation Sans","Nimbus Sans",Arimo,sans-serif}
+.np-page .fB,.np-page .fHB{font-weight:700}.np-page .fI{font-style:italic}
+.np-page a{cursor:pointer}
+/* ══ ANALYST BUTTON — phones only, where the side panel is not shown ══ */
+#ai-fab{display:none;position:fixed;left:16px;bottom:calc(16px + var(--sab));z-index:100;width:46px;height:46px;border-radius:12px;border:1px solid color-mix(in srgb,var(--cyan) 50%,transparent);background:var(--card-bg);color:var(--cyan);align-items:center;justify-content:center;cursor:pointer;padding:0;box-shadow:0 10px 26px rgba(0,0,0,.4),var(--card-bevel);-webkit-tap-highlight-color:transparent}
+#ai-fab:active{transform:scale(.94)}#ai-fab:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+@media (max-width:860px){#ai-fab{display:flex}#stage{padding-bottom:78px}}
+/* ══ BACK TO TOP ══ */
+#top-caret{position:fixed;right:var(--tr,16px);bottom:calc(var(--tb,16px) + var(--sab));z-index:900;width:46px;height:46px;border-radius:12px;border:1px solid color-mix(in srgb,var(--cyan) 50%,transparent);background:var(--card-bg);color:var(--cyan);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;box-shadow:0 10px 26px rgba(0,0,0,.4),var(--card-bevel);opacity:0;visibility:hidden;transform:translateY(10px);pointer-events:none;transition:opacity .22s,transform .22s,visibility 0s .22s;-webkit-tap-highlight-color:transparent}
+#top-caret.on{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition:opacity .22s,transform .22s}
+#top-caret:active{transform:scale(.94)}
+#top-caret:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+@media (hover:hover){#top-caret:hover{background:color-mix(in srgb,var(--cyan) 14%,var(--card-bg))}}
+@media (prefers-reduced-motion:reduce){#top-caret,#top-caret.on{transition:none}}
 /* ── Leaflet 1.9.4 (inlined) ── */
 
 
@@ -960,6 +979,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
 </div>
 
 <div id="overlays"></div>
+<button id="ai-fab" onclick="D.open('ai')" aria-label="Open the Damus analyst" title="Damus analyst"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg></button>
+<button id="top-caret" onclick="D.toTop()" aria-label="Back to top" title="Back to top"><svg width="18" height="18" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 7.5l4-4 4 4"/></svg></button>
 <div id="toasts"></div>
 <input type="file" id="file-in" multiple hidden accept=".pdf,.jpg,.jpeg,.png,.webp,.gif,.txt,.md,.csv,.json,.html,.htm,image/*,application/pdf,text/*">
 
@@ -1100,8 +1121,9 @@ D.APPS = [
   {id:'threat',code:'DMS-06',label:'Threat Indicator',g:['#ff8f6b','#b33a26'],ico:'<path d="M4 17a8 8 0 0 1 16 0"/><path d="M12 17l4-6"/><circle cx="12" cy="17" r="1.300"/>',name:'THREAT WARNING INDICATOR'},
   {id:'weather',code:'DMS-07',label:'Weather & Climate',g:['#58e0b8','#1e9a7a'],ico:'<path d="M7 17h10a4 4 0 0 0 .500-7.970A6 6 0 0 0 6 10.500 3.300 3.300 0 0 0 7 17z"/>',name:'WEATHER AND CLIMATE LAYER'},
   {id:'brief',code:'DMS-08',label:'Daily Brief',g:['#c9a2ff','#6a3fb5'],ico:'<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/>',name:'DAILY BRIEF'},
+  {id:'paper',code:'DMS-11',label:'Newspaper',g:['#ff8fa8','#b02a55'],ico:'<path d="M4 5h13v14H6a2 2 0 0 1-2-2z"/><path d="M17 9h3v8a2 2 0 0 1-2 2H6M7.500 9h6M7.500 12.500h6M7.500 16h3.500"/>',name:'NEWSPAPER · AI EDITION · PDF EXPORT'},
   {id:'outage',code:'DMS-10',label:'90-Day Outage Checklist',g:['#f0b860','#a86a1c'],ico:'<path d="M5 4h14v16H5z"/><path d="M8 9l1.500 1.500L12 8M8 15l1.500 1.500L12 14M14 9.500h2.500M14 15.500h2.500"/>',name:'90-DAY OUTAGE CHECKLIST',badge:function(){ return D.S.outage&&D.S.outage.crit?D.S.outage.crit:null; }},
-  {id:'ai',code:'AI-01',label:'Damus Analyst',g:['#3ed6ff','#1286b4'],ico:'<path d="M4 5h16v11H9l-5 4z"/>',name:'DAMUS ANALYST'},
+  {id:'ai',hub:false,code:'AI-01',label:'Damus Analyst',g:['#3ed6ff','#1286b4'],ico:'<path d="M4 5h16v11H9l-5 4z"/>',name:'DAMUS ANALYST'},
   {id:'settings',code:'DMS-09',label:'Settings',g:['#8f9aab','#4a5566'],ico:'<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.600 5.600l2.100 2.100M16.300 16.300l2.100 2.100M18.400 5.600l-2.100 2.100M7.700 16.300l-2.100 2.100"/>',name:'SETTINGS · CLAUDE CONNECTION · DATA'}
 ];
 D.render = {};
@@ -1110,7 +1132,7 @@ D.buildShell = function(){
   D.renderHub();
 };
 D.renderHub = function(){ var T=D.threat(); var c=D.counts();
-  $('card-grid').innerHTML = D.APPS.map(function(a){ var b=a.badge?a.badge():null; return '<button class="app-card" onclick="D.open(\''+a.id+'\')"><span class="ph-ico" style="--g1:'+a.g[0]+';--g2:'+a.g[1]+'"><svg viewBox="0 0 24 24" aria-hidden="true">'+a.ico+'</svg>'+(b?'<span class="tile-badge">'+b+'</span>':'')+'</span><span class="ph-lbl">'+a.label+'</span><span class="ph-code">'+a.code+'</span></button>'; }).join('');
+  $('card-grid').innerHTML = D.APPS.filter(function(a){ return a.hub!==false; }).map(function(a){ var b=a.badge?a.badge():null; return '<button class="app-card" onclick="D.open(\''+a.id+'\')"><span class="ph-ico" style="--g1:'+a.g[0]+';--g2:'+a.g[1]+'"><svg viewBox="0 0 24 24" aria-hidden="true">'+a.ico+'</svg>'+(b?'<span class="tile-badge">'+b+'</span>':'')+'</span><span class="ph-lbl">'+a.label+'</span><span class="ph-code">'+a.code+'</span></button>'; }).join('');
   var lv=T.level; var nextF=D.S.forecasts.filter(function(f){return f.outcome==null;}).sort(function(a,b){return dnum(a.due)-dnum(b.due);})[0];
   $('hub-side-body').innerHTML = '<div class="hub-sec">Threat indicator</div><button class="hk" style="--acc:var('+lv.col+')" onclick="D.open(\'threat\')">'+D.gauge(T)+'<div class="thr-lvl" style="color:var('+lv.col+')">'+lv.name+'</div><div class="thr-sub">'+lv.say+' Built from '+T.counted+' confirmed or reported events.</div></button>'+
     (function(){ var fd=D.S.feed, r=fd&&fd.run; return '<div class="hub-sec">Daily update</div><button class="hk" style="--acc:var(--cyan)" onclick="D.open(\'brief\')"><div class="hk-l">'+(r?fdate(r.date||r.at)+' · '+((r.added||[]).length+(r.changed||[]).length)+' items':'Runs daily at 4 pm Eastern')+'</div><div class="hk-s clamp">'+esc(r?String(r.summary||''):'No update published yet. The first run will appear here.')+'</div></button>'; })()+'<div class="hub-sec">Ledger</div><div class="hk-grid">'+
@@ -1351,7 +1373,7 @@ D.render.outage = function(){ if($('outage-frame')){ D.outageSync(); return; }
   $('body-outage').innerHTML='<iframe id="outage-frame" title="90-Day Outage Checklist" style="flex:1;width:100%;height:100%;border:0;background:var(--void)"></iframe>';
   var f=$('outage-frame'), html=(window.DAMUS_APPS&&DAMUS_APPS['outage-checklist'])||'';
   if(!html){ $('body-outage').innerHTML='<div class="ov-scroll"><div class="banner">The checklist file is missing from this build.</div></div>'; return; }
-  f.addEventListener('load',function(){ D.outageSync(); try{ var doc=f.contentDocument; ['change','click'].forEach(function(n){ doc.addEventListener(n,function(){ setTimeout(D.outageSync,0); }); }); }catch(e){} });
+  f.addEventListener('load',function(){ D.outageSync(); D.topFrame(f); try{ var doc=f.contentDocument; ['change','click'].forEach(function(n){ doc.addEventListener(n,function(){ setTimeout(D.outageSync,0); }); }); }catch(e){} });
   f.srcdoc=html.replace('<html lang="en">','<html lang="en" data-theme="'+(D.S.theme==='light'?'light':'dark')+'">'); };
 D.outageSync = function(){ try{ var f=$('outage-frame'); if(!f||!f.contentDocument) return; var doc=f.contentDocument; doc.documentElement.setAttribute('data-theme',D.S.theme==='light'?'light':'dark');
     var c=doc.getElementById('crit-n'), p=doc.getElementById('prog-txt'); if(!c||!p||!p.textContent) return; var crit=+c.textContent||0; $('tag-outage').textContent=p.textContent+' · '+crit+' CRITICAL OPEN';
@@ -1376,11 +1398,280 @@ D.feedCheck = function(manual){ return fetch('feed.json',{cache:'no-store'}).the
   .catch(function(){ if(manual) D.toast(location.protocol==='file:'?'Daily updates reach the published page. In this file, paste a feed into the box and tap Import.':'Could not read the daily feed right now.','warn',4600); }); };
 D.runItems = function(){ var r=D.S.feed&&D.S.feed.run; if(!r) return []; return (r.added||[]).concat(r.changed||[]).map(D.ev).filter(Boolean); };
 
+/* ── DMS-11 newspaper: an edition typeset from the ledger. One layout feeds both the on-screen pages (SVG) and the exported file (a real PDF written here, no library).
+      Text is measured with the standard Times and Helvetica width tables, so what is shown is what is exported. ── */
+D.NP = (function(){
+  var P = {W:612,H:792,M:36,G:14,TOP:58,BOT:744};
+  P.CW = (P.W-2*P.M-2*P.G)/3;
+  var RED = [.6,.13,.1], NB = '\u00a0';
+  var WD = {"R":"6y99bcdwdwn5lm509999dwfo6y996y7qdwdwdwdwdwdwdwdwdwdw7q7qfofofoccplk2ijijk2gzfgk2k299atk2gzopk2k2fgk2ijfggzk2k2q8k2k2gz997q99d1dw99ccdwccdwcc99dwdw7q7qdw7qlmdwdwdwdw99at7qdwdwk2dwdwccdc5kdcf19qdw9q99dwccrsdwdw99rsfg99op9qgz9q9q9999cccc9qdwrs99r8at99k29qcck26y99dwdwdwdw5kdw99l47odwfo99l499b4fo8c8c99dwcl6y998c8mdwkukukucck2k2k2k2k2k2opijgzgzgzgz99999999k2k2k2k2k2k2k2fok2k2k2k2k2k2fgdwccccccccccccijcccccccccc7q7q7q7qdwdwdwdwdwdwdwfodwdwdwdwdwdwdwdw","B":"6y99ffdwdwrsn57q9999dwfu6y996y7qdwdwdwdwdwdwdwdwdwdw9999fufufudwpuk2ijk2k2ijgzlmlmatdwlmijq8k2lmgzlmk2fgijk2k2rsk2k2ij997q99g5dw99dwfgccfgcc99dwfg7q99fg7qn5fgdwfgfgccat99fgdwk2dwdwccay64ayeg9qdw9q99dwdwrsdwdw99rsfg99rs9qij9q9q9999dwdw9qdwrs99rsat99k29qcck26y99dwdwdwdw64dw99kr8cdwfu99kr99b4fu8c8c99fgf06y998c96dwkukukudwk2k2k2k2k2k2rsk2ijijijijatatatatk2k2lmlmlmlmlmfulmk2k2k2k2k2gzfgdwdwdwdwdwdwk2cccccccccc7q7q7q7qdwfgdwdwdwdwdwfudwfgfgfgfgdwfgdw","I":"6y99bodwdwn5lm5y9999dwir6y996y7qdwdwdwdwdwdwdwdwdwdw9999iririrdwpkgzgzijk2gzgzk2k299ccijfgn5ijk2gzk2gzdwfgk2gzn5gzfgfgat7qatbqdw99dwdwccdwcc7qdwdw7q7qcc7qk2dwdwdwdwatat7qdwccijccccatb47nb4f19qdw9q99dwfgopdwdw99rsdw99q89qfg9q9q9999fgfg9qdwop99r8at99ij9qatfg6yatdwdwdwdw7ndw99l47odwir99l499b4ir8c8c99dwej6y998c8mdwkukukudwgzgzgzgzgzgzopijgzgzgzgz99999999k2ijk2k2k2k2k2irk2k2k2k2k2fggzdwdwdwdwdwdwdwijcccccccccc7q7q7q7qdwdwdwdwdwdwdwirdwdwdwdwdwccdwcc","H":"7q7q9vfgfgopij5b9999atg87q997q7qfgfgfgfgfgfgfgfgfgfg7q7qg8g8g8fgs7ijijk2k2ijgzlmk27qdwijfgn5k2lmijlmk2ijgzk2ijq8ijijgz7q7q7qd1fg99fgfgdwfgfg7qfgfg6666dw66n5fgfgfgfg99dw7qfgdwk2dwdwdw9a789ag89qfg9q66fg99rsfgfg99rsij99rs9qgz9q9q666699999qfgrs99rsdw99q89qdwij7q99fgfgfgfg78fg99khaafgg899kh99b4g8999999fgex7q9999a5fgn6n6n6gzijijijijijijrsk2ijijijij7q7q7q7qk2k2lmlmlmlmlmg8lmk2k2k2k2ijijgzfgfgfgfgfgfgopdwfgfgfgfg7q7q7q7qfgfgfgfgfgfgfgg8gzfgfgfgfgdwfgdw","HB":"7q99d6fgfgopk26m9999atg87q997q7qfgfgfgfgfgfgfgfgfgfg9999g8g8g8gzr3k2k2k2k2ijgzlmk27qfgk2gzn5k2lmijlmk2ijgzk2ijq8ijijgz997q99g8fg99fggzfggzfg99gzgz7q7qfg7qopgzgzgzgzatfg99gzfglmfgfgdwat7satg89qfg9q7qfgdwrsfgfg99rsij99rs9qgz9q9q7q7qdwdw9qfgrs99rsfg99q89qdwij7q99fgfgfgfg7sfg99khaafgg899kh99b4g8999999gzfg7q9999a5fgn6n6n6gzk2k2k2k2k2k2rsk2ijijijij7q7q7q7qk2k2lmlmlmlmlmg8lmk2k2k2k2ijijgzfgfgfgfgfgfgopfgfgfgfgfg7q7q7q7qgzgzgzgzgzgzgzg8gzgzgzgzgzfggzfg"}, wt = {};
+  Object.keys(WD).forEach(function(k){ var a=[], s=WD[k]; for(var i=0;i<s.length;i+=2) a.push(parseInt(s.substr(i,2),36)); wt[k]=a; });
+  P.FONTS = {R:'Times-Roman',B:'Times-Bold',I:'Times-Italic',H:'Helvetica',HB:'Helvetica-Bold'};
+
+  /* characters: everything is held to the Windows-1252 set the standard PDF fonts carry */
+  var CP = '\u20ac\u0081\u201a\u0192\u201e\u2026\u2020\u2021\u02c6\u2030\u0160\u2039\u0152\u008d\u017d\u008f\u0090\u2018\u2019\u201c\u201d\u2022\u2013\u2014\u02dc\u2122\u0161\u203a\u0153\u009d\u017e\u0178', cpm = {};
+  for(var ci=0;ci<CP.length;ci++) cpm[CP.charCodeAt(ci)] = 128+ci;
+  function code(u){ return u<128?u:(u>=160&&u<256)?u:(cpm[u]||63); }
+  var SUB = {'\u0142':'l','\u0141':'L','\u0111':'d','\u0110':'D','\u0131':'i','\u00ad':'','\u2192':'->','\u2190':'<-','\u2265':'>=','\u2264':'<=','\u2248':'~','\u2212':'-','\u2010':'-','\u2011':'-','\u2012':'-','\u2015':'\u2014','\u2032':"'",'\u2033':'"','\u200b':'','\ufeff':''};
+  function clean(s){ s=String(s==null?'':s).replace(/[\u0142\u0141\u0111\u0110\u0131\u00ad\u2192\u2190\u2265\u2264\u2248\u2212\u2010-\u2012\u2015\u2032\u2033\u200b\ufeff]/g,function(c){ return SUB[c]; }).replace(/[\s\u00a0\u2002-\u200a\u202f]+/g,' ').trim();
+    var o=''; for(var i=0;i<s.length;i++){ var u=s.charCodeAt(i); if((u>=32&&u<127)||(u>160&&u<256)||(u>255&&cpm[u])){ o+=s[i]; continue; } if(u>=0xd800&&u<=0xdfff) continue;
+      var n=s[i].normalize?s[i].normalize('NFKD').replace(/[\u0300-\u036f]/g,''):''; o+=(n.length===1&&n.charCodeAt(0)>=32&&n.charCodeAt(0)<127)?n:'?'; } return o; }
+  function tw(s,f,z,cs){ var a=wt[f], n=0; for(var i=0;i<s.length;i++) n+=a[code(s.charCodeAt(i))-32]||0; return n*z/1000+(cs||0)*s.length; }
+  function fit(s,f,z,w){ if(tw(s,f,z)<=w) return s; while(s.length>1&&tw(s+'\u2026',f,z)>w) s=s.slice(0,-1); return s.replace(/[\s,;:.\u00b7-]+$/,'')+'\u2026'; }
+
+  /* line breaking: fewest-leftover fit across the whole paragraph, so justified columns keep even spacing; bal also evens the last line (headlines) */
+  function wrap(text,f,z,width,bal,ind,hy){ ind=ind||0; var ws=[], gl=[], out=[], sp=tw(' ',f,z);
+    String(text||'').split(' ').forEach(function(w){ if(!w) return; var parts=hy?w.replace(/([A-Za-z]{3}-)(?=[A-Za-z]{3})/g,'$1\u0001').split('\u0001'):[w];
+      parts.forEach(function(pt,pi){ while(pt.length>1&&tw(pt,f,z)>width-ind){ var k=pt.length-1; while(k>1&&tw(pt.slice(0,k),f,z)>width-ind) k--; ws.push(pt.slice(0,k)); gl.push(0); pt=pt.slice(k); } ws.push(pt); gl.push(pi<parts.length-1?0:sp); }); });
+    var n=ws.length; if(!n) return out; var Wd=ws.map(function(w){ return tw(w,f,z); }), best=new Array(n+1), nxt=new Array(n+1), i, j; best[n]=0;
+    for(i=n-1;i>=0;i--){ best[i]=Infinity; nxt[i]=i+1; var lw=0, wl=i===0?width-ind:width; for(j=i+1;j<=n;j++){ lw+=Wd[j-1]+(j-1>i?gl[j-2]:0); if(lw>wl+.01&&j>i+1) break; var slack=Math.max(0,wl-lw), c=(j===n&&!bal)?0:slack*slack; if(c+best[j]<best[i]){ best[i]=c+best[j]; nxt[i]=j; } } }
+    for(i=0;i<n;i=j){ j=nxt[i]; var w2=0, g=0, str=''; for(var k2=i;k2<j;k2++){ w2+=Wd[k2]; str+=ws[k2]; if(k2<j-1){ w2+=gl[k2]; if(gl[k2]){ g++; str+=' '; } } } out.push({s:str,w:w2,g:g,last:j===n}); }
+    return out; }
+
+  /* drawing ops, all in points from the top-left of the page:
+     t text · l line · r rect · p polygons · o circle · a link */
+  function T(x,y,s,f,z,o){ o=o||{}; var w=tw(s,f,z,o.cs); return {k:'t',x:o.al==='r'?x-w:o.al==='c'?x-w/2:x,y:y,s:s,f:f,z:z,w:w,cs:o.cs||0,ws:0,c:o.c||0}; }
+  function place(ops,dx,dy,out){ ops.forEach(function(q){ var c={}, k; for(k in q) c[k]=q[k]; if(q.k==='l'){ c.x1+=dx; c.x2+=dx; c.y1+=dy; c.y2+=dy; } else if(q.k==='p'){ c.d=q.d.map(function(a){ return a.map(function(v,i){ return v+(i%2?dy:dx); }); }); } else { c.x+=dx; c.y+=dy; } out.push(c); }); }
+  function gap(h,drop){ return {h:h,drop:drop?1:0}; }
+  function line(l,f,z,lead,width,just,x0,col){ var ws=0, w=l.w; if(just&&!l.last&&l.g>0){ var e=(width-l.w)/l.g; if(e<=z*1.15){ ws=e; w=width; } } return {h:lead,ops:[{k:'t',x:x0||0,y:lead*.76,s:l.s,f:f,z:z,w:w,ws:ws,cs:0,c:col||0}]}; }
+  function body(paras,f,z,lead,width,just){ var it=[]; paras.forEach(function(p,pi){ var ind=pi?9:0, ls=wrap(p,f,z,width,false,ind,just); ls.forEach(function(l,li){ var item=line(l,f,z,lead,li?width:width-ind,just,li?0:ind); if(ls.length>=4&&(li===0||li===ls.length-2)) item.keep=1; it.push(item); }); }); return it; }
+
+  /* verification status: the mark and the label are always drawn from the ledger, never from the written copy */
+  function stc(st){ return st==='CONFIRMED'?0:st==='REPORTED'?.3:RED; }
+  function mark(st,x,y,z){ if(st==='CONFIRMED') return [{k:'r',x:x,y:y,w:z,h:z,fill:0}]; if(st==='REPORTED') return [{k:'r',x:x,y:y,w:z,h:z,fill:.55}];
+    var o=[{k:'r',x:x+.35,y:y+.35,w:z-.7,h:z-.7,stroke:RED,lw:.7}]; if(st==='DISPUTED') o.push({k:'l',x1:x+.35,y1:y+z-.35,x2:x+z-.35,y2:y+.35,lw:.7,c:RED}); if(st==='SPECULATION') o.push({k:'r',x:x+z/2-.75,y:y+z/2-.75,w:1.5,h:1.5,fill:RED}); return o; }
+  function stKey(e){ return D.STATUS[e.status]?e.status:'UNVERIFIED'; }
+  function status(e,x,yb,width,tail,z){ z=z||6.4; var st=stKey(e), o=mark(st,x,yb-z*.8,z*.82), t=T(x+z*.82+3,yb,D.STATUS[st].label.toUpperCase(),'HB',z,{cs:.5,c:stc(st)}); o.push(t);
+    var rest=tail?fit(tail,'H',z,width-(t.x+t.w+5-x)):''; if(rest) o.push(T(t.x+t.w+5,yb,rest,'H',z,{c:.35})); return o; }
+  function tail(s){ var e=s.evs[0]; return fdate(e.date)+(s.evs.length>1?' \u00b7 '+s.evs.length+' events':'')+(e.region?' \u00b7 '+clean(e.region):''); }
+  function lede(s){ var b=s.body.slice(); if(s.dateline&&b.length&&b[0].toUpperCase().indexOf(s.dateline.toUpperCase())!==0) b[0]=s.dateline.toUpperCase()+' \u2014 '+b[0]; return b; }
+  function caution(e,width){ var S=D.STATUS[stKey(e)]; if(S.w) return []; return wrap('Not established. '+S.label+': '+clean(S.def),'I',7.6,width).map(function(l){ return {h:9.3,ops:[T(0,7.2,l.s,'I',7.6,{c:RED})]}; }); }
+  function sources(evs,width){ var z=7.6, seen={}, list=[];
+    evs.forEach(function(e){ (e.sources||[]).forEach(function(s){ var n=fit(clean(s.name),'I',z,width*.9).replace(/ /g,NB); if(!n||seen[n]||list.length>=5) return; seen[n]=1; list.push({n:n,u:/^https?:\/\//i.test(s.url||'')?s.url:''}); }); });
+    var txt=(list.length?'Sources: '+list.map(function(s){ return s.n; }).join('; ')+'. ':'')+'Ledger '+evs.map(function(e){ return e.id; }).join(', ')+'.', sp=tw(' ','I',z);
+    return wrap(txt,'I',z,width).map(function(l){ var item={h:9.3,ops:[T(0,7.2,l.s,'I',z,{c:.25})]}, xx=0;
+      l.s.split(' ').forEach(function(wd){ var key=wd.replace(/[;.]$/,''), s=list.filter(function(q){ return q.u&&q.n===key; })[0]; if(s){ var lw=tw(key,'I',z); item.ops.push({k:'a',x:xx,y:0,w:lw,h:9.3,url:s.u},{k:'l',x1:xx,y1:8.5,x2:xx+lw,y2:8.5,lw:.3,c:.5}); } xx+=tw(wd,'I',z)+sp; });
+      return item; }); }
+
+  /* flow pieces, each one column wide */
+  function secHead(x,y,w,label){ return [{k:'l',x1:x,y1:y+.8,x2:x+w,y2:y+.8,lw:1.6,c:0},T(x,y+11.5,label,'HB',7.8,{cs:1.1}),{k:'l',x1:x,y1:y+16,x2:x+w,y2:y+16,lw:.4,c:.3}]; }
+  function sec(label,cw,tag){ return [gap(12,1),{h:22,keep:3,ops:secHead(0,0,cw,label),tag:tag?{t:tag,sec:1}:null}]; }
+  function story(s,big,cw){ var e=s.evs[0], z=big?17:13.6, lh=z*1.1, head=[{h:10,ops:[T(0,7.2,fit(s.kicker.toUpperCase(),'HB',6.6,cw-8),'HB',6.6,{cs:.7,c:.3})]}];
+    wrap(s.headline,'B',z,cw,true).forEach(function(l){ head.push({h:lh,ops:[T(0,lh*.8,l.s,'B',z)]}); });
+    head.push({h:12,ops:status(e,0,8,cw,tail(s))});
+    var b=body(lede(s),'R',9.3,11.3,cw,true), k=head.length+Math.min(2,b.length); head[0].keep=k-1; head[0].tag={t:s.headline};
+    return [gap(8,1),{h:7,drop:1,keep:k,ops:[{k:'l',x1:0,y1:.4,x2:cw,y2:.4,lw:.5,c:.3}]}].concat(head,b,[gap(2)],sources(s.evs,cw),caution(e,cw)); }
+  function brief(s,cw,first){ var e=s.evs[0], head=[]; wrap(s.headline,'B',10.4,cw,true).forEach(function(l){ head.push({h:11.8,ops:[T(0,9.2,l.s,'B',10.4)]}); });
+    var b=body(s.body.slice(0,2),'R',8.8,10.5,cw,true), k=head.length+Math.min(2,b.length); head[0].keep=k-1;
+    var meta={h:11,ops:status(e,0,8,cw,fdate(e.date)+(e.region?' \u00b7 '+clean(e.region):'')+' \u00b7 '+e.id,5.8)};
+    return (first?[]:[gap(5,1),{h:5,drop:1,keep:k,ops:[{k:'l',x1:0,y1:.3,x2:cw,y2:.3,lw:.3,c:.55}]}]).concat(head,b,[meta]); }
+  function forecast(f,cw){ var p=Math.round(f.p*100), x=42, y=0, o=[T(0,12.5,p+'%','HB',13),{k:'r',x:0,y:16.5,w:32,h:2.6,fill:.86},{k:'r',x:0,y:16.5,w:Math.max(.6,32*f.p),h:2.6,fill:0}];
+    wrap(clean(f.q),'R',8.9,cw-x).forEach(function(l){ o.push(T(x,y+8.2,l.s,'R',8.9)); y+=10.5; });
+    o.push(T(x,y+7,fit('Due '+fdate(f.due)+' \u00b7 '+((D.DOMAIN[f.dom]||{}).label||'Forecast'),'H',6.2,cw-x),'H',6.2,{c:.35})); y+=9; return {h:Math.max(y,21)+6,ops:o}; }
+  function legend(k,cw){ var S=D.STATUS[k], o=mark(k,0,1.2,5.4), y=9; o.push(T(9,6.4,S.label.toUpperCase(),'HB',6.4,{cs:.5,c:stc(k)}));
+    wrap(clean(S.def)+(S.w?' Counts toward the threat indicator'+(S.w<1?' at reduced weight.':'.'):' Does not move the threat indicator.'),'R',8.6,cw-9).forEach(function(l){ o.push(T(9,y+7.6,l.s,'R',8.6)); y+=10.2; }); return {h:y+4,ops:o}; }
+  function indexRow(e,cw,yr){ var x=32, y=0, o=mark(stKey(e),0,1.5,5), d=fdate(e.date), ls=wrap(clean(e.title),'R',8.2,cw-x); o.push(T(8.5,6.5,String(e.date).slice(0,4)===yr?d.replace(/,? \d{4}$/,''):d.replace(/ \d+,/,''),'H',6,{c:.3}));
+    ls.slice(0,2).forEach(function(l,i){ o.push(T(x,y+6.8,i===1&&ls.length>2?fit(l.s+' \u2026 more words','R',8.2,cw-x):l.s,'R',8.2)); y+=9.2; }); return {h:y+1.8,ops:o}; }
+  function flowItems(ed,cw){ var it=[];
+    ed.stories.forEach(function(s,i){ it=it.concat(story(s,i<2,cw)); });
+    if(ed.briefs.length){ it=it.concat(sec('IN BRIEF',cw,'In brief: '+ed.briefs.length+' short report'+(ed.briefs.length===1?'':'s'))); ed.briefs.forEach(function(b,i){ it=it.concat(brief(b,cw,!i)); });
+      if(ed.more>0) it=it.concat([gap(4)],wrap(ed.more+' other event'+(ed.more===1?' is':'s are')+' listed in The Ledger in Full.','I',7.6,cw).map(function(l){ return {h:9.3,ops:[T(0,7.2,l.s,'I',7.6,{c:.25})]}; })); }
+    var open=D.S.forecasts.filter(function(f){ return f.outcome==null; }).sort(function(a,b){ return dnum(a.due)-dnum(b.due); }).slice(0,12);
+    if(open.length){ it=it.concat(sec('FORECAST BOARD',cw,'Forecast board: odds on '+open.length+' open question'+(open.length===1?'':'s')),wrap('Odds held in the ledger, soonest first. They are probabilities, not promises.','I',8.4,cw).map(function(l){ return {h:10.2,ops:[T(0,7.8,l.s,'I',8.4,{c:.2})]}; }),[gap(5)]); open.forEach(function(f){ it.push(forecast(f,cw)); }); }
+    if(ed.view){ it=it.concat(sec('THE DAMUS VIEW',cw,'The Damus view: '+ed.view.headline)); wrap(ed.view.headline,'B',15,cw,true).forEach(function(l,i){ it.push({h:16.5,keep:i?0:3,ops:[T(0,13.2,l.s,'B',15)]}); });
+      it.push({h:12,keep:2,ops:[T(0,8.4,ed.by==='ai'?'Analysis by the Damus analyst (Claude)':'Compiled from the ledger, without AI','I',7.8,{c:.3})]}); it=it.concat(body(ed.view.body,'R',9.3,11.3,cw,true)); }
+    it=it.concat(sec('HOW TO READ THIS PAPER',cw)); Object.keys(D.STATUS).forEach(function(k){ it.push(legend(k,cw)); });
+    var all=D.S.events.slice().sort(function(a,b){ return dnum(b.date)-dnum(a.date); }), yr=today().slice(0,4), note=function(t){ return wrap(t,'I',8.4,cw).map(function(l){ return {h:10.2,ops:[T(0,7.8,l.s,'I',8.4,{c:.2})]}; }); };
+    it=it.concat(sec('THE LEDGER IN FULL',cw,'The ledger in full: all '+all.length+' events'),note('Every event loaded when this edition was set, newest first.'),[gap(5)]); all.slice(0,150).forEach(function(e){ it.push(indexRow(e,cw,yr)); }); if(all.length>150) it=it.concat([gap(3)],note('And '+(all.length-150)+' older events.'));
+    return it; }
+
+  /* column flow: fills each frame in turn, keeps headings with their first lines, drops rules and gaps that land at the top of a column */
+  function flow(items,i,frames,page){ for(var f=0;f<frames.length&&i<items.length;f++){ var fr=frames[f], y=0, top=true; fr.used=0;
+      while(i<items.length){ var it=items[i]; if(top&&it.drop){ i++; continue; }
+        var need=it.h; if(it.keep) for(var k=1;k<=it.keep&&i+k<items.length;k++) need+=items[i+k].h;
+        if(!top&&y+need>fr.h+.5) break;
+        if(page&&it.ops) place(it.ops,fr.x,fr.y+y,page.ops); if(page&&it.tag) (page.tags=page.tags||[]).push(it.tag); y+=it.h; i++; top=false; if(!it.drop&&it.ops) fr.used=y; } }
+    return i; }
+  function fits(items,i,frames){ return flow(items,i,frames.map(function(f){ return {x:f.x,y:f.y,h:f.h}; }),null)>=items.length; }
+  function balance(items,i,mk,full){ if(!fits(items,i,mk(full))) return full; var lo=20, hi=full; for(var k=0;k<14;k++){ var mid=(lo+hi)/2; if(fits(items,i,mk(mid))) hi=mid; else lo=mid; } return Math.min(full,hi+1); }
+
+  /* front-page furniture */
+  function threatBox(x,y,w){ var Tt=D.threat(), o=secHead(x,y,w,'THREAT INDICATOR'), yy=y+20, sc=T(x,yy+38,String(Tt.score),'HB',44); o.push(sc,T(x+sc.w+8,yy+23,Tt.level.name,'HB',16),T(x+sc.w+8,yy+35,'of 100','H',7.4,{c:.35})); yy+=50;
+    var seg=(w-6)/5, sh=[.9,.8,.66,.5,.32]; D.LEVELS.forEach(function(l,i){ var sx=x+i*(seg+1.5), on=l===Tt.level; o.push({k:'r',x:sx,y:yy,w:seg,h:6.5,fill:sh[i]}); if(on) o.push({k:'r',x:sx,y:yy,w:seg,h:6.5,stroke:0,lw:.9}); o.push(T(sx+seg/2,yy+13.5,l.name,on?'HB':'H',4.9,{al:'c',c:on?0:.4})); });
+    var mx=x+Math.max(3,Math.min(w-3,w*Tt.score/100)); o.push({k:'p',d:[[mx-3,yy-5,mx+3,yy-5,mx,yy-.6]],fill:0}); yy+=22;
+    wrap(clean(Tt.level.say),'I',9.4,w).forEach(function(l){ o.push(T(x,yy+8,l.s,'I',9.4)); yy+=11.4; });
+    wrap('Built from '+Tt.counted+' confirmed or reported events. Unverified claims and speculation do not move it.','H',6.3,w).forEach(function(l){ o.push(T(x,yy+7.4,l.s,'H',6.3,{c:.35})); yy+=8.2; });
+    yy+=6; o.push(T(x,yy+6,'BY DOMAIN','HB',5.8,{cs:.7,c:.3})); yy+=10;
+    Object.keys(D.DOMAIN).forEach(function(k){ var v=Tt.dom[k]||0, bx=x+58, bw=w-58-20; o.push(T(x,yy+6.2,D.DOMAIN[k].label,'H',6.6),{k:'r',x:bx,y:yy+1.4,w:bw,h:4.6,fill:.9}); if(v>0) o.push({k:'r',x:bx,y:yy+1.4,w:bw*Math.min(100,v)/100,h:4.6,fill:.2}); o.push(T(x+w,yy+6.2,String(v),'HB',6.6,{al:'r'})); yy+=9.4; });
+    return {ops:o,h:yy-y}; }
+  function ledgerBox(x,y,w){ var c=D.counts(), Tt=D.threat(), o=secHead(x,y,w,'THE LEDGER TODAY'), yy=y+22;
+    Object.keys(D.STATUS).forEach(function(k){ var lab=D.STATUS[k].label, v=T(x+w,yy+7,String(c[k]||0),'B',9.6,{al:'r'}), lx=x+10+tw(lab,'R',9.4)+4; mark(k,x,yy+1.8,5.4).forEach(function(q){ o.push(q); }); o.push(T(x+10,yy+7,lab,'R',9.4),v); if(v.x-4>lx) o.push({k:'l',x1:lx,y1:yy+6.4,x2:v.x-4,y2:yy+6.4,lw:.35,c:.55,dash:1}); yy+=11.6; });
+    yy+=2; wrap(D.S.events.length+' events loaded. Of the '+Tt.recent+' logged in the past 14 days, '+Tt.noiseN+(Tt.noiseN===1?' is':' are')+' not established.','H',6.3,w).forEach(function(l){ o.push(T(x,yy+7.4,l.s,'H',6.3,{c:.35})); yy+=8.2; });
+    return {ops:o,h:yy-y}; }
+  var LAND=null;
+  function land(){ if(LAND) return LAND; LAND=[]; (window.DAMUS_LAND||[]).forEach(function(p){ var out=[], lx=1e9, ly=1e9, top=-90, i; for(i=1;i<p.length;i+=2) if(p[i]>top) top=p[i]; if(top<-58) return;
+      var prev=p[0]; for(i=0;i+1<p.length;i+=2){ var lo=p[i], la=Math.max(-58,Math.min(80,p[i+1])); while(lo-prev>180) lo-=360; while(lo-prev<-180) lo+=360; prev=lo; lo=Math.max(-180,Math.min(180,lo)); if(Math.abs(lo-lx)+Math.abs(la-ly)>=.8||i+3>=p.length){ out.push(lo,la); lx=lo; ly=la; } } if(out.length>=8) LAND.push(out); }); return LAND; }
+  function mapOps(x,y,w,h,lead){ var px=function(lo){ return x+(lo+180)/360*w; }, py=function(la){ return y+(80-Math.max(-58,Math.min(80,la)))/138*h; }, o=[{k:'r',x:x,y:y,w:w,h:h,fill:.95}], ok=function(e){ return typeof e.lat==='number'&&typeof e.lon==='number'&&e.lon>=-180&&e.lon<=180; };
+    o.push({k:'p',d:land().map(function(p){ var a=[]; for(var i=0;i<p.length;i+=2) a.push(px(p[i]),py(p[i+1])); return a; }),fill:.8});
+    var rank={CONFIRMED:2,REPORTED:1}, pts=D.S.events.filter(ok).sort(function(a,b){ return (rank[a.status]||0)-(rank[b.status]||0)||(b.sev||1)-(a.sev||1); });
+    pts.forEach(function(e){ var r=1.2+.5*(e.sev||1), q={k:'o',x:px(e.lon),y:py(e.lat),r:r}; if(e.status==='CONFIRMED'){ q.fill=0; q.stroke=1; q.lw=.5; } else if(e.status==='REPORTED'){ q.fill=.5; q.stroke=1; q.lw=.5; } else { q.fill=1; q.stroke=RED; q.lw=.7; } o.push(q); });
+    (lead||[]).filter(ok).forEach(function(e){ o.push({k:'o',x:px(e.lon),y:py(e.lat),r:3.6+.5*(e.sev||1),stroke:0,lw:.7}); });
+    o.push({k:'r',x:x,y:y,w:w,h:h,stroke:.35,lw:.5}); return {ops:o,n:pts.length}; }
+
+  /* the edition → pages of ops */
+  function build(ed){ var M=P.M, cw=P.CW, G=P.G, W=P.W, x1=M, x2=M+cw+G, x3=M+2*(cw+G), w2=2*cw+G, now=ed.at&&!isNaN(Date.parse(ed.at))?new Date(ed.at):new Date(), pages=[], pg={ops:[]}, o=pg.ops, Tt=D.threat();
+    var dlong=now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'}), ai=ed.by==='ai', push=function(a){ a.forEach(function(q){ o.push(q); }); };
+    o.push({k:'l',x1:M,y1:M,x2:W-M,y2:M,lw:.5,c:0},T(M,M+10,'SEE AHEAD, JUST A LITTLE','HB',6.6,{cs:1}),T(W-M,M+10,ai?'AI EDITION \u00b7 WRITTEN BY CLAUDE':'LEDGER EDITION \u00b7 SET WITHOUT AI','HB',6.6,{cs:1,al:'r'}),T(W/2,M+66,'DAMUS NEWS','B',62,{cs:3,al:'c'}),
+      {k:'l',x1:M,y1:M+78,x2:W-M,y2:M+78,lw:2.2,c:0},{k:'l',x1:M,y1:M+81.6,x2:W-M,y2:M+81.6,lw:.5,c:0},T(M,M+92.5,dlong,'B',8.6),T(W/2,M+92.5,'THREAT INDICATOR: '+Tt.level.name+' \u00b7 '+Tt.score+' OF 100','HB',7,{cs:.8,al:'c'}),T(W-M,M+92.5,D.S.events.length+' events in the ledger','I',8.6,{al:'r'}),{k:'l',x1:M,y1:M+98,x2:W-M,y2:M+98,lw:.5,c:0});
+    var y0=M+108, y=y0, L=ed.lead, e=L.evs[0], seen={}, fill=1; [L].concat(ed.stories,ed.briefs).forEach(function(s){ s.evs.forEach(function(v){ seen[v.id]=1; }); }); ed.more=Math.max(0,D.S.events.length-Object.keys(seen).length);
+    o.push(T(x1,y+7,fit(L.kicker.toUpperCase(),'HB',7.4,w2),'HB',7.4,{cs:.9,c:.3})); y+=12;
+    var hz=21, hl=[]; [34,30,27,24,21].some(function(z){ hz=z; hl=wrap(L.headline,'B',z,w2,true); return hl.length<=3; });
+    hl.slice(0,5).forEach(function(l){ o.push(T(x1,y+hz*.84,l.s,'B',hz)); y+=hz*1.05; }); y+=3;
+    if(L.deck){ wrap(L.deck,'I',12.4,w2,true).slice(0,4).forEach(function(l){ o.push(T(x1,y+11,l.s,'I',12.4,{c:.12})); y+=15; }); y+=3; }
+    if(land().length){ var mh=w2*138/360, mp=mapOps(x1,y+3,w2,mh,L.evs); push(mp.ops); y+=mh+3;
+      wrap('The ledger on the map: '+mp.n+' of '+D.S.events.length+' events carry a location. Black, confirmed. Grey, reported. Red outline, not established. Ringed, the events in today\u2019s lead story.','H',6.2,w2).forEach(function(l){ o.push(T(x1,y+8,l.s,'H',6.2,{c:.35})); y+=7.8; }); y+=5; }
+    place(status(e,0,8,w2,tail(L)),x1,y,o); y+=12; o.push({k:'l',x1:x1,y1:y,x2:x1+w2,y2:y,lw:.4,c:.3}); y+=6;
+    var lb=body(lede(L),'R',9.5,11.6,cw,true).concat([gap(3)],sources(L.evs,cw),caution(e,cw)), mk2=function(h){ return [{x:x1,y:y,h:h},{x:x2,y:y,h:h}]; };
+    var fl=mk2(balance(lb,0,mk2,P.BOT-y)), ni=flow(lb,0,fl,pg), used=Math.max(fl[0].used,fl[1].used||0);
+    o.push({k:'l',x1:x2-G/2,y1:y,x2:x2-G/2,y2:y+used,lw:.4,c:.55});
+    var items=(ni<lb.length?[{h:11,keep:2,ops:[T(0,7.5,'LEAD STORY, CONTINUED','HB',6.4,{cs:.7,c:.3})]}].concat(lb.slice(ni)):[]).concat(flowItems(ed,cw));
+    var yL=y+used+7, ys=y0, tb=threatBox(x3,ys,cw); push(tb.ops); ys+=tb.h+12; var lg=ledgerBox(x3,ys,cw); push(lg.ops); ys+=lg.h+9;
+    var fr1=[], inside=null; if(P.BOT-yL-9>=60){ o.push({k:'l',x1:x1,y1:yL,x2:x1+w2,y2:yL,lw:.9,c:0}); fr1.push({x:x1,y:yL+9,h:P.BOT-yL-9},{x:x2,y:yL+9,h:P.BOT-yL-9}); } else if(P.BOT-yL>=30) inside=yL;
+    if(P.BOT-ys-9>=60){ o.push({k:'l',x1:x3,y1:ys,x2:x3+cw,y2:ys,lw:.9,c:0}); fr1.push({x:x3,y:ys+9,h:P.BOT-ys-9}); }
+    var i=flow(items,0,fr1,pg); if(fr1.length>1){ var u1=Math.max(fr1[0].used||0,fr1[1].used||0); if(u1) o.push({k:'l',x1:x2-G/2,y1:yL+9,x2:x2-G/2,y2:yL+9+u1,lw:.4,c:.55}); }
+    o.push({k:'l',x1:x3-G/2,y1:y0,x2:x3-G/2,y2:P.BOT,lw:.4,c:.55}); pages.push(pg);
+    var full=P.BOT-P.TOP, cols=function(h){ return [{x:x1,y:P.TOP,h:h},{x:x2,y:P.TOP,h:h},{x:x3,y:P.TOP,h:h}]; };
+    while(i<items.length&&pages.length<12){ pg={ops:[]}; var fs=cols(balance(items,i,cols,full)), was=i; i=flow(items,i,fs,pg); if(i===was) break;
+      var u=Math.max(fs[0].used||0,fs[1].used||0,fs[2].used||0); fill=u/full; pg.ops.push({k:'l',x1:x2-G/2,y1:P.TOP,x2:x2-G/2,y2:P.TOP+u,lw:.4,c:.55},{k:'l',x1:x3-G/2,y1:P.TOP,x2:x3-G/2,y2:P.TOP+u,lw:.4,c:.55}); pages.push(pg); }
+    if(inside!=null){ var ent=[]; pages.forEach(function(p,n){ if(n) (p.tags||[]).forEach(function(t){ ent.push({t:t.t,sec:t.sec,n:n+1}); }); });
+      var rows=Math.floor((P.BOT-inside-17)/10.6), secs=ent.filter(function(q){ return q.sec; }), sto=ent.filter(function(q){ return !q.sec; }), pick=sto.slice(0,Math.max(0,rows*2-Math.min(secs.length,rows))); pick=pick.concat(secs.slice(0,rows*2-pick.length)).sort(function(a,b){ return a.n-b.n; });
+      if(rows>0&&pick.length){ var a0=pages[0].ops, per=Math.min(rows,Math.ceil(pick.length/2)); a0.push({k:'l',x1:x1,y1:inside,x2:x1+w2,y2:inside,lw:.9,c:0},T(x1,inside+10.5,'INSIDE','HB',7,{cs:1.1}));
+        pick.slice(0,per*2).forEach(function(q,k){ var cx=k<per?x1:x2, cy=inside+17+(k<per?k:k-per)*10.6; a0.push(T(cx,cy+8,String(q.n),'HB',7.4),T(cx+12,cy+8,fit(q.t,'R',8.8,cw-12),'R',8.8)); }); } }
+    var colo=ai?'Stories written by Claude from the Damus event ledger. Status labels come from the verification desk.':'Set from the Damus event ledger without AI. Status labels come from the verification desk.';
+    pages.forEach(function(p,n){ var a=p.ops; if(n) a.push(T(M,46,'DAMUS NEWS','B',10,{cs:1}),T(W/2,46,dlong,'I',8.4,{al:'c'}),T(W-M,46,'PAGE '+(n+1),'HB',6.8,{cs:.6,al:'r'}),{k:'l',x1:M,y1:51,x2:W-M,y2:51,lw:.9,c:0});
+      a.push({k:'l',x1:M,y1:P.BOT+7,x2:W-M,y2:P.BOT+7,lw:.5,c:0},T(M,P.BOT+17,'DAMUS NEWS \u00b7 '+now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}).toUpperCase(),'HB',5.8,{cs:.5,c:.3}),T(W/2,P.BOT+17,colo,'H',5.8,{al:'c',c:.35}),T(W-M,P.BOT+17,'PAGE '+(n+1)+' OF '+pages.length,'HB',5.8,{cs:.5,al:'r',c:.3})); });
+    return {pages:pages,by:ed.by,date:dlong,iso:P.iso(now),fill:fill}; }
+  P.layout = function(ed){ var L=build(ed), n=ed.briefs.length; if(L.pages.length>1&&L.fill<.25) for(var k=1;k<=5&&n-k>=3;k++){ var e2={}, key; for(key in ed) e2[key]=ed[key]; e2.briefs=ed.briefs.slice(0,n-k); var L2=build(e2); if(L2.pages.length<L.pages.length) return L2; } return L; };
+
+  /* on-screen pages */
+  function nf(v){ return String(Math.round(v*100)/100); }
+  function rgb(c){ if(typeof c==='number') c=[c,c,c]; return 'rgb('+c.map(function(v){ return Math.round(v*255); }).join(',')+')'; }
+  P.svg = function(pg,n,total){ var s=['<svg class="np-page" viewBox="0 0 '+P.W+' '+P.H+'" aria-label="Newspaper page '+n+' of '+total+'">'];
+    pg.ops.forEach(function(q){
+      if(q.k==='t') s.push('<text class="f'+q.f+'" x="'+nf(q.x)+'" y="'+nf(q.y)+'" font-size="'+nf(q.z)+'" fill="'+rgb(q.c)+'"'+(q.ws?' word-spacing="'+nf(q.ws)+'"':'')+(q.cs?' letter-spacing="'+nf(q.cs)+'"':'')+(q.w>1?' textLength="'+nf(q.w)+'" lengthAdjust="spacingAndGlyphs"':'')+'>'+esc(q.s.replace(/\u00a0/g,' '))+'</text>');
+      else if(q.k==='l') s.push('<line x1="'+nf(q.x1)+'" y1="'+nf(q.y1)+'" x2="'+nf(q.x2)+'" y2="'+nf(q.y2)+'" stroke="'+rgb(q.c||0)+'" stroke-width="'+nf(q.lw||.5)+'"'+(q.dash?' stroke-dasharray="0.6 1.8"':'')+'/>');
+      else if(q.k==='r') s.push('<rect x="'+nf(q.x)+'" y="'+nf(q.y)+'" width="'+nf(q.w)+'" height="'+nf(q.h)+'" fill="'+(q.fill==null?'none':rgb(q.fill))+'"'+(q.stroke==null?'':' stroke="'+rgb(q.stroke)+'" stroke-width="'+nf(q.lw||.5)+'"')+'/>');
+      else if(q.k==='o') s.push('<circle cx="'+nf(q.x)+'" cy="'+nf(q.y)+'" r="'+nf(q.r)+'" fill="'+(q.fill==null?'none':rgb(q.fill))+'"'+(q.stroke==null?'':' stroke="'+rgb(q.stroke)+'" stroke-width="'+nf(q.lw||.5)+'"')+'/>');
+      else if(q.k==='p') s.push('<path d="'+q.d.map(function(a){ var d='M'; for(var i=0;i<a.length;i+=2) d+=(i?'L':'')+nf(a[i])+' '+nf(a[i+1]); return d+'Z'; }).join('')+'" fill="'+rgb(q.fill||0)+'"/>');
+      else if(q.k==='a') s.push('<a href="'+esc(q.url)+'" target="_blank" rel="noopener"><rect x="'+nf(q.x)+'" y="'+nf(q.y)+'" width="'+nf(q.w)+'" height="'+nf(q.h)+'" fill="#000" fill-opacity="0"/></a>');
+    });
+    s.push('</svg>'); return s.join(''); };
+
+  /* PDF: standard fonts, one content stream per page, link annotations for the sources. Returns the file as bytes. */
+  P.pdf = function(L){ var H=P.H, n=function(v){ return (Math.round(v*100)/100).toFixed(2).replace(/\.?0+$/,''); };
+    var enc=function(s){ var o=''; for(var i=0;i<s.length;i++){ var c=code(s.charCodeAt(i)); if(c===160) c=32; if(c===40||c===41||c===92) o+='\\'; o+=String.fromCharCode(c); } return o; };
+    var asc=function(s){ return String(s).replace(/[^\x20-\x7e]/g,'?').replace(/([()\\])/g,'\\$1'); };
+    var objs=['',''], add=function(b){ objs.push(b); return objs.length; }, fk=Object.keys(P.FONTS), fid={}, kids=[];
+    fk.forEach(function(k){ fid[k]=add('<< /Type /Font /Subtype /Type1 /BaseFont /'+P.FONTS[k]+' /Encoding /WinAnsiEncoding >>'); });
+    var res='<< /Font << '+fk.map(function(k){ return '/'+k+' '+fid[k]+' 0 R'; }).join(' ')+' >> >>';
+    L.pages.forEach(function(pg){ var s=[], st={}, annots=[];
+      var fill=function(c){ var k=typeof c==='number'?n(c)+' g':c.map(n).join(' ')+' rg'; if(st.f!==k){ st.f=k; s.push(k); } };
+      var stroke=function(c,lw){ var k=typeof c==='number'?n(c)+' G':c.map(n).join(' ')+' RG'; if(st.s!==k){ st.s=k; s.push(k); } if(st.w!==lw){ st.w=lw; s.push(n(lw)+' w'); } };
+      var paint=function(q){ if(q.fill!=null) fill(q.fill); if(q.stroke!=null) stroke(q.stroke,q.lw||.5); return q.fill!=null&&q.stroke!=null?'B':q.fill!=null?'f':'S'; };
+      pg.ops.forEach(function(q){
+        if(q.k==='t'){ fill(q.c||0); var t='BT /'+q.f+' '+n(q.z)+' Tf '; if(st.tc!==q.cs){ st.tc=q.cs; t+=n(q.cs)+' Tc '; } if(st.tw!==q.ws){ st.tw=q.ws; t+=n(q.ws)+' Tw '; } s.push(t+n(q.x)+' '+n(H-q.y)+' Td ('+enc(q.s)+') Tj ET'); }
+        else if(q.k==='l'){ stroke(q.c||0,q.lw||.5); s.push((q.dash?'[0.6 1.8] 0 d ':'')+n(q.x1)+' '+n(H-q.y1)+' m '+n(q.x2)+' '+n(H-q.y2)+' l S'+(q.dash?' [] 0 d':'')); }
+        else if(q.k==='r'){ var op=paint(q); s.push(n(q.x)+' '+n(H-q.y-q.h)+' '+n(q.w)+' '+n(q.h)+' re '+op); }
+        else if(q.k==='o'){ var op2=paint(q), r=q.r, c=r*.5523, x=q.x, y=H-q.y; s.push(n(x+r)+' '+n(y)+' m '+n(x+r)+' '+n(y+c)+' '+n(x+c)+' '+n(y+r)+' '+n(x)+' '+n(y+r)+' c '+n(x-c)+' '+n(y+r)+' '+n(x-r)+' '+n(y+c)+' '+n(x-r)+' '+n(y)+' c '+n(x-r)+' '+n(y-c)+' '+n(x-c)+' '+n(y-r)+' '+n(x)+' '+n(y-r)+' c '+n(x+c)+' '+n(y-r)+' '+n(x+r)+' '+n(y-c)+' '+n(x+r)+' '+n(y)+' c h '+op2); }
+        else if(q.k==='p'){ fill(q.fill||0); q.d.forEach(function(a){ var d=''; for(var i=0;i<a.length;i+=2) d+=n(a[i])+' '+n(H-a[i+1])+(i?' l ':' m '); s.push(d+'h'); }); s.push('f'); }
+        else if(q.k==='a'){ var u=q.url; try{ u=encodeURI(decodeURI(q.url)); }catch(er){} annots.push(add('<< /Type /Annot /Subtype /Link /Rect ['+n(q.x)+' '+n(H-q.y-q.h)+' '+n(q.x+q.w)+' '+n(H-q.y)+'] /Border [0 0 0] /A << /S /URI /URI ('+asc(u)+') >> >>')); }
+      });
+      var body=s.join('\n'), cid=add('<< /Length '+body.length+' >>\nstream\n'+body+'\nendstream');
+      kids.push(add('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 '+P.W+' '+P.H+'] /Resources '+res+' /Contents '+cid+' 0 R'+(annots.length?' /Annots ['+annots.map(function(a){ return a+' 0 R'; }).join(' ')+']':'')+' >>')); });
+    var d=new Date(), p2=function(v){ return (v<10?'0':'')+v; }, stamp='D:'+d.getFullYear()+p2(d.getMonth()+1)+p2(d.getDate())+p2(d.getHours())+p2(d.getMinutes())+p2(d.getSeconds())+(d.getTimezoneOffset()>0?'-':'+')+p2(Math.floor(Math.abs(d.getTimezoneOffset())/60))+"'"+p2(Math.abs(d.getTimezoneOffset())%60)+"'";
+    var info=add('<< /Title ('+asc('Damus News - '+L.date)+') /Author (Damus News) /Subject ('+asc(L.by==='ai'?'Edition written by Claude from the Damus event ledger':'Edition set from the Damus event ledger')+') /Creator (Damus News v'+asc(D.ver)+') /Producer (Damus News) /CreationDate ('+stamp+') >>');
+    objs[0]='<< /Type /Catalog /Pages 2 0 R >>'; objs[1]='<< /Type /Pages /Count '+kids.length+' /Kids ['+kids.map(function(k){ return k+' 0 R'; }).join(' ')+'] >>';
+    var out='%PDF-1.4\n%\xe2\xe3\xcf\xd3\n', off=[]; objs.forEach(function(b,i){ off.push(out.length); out+=(i+1)+' 0 obj\n'+b+'\nendobj\n'; });
+    var xr=out.length; out+='xref\n0 '+(objs.length+1)+'\n0000000000 65535 f \n'+off.map(function(v){ return ('0000000000'+v).slice(-10)+' 00000 n \n'; }).join('')+'trailer\n<< /Size '+(objs.length+1)+' /Root 1 0 R /Info '+info+' 0 R >>\nstartxref\n'+xr+'\n%%EOF\n';
+    var bytes=new Uint8Array(out.length); for(var i=0;i<out.length;i++) bytes[i]=out.charCodeAt(i)&255; return bytes; };
+
+  /* editions. norm() turns Claude's draft into a checked edition: every story must point at events that are really in the ledger. */
+  P.norm = function(raw){ if(!raw||!raw.lead) return null; var used={};
+    var get=function(ids){ return [].concat(ids==null?[]:ids).map(function(i){ return D.ev(String(i).trim()); }).filter(function(e){ if(!e||used[e.id]) return false; used[e.id]=1; return true; }); };
+    var paras=function(b,max){ return (Array.isArray(b)?b:String(b||'').split(/\n+/)).map(clean).filter(Boolean).slice(0,max); };
+    var S=function(o,big){ if(!o) return null; var evs=get(o.ids||o.id); if(!evs.length) return null; var b=paras(o.body||o.text,8); if(!b.length) b=[clean(evs[0].summary)||clean(evs[0].title)];
+      return {evs:evs,kicker:clean(o.kicker||D.CAT[evs[0].cat]||'News').slice(0,40),headline:clean(o.headline||evs[0].title).slice(0,big?130:110),deck:clean(o.deck).slice(0,240),dateline:clean(o.dateline).slice(0,40),body:b}; };
+    var lead=S(raw.lead,true); if(!lead) return null; var list=function(a,max){ return (Array.isArray(a)?a:[]).map(function(x){ return S(x); }).filter(Boolean).slice(0,max); };
+    var st=list(raw.stories,9), br=list(raw.briefs,14), v=raw.view&&paras(raw.view.body,6);
+    return {by:'ai',lead:lead,stories:st,briefs:br,view:v&&v.length?{headline:clean(raw.view.headline||'Where this is heading').slice(0,100),body:v}:null}; };
+  P.rank = function(){ var now=Date.now(), SW={CONFIRMED:1,REPORTED:.8,DISPUTED:.45,UNVERIFIED:.4,SPECULATION:.3}, sc=function(e){ var age=Math.max(0,(now-dnum(e.date))/DAY); return D.SEVW[e.sev||1]*(SW[e.status]||.4)*(.3+.7*Math.pow(.5,age/21)); }; return D.S.events.slice().sort(function(a,b){ return sc(b)-sc(a); }); };
+  P.wire = function(){ var evs=P.rank(); if(!evs.length) return null; var est=function(e){ return !!(D.STATUS[e.status]||{}).w; }, li=0; for(var i=0;i<evs.length;i++) if(est(evs[i])){ li=i; break; }
+    var STOP={Claim:1,Theory:1,United:1,States:1,North:1,South:1,East:1,West:1,Island:1,Strait:1,Third:1,First:1,More:1,After:1,Over:1,With:1,From:1,Into:1,Report:1,Reports:1}, keys=function(e){ var k={}; ((clean(e.title)+' '+clean(e.region)).match(/\b[A-Z][a-z]{3,}\b/g)||[]).forEach(function(w){ if(!STOP[w]) k[w]=1; }); return k; };
+    var le=evs.splice(li,1)[0], lk=keys(le), rel=evs.filter(function(e){ return e.cat===le.cat&&est(e)&&Math.abs(dnum(e.date)-dnum(le.date))<=7*DAY&&Object.keys(keys(e)).some(function(w){ return lk[w]; }); }).slice(0,3); evs=evs.filter(function(e){ return rel.indexOf(e)<0; });
+    var dl=function(e){ var r=clean(e.region); return r.indexOf(',')>0?r.split(',')[0]:''; };
+    var mk=function(e){ return {evs:[e],kicker:D.CAT[e.cat]||'News',headline:clean(e.title),deck:'',dateline:dl(e),body:[clean(e.summary)||clean(e.title)].concat(e.note?['Caveat: '+clean(e.note)]:[])}; };
+    var lead=mk(le); lead.evs=[le].concat(rel); rel.forEach(function(r){ lead.body.push(fdate(r.date)+': '+clean(r.title).replace(/[.!?]$/,'')+'. '+clean(r.summary)+(r.note?' Caveat: '+clean(r.note):'')); });
+    var Tt=D.threat(), dom=Object.keys(D.DOMAIN).sort(function(a,b){ return Tt.dom[b]-Tt.dom[a]; }), due=D.S.forecasts.filter(function(f){ return f.outcome==null; }).sort(function(a,b){ return dnum(a.due)-dnum(b.due); }).slice(0,2);
+    var vb=['The threat indicator stands at '+Tt.level.name+', '+Tt.score+' of 100. '+clean(Tt.level.say)+' It rests on '+Tt.counted+' confirmed or reported events; unverified claims, speculation and disputed items do not move it.'];
+    if(Tt.recent) vb.push('Of the '+Tt.recent+' items logged in the past 14 days, '+Tt.noiseN+(Tt.noiseN===1?' is':' are')+' not established. Treat them as leads to check, not as facts to plan around.');
+    if(Tt.dom[dom[0]]>0) vb.push('The heaviest confirmed activity sits in '+D.DOMAIN[dom[0]].label.toLowerCase()+' ('+Tt.dom[dom[0]]+' of 100)'+(Tt.dom[dom[1]]>0?' and '+D.DOMAIN[dom[1]].label.toLowerCase()+' ('+Tt.dom[dom[1]]+')':'')+'.');
+    if(due.length) vb.push('Next to come due on the forecast board: '+due.map(function(f){ return clean(f.q).replace(/[.!?]$/,'')+' ('+Math.round(f.p*100)+'% by '+fdate(f.due)+')'; }).join('; ')+'.');
+    return {by:'wire',lead:lead,stories:evs.slice(0,6).map(mk),briefs:evs.slice(6,20).map(function(e){ var b=mk(e); b.body=b.body.slice(0,1); b.dateline=''; return b; }),view:{headline:'Where the ledger points',body:vb}}; };
+  P.sig = function(){ var h=5381, s=D.S.events.map(function(e){ return e.id+e.status+e.sev+e.date; }).join('|')+'#'+D.S.forecasts.map(function(f){ return f.id+f.p+f.outcome; }).join('|'); for(var i=0;i<s.length;i++) h=((h<<5)+h+s.charCodeAt(i))|0; return String(h); };
+  P.prompt = function(){ var Tt=D.threat(), evs=P.rank().slice(0,60).sort(function(a,b){ return dnum(b.date)-dnum(a.date); });
+    var led=evs.map(function(e){ return e.id+' | '+e.date+' | '+e.status+' | '+(D.CAT[e.cat]||e.cat)+' | severity '+(e.sev||1)+' of 5 | '+e.title+' | '+(e.region||'no region')+'\n  summary: '+(e.summary||'none')+(e.note?'\n  caveat: '+e.note:'')+'\n  sources: '+((e.sources||[]).map(function(s){ return s.name; }).join('; ')||'none'); }).join('\n');
+    var fc=D.S.forecasts.filter(function(f){ return f.outcome==null; }).sort(function(a,b){ return dnum(a.due)-dnum(b.due); }).slice(0,12).map(function(f){ return f.id+' | '+Math.round(f.p*100)+'% | due '+f.due+' | '+f.q; }).join('\n')||'none';
+    return {system:'You are the editor of Damus News, a newspaper edition built from a checked event ledger. Work as a careful professional reporter. Use only facts that are in the ledger you are given: never add events, numbers, names or quotations that are not there. Keep each event\'s verification status visible in the copy. Write Confirmed events as fact. Attribute Reported events to their source. For Unverified, Speculation and Disputed items say plainly that they are not established, and never make one of them the lead story. Carry each caveat into the story it belongs to. Do not inflate fear and do not offer false comfort; aim for realistic planning. Be politically even-handed. Plain newspaper English, no markdown.',
+      prompt:'Edit today\'s edition, dated '+today()+'. Pick the lead by significance and recency: prefer Confirmed events of high severity from the past 7 days. Group closely related events into one story. Leave out what does not earn its space.\n\nReturn ONLY one JSON object, with no text before or after it, in exactly this shape:\n{"lead":{"ids":["E-000"],"kicker":"two or three words","headline":"at most 11 words","deck":"one sentence, at most 28 words","dateline":"the city in capitals if the ledger names one, otherwise an empty string","body":"4 or 5 paragraphs, 190 to 240 words in all, separated by \\n\\n"},\n"stories":[{"ids":["E-000"],"kicker":"two or three words","headline":"at most 10 words","dateline":"as above","body":"2 or 3 paragraphs, 80 to 120 words in all, separated by \\n\\n"}],\n"briefs":[{"id":"E-000","headline":"at most 8 words","text":"one or two sentences, at most 40 words"}],\n"view":{"headline":"at most 9 words","body":"3 paragraphs, 130 to 170 words in all, separated by \\n\\n: where things are heading, what is loud but unproven, and what to watch next, using the forecast odds"}}\n\nWrite 5 to 7 stories and up to 8 briefs. Every id must come from the ledger, and each event may appear in only one place. Headlines are sentence case with no full stop. Do not repeat the dateline inside the body.\n\nTHREAT INDICATOR: '+Tt.level.name+', '+Tt.score+' of 100. By domain: '+Object.keys(D.DOMAIN).map(function(k){ return D.DOMAIN[k].label+' '+Tt.dom[k]; }).join(', ')+'.\n\nOPEN FORECASTS (id | odds | due | question):\n'+fc+'\n\nLEDGER (id | date | status | category | severity | title | region):\n'+led}; };
+  P.iso = function(d){ var p2=function(v){ return (v<10?'0':'')+v; }; return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate()); };
+  P.clean = clean;
+  return P;
+})();
+D.paperEdition = function(){ var st=D.S.paper, ed=st&&st.ed?D.NP.norm(st.ed):null; if(ed) ed.at=st.at; return ed||D.NP.wire(); };
+D.render.paper = function(){ var ed=D.paperEdition(), st=D.S.paper, eng=D.engine(), box=$('body-paper');
+  if(!ed){ D.ui.paper=null; $('tag-paper').textContent='NO EVENTS'; box.innerHTML='<div class="ov-scroll"><div class="wrap np-wrap"><div class="banner">The ledger is empty, so there is nothing to print yet. Add events in the Event Ledger or the Drop Zone.</div></div></div>'; return; }
+  var L=D.ui.paper=D.NP.layout(ed), ai=ed.by==='ai', n=L.pages.length, when=ai&&st.at?new Date(st.at).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}):'';
+  var old=ai&&L.iso!==D.NP.iso(new Date()), moved=ai&&st.sig!==D.NP.sig();
+  var note=ai?(old||moved?'<b>'+(old?'This edition was written on '+esc(L.date)+(moved?', and the ledger has changed since.':'.'):'The ledger has changed since Claude wrote this edition.')+'</b> Status labels, the threat box and the forecast board are current. Rewrite to bring the stories up to date.':'Claude chose the lead, grouped the events and wrote the copy. Status labels, sources, the map, the threat box and the forecast board are drawn straight from the ledger.')
+    :(eng==='none'?'<b>Claude is not connected in this view</b>, so this edition is set straight from the ledger: headlines and summaries as logged, ranked by severity, status and recency. Open Settings to connect, then have Claude write it.':'This edition is set straight from the ledger: headlines and summaries as logged. Have Claude pick the lead, group the events and write the stories.');
+  $('tag-paper').textContent=(ai?'AI EDITION':'LEDGER EDITION')+' \u00b7 '+n+' PAGE'+(n===1?'':'S');
+  box.innerHTML='<div class="ov-scroll"><div class="wrap np-wrap"><div class="panel"><div class="p-h">Today\u2019s edition<span class="r" id="np-status">'+(ai?'written by Claude \u00b7 '+esc(when):'ledger edition')+'</span></div><div class="row"><button class="btn cy" id="np-write" onclick="D.paperWrite()"'+(eng==='none'?' disabled':'')+'>'+(ai?'Rewrite with Claude':'Write edition with Claude')+'</button><button class="btn am" onclick="D.paperPDF()">Export PDF</button>'+(ai?'<button class="btn" onclick="D.paperPlain()">Back to ledger edition</button>':'')+'</div><p class="note" style="margin-top:10px">'+note+'</p></div><div id="np-pages">'+L.pages.map(function(p,i){ return D.NP.svg(p,i+1,n); }).join('')+'</div></div></div>'; };
+D.paperWrite = function(){ if(D.engine()==='none'){ D.toast('Connect Claude in Settings first','warn'); return; } if(D.ai.busy){ D.toast('Claude is busy with another request. Try again in a moment.','warn'); return; } D.ai.busy=true;
+  var say=function(t){ var el=$('np-status'); if(el) el.textContent=t; }, b=$('np-write'), q=D.NP.prompt(); if(b) b.disabled=true; say('Claude is writing the edition\u2026');
+  D.ask({system:q.system,prompt:q.prompt,max:4500,onText:function(t){ say('Claude is writing the edition\u2026 '+String(t||'').length.toLocaleString('en-US')+' characters'); }})
+    .then(function(r){ var raw; try{ raw=D.json(r.text); }catch(e){ throw new Error('Claude\u2019s draft could not be read. Try again.'); } if(!D.NP.norm(raw)) throw new Error('The draft had no lead story tied to a ledger event. Try again.'); D.S.paper={at:new Date().toISOString(),sig:D.NP.sig(),ed:raw}; D.save(); D.toast('Edition written','ok'); })
+    .catch(function(e){ D.toast((e&&e.message)||'Claude request failed','bad',4600); })
+    .then(function(){ D.ai.busy=false; if(D.ui.open==='paper') D.render.paper(); }); };
+D.paperPlain = function(){ D.S.paper=null; D.save(); D.render.paper(); };
+D.paperPDF = function(){ var L=D.ui.paper; if(!L){ D.toast('Nothing to export yet','warn'); return; } var bytes, name='damus-news-'+L.iso+'.pdf'; try{ bytes=D.NP.pdf(L); }catch(e){ D.toast('The PDF could not be built: '+e.message,'bad',4600); return; }
+  var blob=new Blob([bytes],{type:'application/pdf'}), direct=function(){ var a=document.createElement('a'), u=URL.createObjectURL(blob); a.href=u; a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ URL.revokeObjectURL(u); },8000); D.toast('PDF exported: '+name,'ok',3200); };
+  if(D.sandboxed&&window.claude&&typeof window.claude.use==='function'){ window.claude.use('downloads').then(function(dl){ if(!dl) throw {code:'unavailable'}; return dl.save({filename:name,data:blob}); }).then(function(){ D.toast('PDF saved: '+name,'ok',3200); })
+      .catch(function(e){ var c=e&&e.code; D.toast(c==='declined'?'Save was declined. Tap Export PDF to try again.':c==='rate_limited'?'A save prompt is already open. Answer it, then try again.':'This view cannot save files. Open the web-hosted Damus site to export the PDF.','warn',4600); }); return; }
+  direct(); };
+
+/* ── back to top: one caret for the hub, every overlay page and the embedded checklist; it appears once the page in view is scrolled past D.TOP_AT px ── */
+D.TOP_AT = 140; D.topLast = null; D.topRaf = 0;
+D.topTarget = function(){ if(!$('gate').classList.contains('off')) return null; var id=D.ui.open;
+  if(!id){ var h=$('hub-scroll'); return {y:h.scrollTop,box:h,go:function(b){ h.scrollTo({top:0,behavior:b}); }}; }
+  if(id==='outage'){ var f=$('outage-frame'); if(!f) return null; try{ var w=f.contentWindow; return {y:w.scrollY||0,box:f,go:function(b){ w.scrollTo({top:0,behavior:b}); }}; }catch(e){ return null; } }
+  var o=$('ov-'+id); if(!o) return null; var els=[].slice.call(o.querySelectorAll('.ov-scroll')), el=null;
+  if(D.topLast&&els.indexOf(D.topLast)>=0&&D.topLast.scrollTop>D.TOP_AT) el=D.topLast; else el=els.filter(function(x){ return x.scrollTop>D.TOP_AT; })[0]||els[0];
+  return el?{y:el.scrollTop,box:el,go:function(b){ el.scrollTo({top:0,behavior:b}); }}:null; };
+D.topSync = function(){ D.topRaf=0; var b=$('top-caret'), t=D.topTarget(), on=!!t&&t.y>D.TOP_AT;
+  if(on){ var r=t.box.getBoundingClientRect(); b.style.setProperty('--tr',Math.max(12,window.innerWidth-r.right+16)+'px'); b.style.setProperty('--tb',Math.max(16,window.innerHeight-r.bottom+16)+'px'); }
+  b.classList.toggle('on',on); };
+D.topQueue = function(){ if(!D.topRaf) D.topRaf=requestAnimationFrame(D.topSync); };
+D.toTop = function(){ var t=D.topTarget(); if(!t) return; var calm=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches; t.go(calm?'auto':'smooth'); };
+D.topFrame = function(f){ try{ f.contentWindow.addEventListener('scroll',D.topQueue,{passive:true}); }catch(e){} D.topQueue(); };
+D.topInit = function(){ document.addEventListener('scroll',function(e){ var t=e.target; if(t&&t.classList&&(t.id==='hub-scroll'||t.classList.contains('ov-scroll'))) D.topLast=t; D.topQueue(); },{capture:true,passive:true});
+  ['click','input','keyup'].forEach(function(n){ document.addEventListener(n,function(){ setTimeout(D.topQueue,0); },true); }); window.addEventListener('resize',D.topQueue);
+  ['open','close','enter'].forEach(function(k){ var fn=D[k]; if(typeof fn!=='function') return; D[k]=function(){ var r=fn.apply(this,arguments); D.topQueue(); setTimeout(D.topQueue,450); return r; }; }); D.topQueue(); };
+
 /* ── boot ── */
 D.boot = function(){ D.load();
   ['fullscreenchange','webkitfullscreenchange'].forEach(function(n){ document.addEventListener(n,D.fsSync); });
   /* installable desktop app: the manifest loads only from a web host, never from the restricted Claude page or a local file */
-  if(location.protocol!=='file:'&&!D.sandboxed){ var ml=document.createElement('link'); ml.rel='manifest'; ml.href='manifest.webmanifest'; document.head.appendChild(ml); } D.applyTheme(D.S.theme||'dark'); D.buildShell(); D.applySide(); D.fsSync(); D.chatInit(); D.initAI();
+  if(location.protocol!=='file:'&&!D.sandboxed){ var ml=document.createElement('link'); ml.rel='manifest'; ml.href='manifest.webmanifest'; document.head.appendChild(ml); } D.applyTheme(D.S.theme||'dark'); D.buildShell(); D.applySide(); D.fsSync(); D.chatInit(); D.initAI(); D.topInit();
   $('file-in').addEventListener('change',function(){ D.handleFiles(this.files); this.value=''; });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape') D.close(); if(e.key==='Enter'&&!$('gate').classList.contains('off')) D.enter(); });
   var tick=function(){ var d=new Date(); $('clock').textContent=d.toISOString().slice(11,16)+'Z · '+d.toLocaleDateString('en-US',{month:'short',day:'numeric'}); }; tick(); setInterval(tick,30000); D.feedCheck(); setInterval(D.feedCheck,30*60000);
