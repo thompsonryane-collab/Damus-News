@@ -1405,7 +1405,7 @@ D.boot = function(){ D.load();
   if(location.protocol!=='file:'&&!D.sandboxed){ var ml=document.createElement('link'); ml.rel='manifest'; ml.href='manifest.webmanifest'; document.head.appendChild(ml); } D.applyTheme(D.S.theme||'dark'); D.buildShell(); D.applySide(); D.fsSync(); D.chatInit(); D.initAI();
   $('file-in').addEventListener('change',function(){ D.handleFiles(this.files); this.value=''; });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape') D.close(); if(e.key==='Enter'&&!$('gate').classList.contains('off')) D.enter(); });
-  var tick=function(){ var d=new Date(); $('clock').textContent=d.toISOString().slice(11,16)+'Z · '+d.toLocaleDateString('en-US',{month:'short',day:'numeric'}); }; tick(); setInterval(tick,30000); D.feedCheck(); setInterval(D.feedCheck,30*60000);
+  var tick=function(){ var d=new Date(); $('clock').textContent=D.clockText?D.clockText(d):d.toISOString().slice(11,16)+'Z · '+d.toLocaleDateString('en-US',{month:'short',day:'numeric'}); }; tick(); setInterval(tick,30000); D.feedCheck(); setInterval(D.feedCheck,30*60000);
   if(window.innerWidth<=1180&&window.innerWidth>860){ $('dock').classList.add('closed'); document.body.classList.add('dock-closed'); } };
 D.boot();
 </script>
@@ -1638,7 +1638,7 @@ D.NP = (function(){
 D.paperEdition = function(){ var st=D.S.paper, ed=st&&st.ed?D.NP.norm(st.ed):null; if(ed) ed.at=st.at; return ed||D.NP.wire(); };
 D.render.paper = function(){ var ed=D.paperEdition(), st=D.S.paper, eng=D.engine(), box=$('body-paper');
   if(!ed){ D.ui.paper=null; $('tag-paper').textContent='NO EVENTS'; box.innerHTML='<div class="ov-scroll"><div class="wrap np-wrap"><div class="banner">The ledger is empty, so there is nothing to print yet. Add events in the Event Ledger or the Drop Zone.</div></div></div>'; return; }
-  var L=D.ui.paper=D.NP.layout(ed), ai=ed.by==='ai', n=L.pages.length, when=ai&&st.at?new Date(st.at).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}):'';
+  var L=D.ui.paper=D.NP.layout(ed), ai=ed.by==='ai', n=L.pages.length, when=ai&&st.at?D.stamp(st.at):'';
   var old=ai&&L.iso!==D.NP.iso(new Date()), moved=ai&&st.sig!==D.NP.sig();
   var note=ai?(old||moved?'<b>'+(old?'This edition was written on '+esc(L.date)+(moved?', and the ledger has changed since.':'.'):'The ledger has changed since Claude wrote this edition.')+'</b> Status labels, the threat box and the forecast board are current. Rewrite to bring the stories up to date.':'Claude chose the lead, grouped the events and wrote the copy. Status labels, sources, the map, the threat box and the forecast board are drawn straight from the ledger.')
     :(eng==='none'?'<b>Claude is not connected in this view</b>, so this edition is set straight from the ledger: headlines and summaries as logged, ranked by severity, status and recency. Open Settings to connect, then have Claude write it.':'This edition is set straight from the ledger: headlines and summaries as logged. Have Claude pick the lead, group the events and write the stories.');
@@ -1684,11 +1684,15 @@ D.render.paper = function(){ D.paperShow(); var er=D.ui.paperErr, p=document.que
   d.innerHTML='<div class="banner" style="margin-top:10px"><b>The last attempt did not produce an edition.</b> '+esc(er.why)+(raw?' <button class="btn sm" style="margin-left:6px" onclick="D.copy(D.ui.paperErr.raw)">Copy reply</button>':'')+'</div>'+(raw?'<details style="margin-top:8px"><summary class="note" style="cursor:pointer">Show what Claude sent back ('+raw.length.toLocaleString('en-US')+' characters)</summary><pre class="out" style="max-height:280px;overflow:auto;margin-top:8px">'+esc(raw.slice(0,12000))+'</pre></details>':'');
   p.appendChild(d); };
 // Upload time stamps: every file sent through the Drop Zone carries the moment it was uploaded. It shows in the review queue, in the Last file panel, and in the source label and history of events filed from it.
-D.stamp = function(iso){ var d=new Date(iso); return iso&&!isNaN(d)?d.toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'}):''; };
 D.upWhen = function(at){ var s=D.stamp(at); return s?' · uploaded '+esc(s):''; };
 D.upLine = function(c){ return c&&c.file?'<div class="ev-s">From '+esc(c.file)+D.upWhen(c.at)+'</div>':''; };
 D.upRef = function(c){ var s=D.stamp(c.at); return 'upload '+c.file+(s?' ('+s+')':''); };
 D.upName = function(c){ var s=D.stamp(c.at); return 'Upload: '+c.file+(s?', uploaded '+s:'')+(c.attributed_to?' (cites '+c.attributed_to+')':''); };
+// Clock and time stamps: Eastern time on a 24-hour clock, for example 1558 EST. The label follows daylight saving, EST in winter and EDT in summer.
+D.et = function(d){ var p={}; try{ new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hourCycle:'h23',hour:'2-digit',minute:'2-digit',month:'short',day:'numeric',year:'numeric',timeZoneName:'short'}).formatToParts(d).forEach(function(x){ p[x.type]=x.value; }); }catch(e){ return null; } return p.hour&&p.minute?p:null; };
+D.clockText = function(d){ var p=D.et(d); return p?p.hour+p.minute+' '+p.timeZoneName+' · '+p.month+' '+p.day:d.toISOString().slice(11,16)+'Z · '+d.toLocaleDateString('en-US',{month:'short',day:'numeric'}); };
+D.stamp = function(iso){ var d=new Date(iso); if(!iso||isNaN(d)) return ''; var p=D.et(d); return p?p.month+' '+p.day+', '+p.year+', '+p.hour+p.minute+' '+p.timeZoneName:d.toISOString().slice(0,16).replace('T',' ')+'Z'; };
+(function(){ var c=$('clock'); if(c){ c.textContent=D.clockText(new Date()); c.title='Eastern time, 24-hour clock'; } })();
 /* ── back to top: one caret for the hub, every overlay page and the embedded checklist; it appears once the page in view is scrolled past D.TOP_AT px ── */
 D.TOP_AT = 140; D.topLast = null; D.topRaf = 0;
 D.topTarget = function(){ if(!$('gate').classList.contains('off')) return null; var id=D.ui.open;
