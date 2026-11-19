@@ -1002,6 +1002,41 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .wb-chg .t{font-family:var(--sans);font-size:13.5px;font-weight:600;color:var(--txh);line-height:1.3}
 .wb-chg .w{font-family:var(--sans);font-size:12.5px;color:var(--pc);line-height:1.45;margin-top:2px}
 .wb-chg .a{font-size:11px;color:var(--txf);margin-top:2px}
+/* kinds: an icon in every point and a short label that always fits */
+.wb-n .ic{fill:none;stroke:var(--void);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.wb-n.off .ic{stroke:var(--sc)}
+.wb-n text.kl{font-size:10px;fill:var(--txd)}
+#wb-svg.kf .wb-n:not(.khot){opacity:.14}
+#wb-svg.kf .wb-e,#wb-svg.kf .wb-twig{opacity:.05}
+#wb-svg.kf .wb-n.khot text{opacity:1}
+.wb-kinds{display:flex;gap:6px;flex-wrap:wrap}
+.wb-kb{display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:12.5px;color:var(--tx);background:none;border:1px solid var(--border2);border-radius:999px;padding:4px 10px 4px 7px;cursor:pointer}
+.wb-kb:hover,.wb-kb.on{border-color:var(--cyan);color:var(--txh)}
+.wb-kb.on{background:var(--cyan-d)}
+.wb-kb svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.wb-kb b{color:var(--txd);font-weight:600}
+/* a clicked point opens out into a card with its connections in a column on each side */
+.wb-n.row text{opacity:1}
+.wb-n text.rt{font-size:11.5px;fill:var(--txh);font-weight:600}
+.wb-n text.rw{font-size:9.5px;fill:var(--txd)}
+.wb-card .cb{fill:var(--card-bg);stroke:var(--sc);stroke-width:1.8}
+.wb-card text{opacity:1;stroke:none}
+.wb-card text.ck{font-size:11px;fill:var(--sc);font-weight:700}
+.wb-card text.cm{font-size:10px;fill:var(--txd)}
+.wb-card text.ct{font-size:13px;fill:var(--txh);font-weight:700}
+.wb-card:focus-visible .cb{stroke:var(--txh);stroke-width:2.6}
+/* the details panel can be dragged to any width; the web takes the rest */
+#wb-split{width:9px;flex-shrink:0;cursor:col-resize;position:relative;touch-action:none;outline:none}
+#wb-split::after{content:"";position:absolute;top:0;bottom:0;left:4px;width:1px;background:var(--border)}
+#wb-split:hover::after,#wb-split.on::after,#wb-split:focus-visible::after{left:3px;width:3px;background:var(--cyan)}
+@media (min-width:861px){#body-web .ov-side{width:var(--wbw,380px);border-left:0}}
+@media (max-width:860px){#wb-split{display:none}}
+#wb-svg.exp .wb-core,#wb-svg.exp .wb-dom,#wb-svg.exp .wb-spoke{opacity:.1}
+#wb-svg.exp.focus .wb-n:not(.hot){opacity:.1}
+#wb-svg.exp .wb-n:not(.hot) .wb-ring{display:none}
+.wb-n.row text{pointer-events:auto;cursor:pointer}
+#wb-kindbar{position:absolute;left:10px;right:10px;bottom:10px;z-index:2;pointer-events:none}
+#wb-kindbar .wb-kb{pointer-events:auto;background:color-mix(in srgb,var(--card-bg) 90%,transparent);font-size:12px;padding:3px 9px 3px 6px}
 /* complete update before a new edition */
 .cu-row{border:1px solid var(--border);border-left:3px solid var(--txf);border-radius:10px;padding:10px 12px;display:grid;gap:5px}
 .cu-row.on{border-left-color:var(--sage);background:color-mix(in srgb,var(--sage) 6%,transparent)}
@@ -1143,13 +1178,13 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .ds-sub{font-size:13px;color:var(--txd)}
 .ds-filter{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto;align-items:center}
 .ds-fc{font-family:var(--sans);font-size:13px;font-weight:600;padding:6px 11px;border-radius:999px;border:1px solid var(--border2);background:var(--card-bg);color:var(--tx);cursor:pointer;display:inline-flex;gap:7px;align-items:center}
-.ds-fc i{width:9px;height:9px;border-radius:3px;background:var(--c)}
+.ds-fc .ds-badge{width:20px;height:20px;border-radius:6px}
 .ds-fc.on{background:color-mix(in srgb,var(--c,var(--cyan)) 20%,var(--card-bg));border-color:var(--c,var(--cyan));color:var(--txh)}
 .ds-btn{font-family:var(--sans);font-size:13.5px;font-weight:600;padding:7px 12px;min-height:34px;border-radius:8px;border:1px solid var(--border2);background:transparent;color:var(--tx);cursor:pointer}
 .ds-btn:hover{border-color:var(--cyan);color:var(--txh)}
 .ds-btn:disabled{opacity:.45;cursor:not-allowed}
 .ds-btn.pri{background:var(--cyan-d);border-color:color-mix(in srgb,var(--cyan) 55%,transparent);color:var(--cyan)}
-.ds-map{display:flex;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--card-bg);height:clamp(340px,48vh,560px);min-height:0;box-shadow:var(--card-bevel)}
+.ds-map{display:flex;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--card-bg);height:clamp(390px,54vh,620px);min-height:0;box-shadow:var(--card-bevel)}
 .ds-map.tall{height:clamp(480px,74vh,880px)}
 .ds-map #map-wrap{flex:1;min-width:0}
 .ds-map .ov-side{width:330px}
@@ -1181,7 +1216,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .ds-scale span.on{border-top-color:var(--c);color:var(--txh);font-weight:700}
 .ds-meta{font-size:13px;line-height:1.45;color:var(--txd);margin:10px 0 0}
 .ds-meta b{color:var(--txh)}
-.ds-row{display:grid;grid-template-columns:104px 1fr 28px 40px;gap:10px;align-items:center;padding:7px 8px;border-radius:8px;font-size:14px;width:100%;background:transparent;border:0;color:var(--tx);text-align:left;cursor:pointer;font-family:var(--sans)}
+.ds-row{display:grid;grid-template-columns:26px 100px 1fr 28px 40px;gap:10px;align-items:center;padding:7px 8px;border-radius:8px;font-size:14px;width:100%;background:transparent;border:0;color:var(--tx);text-align:left;cursor:pointer;font-family:var(--sans)}
 .ds-row:hover,.ds-li:hover{background:color-mix(in srgb,var(--tx) 7%,transparent)}
 .ds-row.on{background:color-mix(in srgb,var(--c) 18%,transparent)}
 .ds-row .n{text-align:right;color:var(--txh);font-variant-numeric:tabular-nums}
@@ -1228,6 +1263,51 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .ds-ai{border:1px solid color-mix(in srgb,var(--cyan) 40%,transparent);border-radius:12px;padding:14px;background:color-mix(in srgb,var(--cyan) 5%,transparent);display:grid;gap:14px}
 .ds-est{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 @media (prefers-reduced-motion:reduce){#ds-inv,#ds-tip{transition:none}.ds-p.flash{animation:none}}
+/* an icon for each area: in the filter, the By area panel, the map legend and on the map itself */
+.ds-badge{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:7px;background:var(--c);flex-shrink:0}
+.ds-ic{width:68%;height:68%;fill:none;stroke:var(--void);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;display:block}
+.ds-mk{background:none;border:0}
+.ds-mk>span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;box-sizing:border-box;background:var(--c);border:1.5px solid var(--void);box-shadow:0 2px 6px rgba(0,0,0,.45)}
+.ds-mk .ds-ic{width:62%;height:62%}
+.ds-mk.r>span{background:color-mix(in srgb,var(--c) 40%,var(--card-bg));border:2px solid var(--c)}
+.ds-mk.r .ds-ic{stroke:var(--txh)}
+.ds-mk.u>span{background:color-mix(in srgb,var(--card-bg) 84%,transparent);border:2px dashed var(--c);box-shadow:none}
+.ds-mk.u .ds-ic{stroke:var(--c)}
+.ds-mk.sel>span{outline:3px solid var(--txh);outline-offset:1px}
+.ds-mk.dim{opacity:.16}
+.ds-mk.pop>span{animation:dspop .9s ease-out}
+@keyframes dspop{0%{transform:scale(.3);box-shadow:0 0 0 0 var(--c)}55%{transform:scale(1.4);box-shadow:0 0 0 14px transparent}100%{transform:scale(1);box-shadow:0 2px 6px rgba(0,0,0,.45)}}
+.ds-map .map-legend{line-height:1.3;padding:8px 10px}
+.ds-lg{display:flex;align-items:center;gap:7px;margin-bottom:4px}
+.ds-lg .ds-badge{width:18px;height:18px;border-radius:5px}
+.ds-lgs{margin-top:6px;border-top:1px solid var(--border2);padding-top:6px;line-height:1.7;color:var(--txd)}
+.map-legend i.ds-lf{width:11px;height:11px;box-sizing:border-box;background:var(--txd)}
+.map-legend i.ds-lf.r{background:color-mix(in srgb,var(--txd) 35%,var(--card-bg));border:2px solid var(--txd)}
+.map-legend i.ds-lf.u{background:transparent;border:2px dashed var(--txd)}
+.ds-map .map-note{bottom:96px}
+/* play bar: a spike for every day in the area colours, a date axis, and the date and time being shown */
+.ds-time{align-items:flex-end;gap:12px;padding:6px 12px 7px}
+.ds-tlw{flex:1;min-width:140px;display:grid}
+.ds-spk{display:flex;align-items:flex-end;height:38px;padding:0 8px}
+.ds-sc{flex:1;min-width:0;height:100%;display:flex;flex-direction:column-reverse;align-items:center;background:none;border:0;padding:0;cursor:pointer;opacity:.28;transition:opacity .15s;transform-origin:bottom}
+.ds-sc.lit{opacity:1}
+.ds-sc b{display:block;width:72%;max-width:10px;min-width:3px}
+.ds-sc b:last-child{border-radius:2px 2px 0 0}
+.ds-sc b.dm{opacity:.18}
+.ds-sc.z{cursor:default}
+.ds-sc.z::after{content:"";width:2px;height:2px;border-radius:50%;background:var(--border2)}
+.ds-sc:not(.z):hover{background:color-mix(in srgb,var(--tx) 10%,transparent)}
+.ds-sc.hit{animation:dsspike .8s ease-out}
+@keyframes dsspike{0%{transform:scaleY(.2)}45%{transform:scaleY(1.4)}100%{transform:scaleY(1)}}
+.ds-time input[type=range]{width:100%;margin:1px 0 0}
+.ds-ax{position:relative;height:14px;margin:0 8px;font-size:11px;color:var(--txf)}
+.ds-ax span{position:absolute;top:1px;transform:translateX(-50%);white-space:nowrap}
+.ds-ax span:first-child{transform:none}
+.ds-ax span:last-child{transform:translateX(-100%)}
+.ds-now{min-width:196px;text-align:right;line-height:1.3;padding-bottom:2px}
+.ds-now b{display:block;font-size:13.5px;color:var(--txh);font-weight:700}
+.ds-now small{display:block;font-size:11.5px;color:var(--txd);max-width:240px;margin-left:auto}
+@media (prefers-reduced-motion:reduce){.ds-mk.pop>span,.ds-sc.hit{animation:none}}
 </style>
 </head>
 <body>
@@ -2139,7 +2219,17 @@ D.web = (function(){
     return '<div class="ov-scroll"><div class="wrap" style="max-width:860px"><div class="elist">'+(rows.length?rows.map(function(e){ var s=D.STATUS[e.status]||D.STATUS.UNVERIFIED, a=G.adj[e.id];
       return '<button class="ev '+(e.id===W.sel?'sel':'')+'" style="--sc:var('+s.col+')" onclick="D.web.pick(\''+e.id+'\')"><div class="ev-top">'+D.chip(e.status)+'<span class="chip gr">'+esc(D.CAT[e.cat]||e.cat)+'</span>'+D.sevBars(e.sev)+'<span class="wb-deg">'+a.length+' link'+(a.length===1?'':'s')+'</span></div><div class="ev-t">'+esc(e.title)+'</div><div class="ev-s">'+fdate(e.date)+' · '+esc(e.region||'')+(a.length?' · strongest tie: '+esc((D.ev(a[0].id)||{}).title||''):'')+'</div></button>'; }).join(''):'<div class="banner">No events in this window.</div>')+'</div></div></div>'; };
   W.frame = function(bar,main,G){ $('tag-web').textContent=G.nodes.length+' EVENTS · '+G.edges.length+' LINKS';
-    $('body-web').innerHTML='<div id="wb-main"><div class="wb-bar">'+bar+'</div>'+main+'</div><aside class="ov-side"><div class="ov-scroll" id="wb-side">'+W.sideHtml(G)+'</div></aside>'; };
+    var sd=D.S.webSide=D.S.webSide||{w:380,off:false};
+    $('body-web').innerHTML='<div id="wb-main"><div class="wb-bar">'+bar+'<button class="vtab" onclick="D.web.sideToggle()" title="Show or hide the details panel">'+(sd.off?'Show panel':'Hide panel')+'</button></div>'+main+'</div>'+(sd.off?'':'<div id="wb-split" role="separator" aria-orientation="vertical" aria-label="Resize the details panel" tabindex="0" title="Drag to resize. Double-click to reset."></div><aside class="ov-side" id="wb-aside" style="--wbw:'+sd.w+'px"><div class="ov-scroll" id="wb-side">'+W.sideHtml(G)+'</div></aside>'); W.split(); };
+  /* the details panel: drag its edge to any width (arrow keys work too), or hide it; the web takes the rest */
+  W.sideToggle = function(){ var sd=D.S.webSide; sd.off=!sd.off; D.save(); D.render.web(); };
+  W.sideW = function(w){ var sd=D.S.webSide, box=$('body-web'), a=$('wb-aside'); sd.w=Math.round(Math.max(260,Math.min(Math.max(280,box.clientWidth*.64),w))); if(a) a.style.setProperty('--wbw',sd.w+'px'); };
+  W.split = function(){ var h=$('wb-split'), box=$('body-web'), drag=false; if(!h) return;
+    h.addEventListener('pointerdown',function(ev){ drag=true; h.classList.add('on'); try{ h.setPointerCapture(ev.pointerId); }catch(e){} ev.preventDefault(); });
+    h.addEventListener('pointermove',function(ev){ if(drag) W.sideW(box.getBoundingClientRect().right-ev.clientX); });
+    var up=function(){ if(!drag) return; drag=false; h.classList.remove('on'); D.save(); }; h.addEventListener('pointerup',up); h.addEventListener('pointercancel',up);
+    h.addEventListener('dblclick',function(){ W.sideW(380); D.save(); });
+    h.addEventListener('keydown',function(ev){ var d=ev.key==='ArrowLeft'?24:ev.key==='ArrowRight'?-24:0; if(!d) return; ev.preventDefault(); W.sideW(D.S.webSide.w+d); D.save(); }); };
   W.render = function(){ var G=W.graph(); W.frame(W.winTabs(),W.listHtml(G),G); };
   return W;
 })();
@@ -2171,7 +2261,7 @@ D.render.web = function(){ D.web.render(); };
   W.clear = function(){ D.S.pulses=[]; D.save(); D.renderHub(); D.render.web(); };
   /* ── layout: fixed core and domain anchors, events settle around their domain and lean toward what they connect to ── */
   function rnd(seed){ var x=seed|0; return function(){ x^=x<<13; x^=x>>>17; x^=x<<5; return ((x>>>0)%100000)/100000; }; }
-  W.rad = function(e){ return 5+(e.sev||1)*1.9; };
+  W.rad = function(e){ return 8.5+(e.sev||1)*1.7; };
   W.anchors = function(){ var ks=Object.keys(D.DOMAIN), o={}; ks.forEach(function(k,i){ var a=(-90+i*360/ks.length)*Math.PI/180; o[k]={x:340*Math.cos(a),y:250*Math.sin(a),a:a}; }); return o; };
   W.place = function(G){ if(W.posKey===G.key) return; var A=W.anchors(), pos={}, N=G.nodes, i, j, it;
     N.forEach(function(e){ var a=A[W.domOf(e)], old=W.pos[e.id]; if(old){ pos[e.id]={x:old.x,y:old.y}; return; } var r=rnd(W.hash(e.id)*31+7), ang=a.a+(r()-.5)*2.4, d=70+r()*110; pos[e.id]={x:a.x+Math.cos(ang)*d,y:a.y+Math.sin(ang)*d}; });
@@ -2191,24 +2281,67 @@ D.render.web = function(){ D.web.render(); };
   function f1(v){ return (Math.round(v*10)/10).toString(); }
   function short(s,n){ s=String(s||''); return s.length>n?s.slice(0,n-1).replace(/[\s,;:.-]+$/,'')+'…':s; }
   function rings(k,r){ return k?'<circle class="wb-ring k-'+k+'" r="'+f1(r)+'"/><circle class="wb-ring b k-'+k+'" r="'+f1(r)+'"/>':''; }
-  W.svg = function(G){ var A=W.anchors(), T=D.threat(), vb=W.vb||(W.vb=W.fit(G)), s=[], labN={}, deg=function(e){ return G.adj[e.id].length; };
-    var boxes=[{x:-50,y:-50,w:100,h:100}], hit=function(b){ return boxes.some(function(o){ return b.x<o.x+o.w&&o.x<b.x+b.w&&b.y<o.y+o.h&&o.y<b.y+b.h; }); }, lbox=function(e){ var p=W.pos[e.id], r=W.rad(e), w=Math.min(30,String(e.title||'').length)*5.5+6; return {x:p.x>=0?p.x+r+3:p.x-r-3-w,y:p.y-8,w:w,h:16}; };
+  /* ── what kind of event a node is: a short label that always fits, and an icon drawn inside the node ── */
+  W.KINDS = {
+    strike:['Strike','<circle cx="12" cy="12" r="6"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/>'],
+    forces:['Forces','<circle cx="12" cy="5" r="2"/><path d="M12 7v13M6 13a6 6 0 0 0 12 0M8 10h8"/>'],
+    nuclear:['Nuclear','<circle cx="12" cy="12" r="1.6"/><ellipse cx="12" cy="12" rx="9" ry="3.6"/><ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(120 12 12)"/>'],
+    threat:['Threat','<path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M12 8v5M12 16v.5"/>'],
+    hack:['Hack','<ellipse cx="12" cy="13" rx="4.5" ry="6"/><path d="M12 7V4M8 8 6 5M16 8l2-3M7.5 12H3M16.5 12H21M8 17l-3 2M16 17l3 2"/>'],
+    flaw:['Flaw','<path d="M12 4 21 19H3z"/><path d="M12 10v4M12 16.5v.5"/>'],
+    ai:['AI','<rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/>'],
+    outage:['Outage','<path d="M12 3v8"/><path d="M6.5 7a8 8 0 1 0 11 0"/>'],
+    air:['Aviation','<path d="M12 3c1 0 1.5 1 1.5 2.5V9l7 4v2l-7-2v4l2 1.5V20l-3.5-1L8.5 20v-1.500l2-1.5v-4l-7 2v-2l7-4V5.5C10.5 4 11 3 12 3z"/>'],
+    sea:['Shipping','<path d="M4 15h16l-2 5H6zM7 15V9h10v6M12 9V4"/>'],
+    markets:['Markets','<path d="M4 20V4M4 20h16M8 16v-4M12 16V8M16 16v-6"/>'],
+    storm:['Weather','<path d="M7 17a4 4 0 0 1 .5-8 5.5 5.5 0 0 1 10.5 1.5A3.5 3.5 0 0 1 17 17z"/><path d="M9 20l-1 2M13 20l-1 2"/>'],
+    ready:['Readiness','<rect x="6" y="5" width="12" height="16" rx="2"/><path d="M9 5V3.5h6V5M9 13l2 2 4-4"/>'],
+    talks:['Politics','<path d="M6 21V4M6 5h11l-2 3.5 2 3.5H6"/>'],
+    other:['Event','<circle cx="12" cy="12" r="3.5"/>'] };
+  var KRULE=[['nuclear',/nuclear|radiolog|dirty bomb|reactor|poseidon|atomic/],['outage',/outage|ground stop|blackout|power cut|boil.water|goes down|went down|disrupt/],['hack',/hack|breach|ransomware|intrusion|cyber.?attack|skimmer|malware|unauthori[sz]ed access|hijack|tampered|exploit/],['flaw',/flaw|vulnerab|patch|cve-|\bplcs?\b|internet-exposed|flash advisory/],['ai',/\bai\b|\bagents?\b|openai|anthropic|claude|chatgpt|artex|gemini|grok/],['threat',/hoax|bomb threat|terror|\bplot\b|security alert/],
+    ['strike',/strike|missile|drone|intercept|shot down|shoot|bombard|shell|operation|targets? /],['forces',/carrier|troops|deploy|fleet|submarine|warship|warplane|airspace|\bbases?\b|military|navy|army|pentagon|fortress/],['sea',/tanker|strait|shipping|vessel|\bport\b|hormuz|bridge/],['air',/flight|airline|\bjet\b|aircraft|plane|\bfaa\b|airport|aviation|transponder/],
+    ['storm',/storm|flood|rain|hurricane|el ni[nñ]o|atmospheric|surf|landslide|drought|heat|snow|weather|noaa/],['markets',/\boil\b|brent|crude|price|market|shares|econom|sanction|nvidia|bank|cash|tariff|loan/],['ready',/be ready|supplies|checklist|prepared|emergency alert|alert system|evacuat|detonat/],['talks',/summit|talks|trilateral|ceasefire|election|midterm|envoy|\bdeal\b|vote|hearing|congress|senate|minister|president|apec|secretary|government/]];
+  var KFALL={CONFLICT:'strike',SECURITY:'threat',CYBER:'hack',INFRA:'outage',WEATHER:'storm',ECON:'markets',POLITICAL:'talks'};
+  W.kind = function(e){ var t=(' '+String(e.title||'')+' ').toLowerCase(); for(var i=0;i<KRULE.length;i++) if(KRULE[i][1].test(t)) return KRULE[i][0]; return KFALL[e.cat]||'other'; };
+  W.ico = function(k,r){ var sc=r*1.3/24; return '<g class="ic" transform="translate('+f1(-12*sc)+' '+f1(-12*sc)+') scale('+sc.toFixed(3)+')">'+(W.KINDS[k]||W.KINDS.other)[1]+'</g>'; };
+  W.kindFilter = function(k){ W.kf=W.kf===k?null:k; D.render.web(); };
+  function wrap(t,n,max){ var w=String(t||'').split(/\s+/), L=[], cur=''; w.forEach(function(x){ if(cur&&(cur+' '+x).length>n){ L.push(cur); cur=x; } else cur=cur?cur+' '+x:x; }); if(cur) L.push(cur); if(L.length>max){ var rest=L.slice(max-1).join(' '); L=L.slice(0,max-1); L.push(short(rest,n)); } return L; }
+  /* the clicked event opens out: a card in the middle with its full headline, and what it connects to set in a column on each side with room for every label */
+  W.expand = function(G,id){ var e=D.ev(id), p0=W.pos[id]; if(!e||!p0||!G.adj[id]) return null; var CW=284, GAP=96, ROW=48, lines=wrap(e.title,32,4), ch=86+lines.length*15;
+    var srt=G.adj[id].slice(0,16).map(function(x){ return {x:x,p:W.pos[x.id]}; }).filter(function(o){ return o.p; }).sort(function(a,b){ return a.p.x-b.p.x; }), nL=Math.floor(srt.length/2), sides=[[srt.slice(0,nL),-1],[srt.slice(nL),1]], pos={}, rows=[], rowOf={};
+    sides.forEach(function(sd){ var l=sd[0].sort(function(a,b){ return a.p.y-b.p.y; }), s=sd[1], y0=p0.y-(l.length-1)*ROW/2; l.forEach(function(o,i){ var r={id:o.x.id,x:p0.x+s*(CW/2+GAP),y:y0+i*ROW,s:s,w:o.x.w,why:o.x.why||[]}; pos[r.id]={x:r.x,y:r.y}; rows.push(r); rowOf[r.id]=r; }); });
+    var hh=Math.max(ch/2,(Math.max(sides[0][0].length,sides[1][0].length,1)-1)*ROW/2+28)+22, hw=rows.length?CW/2+GAP+26+214:CW/2+70;
+    return {id:id,p0:p0,pos:pos,rows:rows,rowOf:rowOf,card:{w:CW,h:ch,lines:lines},box:{x:p0.x-hw,y:p0.y-hh,w:2*hw,h:2*hh}}; };
+  W.svg = function(G){ var A=W.anchors(), T=D.threat(), X=W.sel&&W.sel.charAt(0)!=='@'?W.expand(G,W.sel):null, P=function(id){ return (X&&X.pos[id])||W.pos[id]; }, vb=W.vb||(W.vb=X?X.box:W.fit(G)), s=[], labN={}, deg=function(e){ return G.adj[e.id].length; };
+    var boxes=[{x:-50,y:-50,w:100,h:100}], hit=function(b){ return boxes.some(function(o){ return b.x<o.x+o.w&&o.x<b.x+b.w&&b.y<o.y+o.h&&o.y<b.y+b.h; }); }, lbox=function(e){ var p=W.pos[e.id], r=W.rad(e), w=W.KINDS[W.kind(e)][0].length*5.6+6; return {x:p.x>=0?p.x+r+3:p.x-r-3-w,y:p.y-8,w:w,h:16}; };
     Object.keys(A).forEach(function(k){ boxes.push({x:A[k].x-48,y:A[k].y-(A[k].y<-20?44:26),w:96,h:70}); }); G.nodes.forEach(function(e){ var p=W.pos[e.id], r=W.rad(e); boxes.push({x:p.x-r,y:p.y-r,w:2*r,h:2*r}); });
-    G.nodes.slice().sort(function(a,b){ return (W.kindOf(b.id)?50:0)+(b.sev||1)*3+deg(b)-((W.kindOf(a.id)?50:0)+(a.sev||1)*3+deg(a)); }).forEach(function(e,i){ if(i>=18&&!W.kindOf(e.id)) return; var b=lbox(e); if(hit(b)) return; labN[e.id]=1; boxes.push(b); });
-    s.push('<svg id="wb-svg" xmlns="'+NS+'" viewBox="'+[vb.x,vb.y,vb.w,vb.h].map(f1).join(' ')+'" preserveAspectRatio="xMidYMid meet" role="group" aria-label="Mind web of '+G.nodes.length+' events and '+G.edges.length+' connections">');
+    if(!X) G.nodes.slice().sort(function(a,b){ return (W.kindOf(b.id)?50:0)+(b.sev||1)*3+deg(b)-((W.kindOf(a.id)?50:0)+(a.sev||1)*3+deg(a)); }).forEach(function(e,i){ if(i>=60&&!W.kindOf(e.id)) return; var b=lbox(e); if(hit(b)) return; labN[e.id]=1; boxes.push(b); });
+    s.push('<svg id="wb-svg" class="'+(W.kf?'kf ':'')+(X?'exp':'')+'" xmlns="'+NS+'" viewBox="'+[vb.x,vb.y,vb.w,vb.h].map(f1).join(' ')+'" preserveAspectRatio="xMidYMid meet" role="group" aria-label="Mind web of '+G.nodes.length+' events and '+G.edges.length+' connections">');
     Object.keys(A).forEach(function(k){ s.push('<line class="wb-spoke" x1="0" y1="0" x2="'+f1(A[k].x)+'" y2="'+f1(A[k].y)+'"/>'); });
-    G.nodes.forEach(function(e){ var p=W.pos[e.id], a=A[W.domOf(e)]; s.push('<line class="wb-twig" x1="'+f1(a.x)+'" y1="'+f1(a.y)+'" x2="'+f1(p.x)+'" y2="'+f1(p.y)+'"/>'); });
-    G.edges.forEach(function(c){ var p=W.pos[c.a], q=W.pos[c.b], mx=(p.x+q.x)/2, my=(p.y+q.y)/2, dx=q.x-p.x, dy=q.y-p.y, b=((W.hash(c.a+c.b)&1)?1:-1)*.14, ka=W.kindOf(c.a), kb=W.kindOf(c.b), k=ka&&kb?(RANK[ka]>=RANK[kb]?ka:kb):(ka||kb);
-      s.push('<path class="wb-e'+(k?' live k-'+k:'')+'" data-a="'+c.a+'" data-b="'+c.b+'" stroke-width="'+f1(.7+Math.min(6,c.w)*.42)+'" d="M'+f1(p.x)+' '+f1(p.y)+'Q'+f1(mx-dy*b)+' '+f1(my+dx*b)+' '+f1(q.x)+' '+f1(q.y)+'"/>'); });
+    G.nodes.forEach(function(e){ if(X&&(e.id===X.id||X.rowOf[e.id])) return; var p=P(e.id), a=A[W.domOf(e)]; s.push('<line class="wb-twig" x1="'+f1(a.x)+'" y1="'+f1(a.y)+'" x2="'+f1(p.x)+'" y2="'+f1(p.y)+'"/>'); });
+    G.edges.forEach(function(c){ var p=P(c.a), q=P(c.b), mx=(p.x+q.x)/2, my=(p.y+q.y)/2, dx=q.x-p.x, dy=q.y-p.y, b=((W.hash(c.a+c.b)&1)?1:-1)*.14, ka=W.kindOf(c.a), kb=W.kindOf(c.b), k=ka&&kb?(RANK[ka]>=RANK[kb]?ka:kb):(ka||kb), d='M'+f1(p.x)+' '+f1(p.y)+'Q'+f1(mx-dy*b)+' '+f1(my+dx*b)+' '+f1(q.x)+' '+f1(q.y), row=X&&(c.a===X.id?X.rowOf[c.b]:c.b===X.id?X.rowOf[c.a]:null);
+      if(row){ var sx=X.p0.x+row.s*X.card.w/2, ex=row.x-row.s*(W.rad(D.ev(row.id))+1), hx=(sx+ex)/2; d='M'+f1(sx)+' '+f1(X.p0.y)+'C'+f1(hx)+' '+f1(X.p0.y)+' '+f1(hx)+' '+f1(row.y)+' '+f1(ex)+' '+f1(row.y); }
+      s.push('<path class="wb-e'+(k?' live k-'+k:'')+'" data-a="'+c.a+'" data-b="'+c.b+'" stroke-width="'+f1(.7+Math.min(6,c.w)*.42)+'" d="'+d+'"/>'); });
     Object.keys(A).forEach(function(k){ var a=A[k], pk=W.kindOf('@dom:'+k), up=a.y<-20; s.push('<g class="wb-dom'+(W.sel==='@dom:'+k?' sel':'')+'" data-id="@dom:'+k+'" transform="translate('+f1(a.x)+' '+f1(a.y)+')" tabindex="0" role="button" aria-label="'+esc(D.DOMAIN[k].label)+' domain, score '+T.dom[k]+'">'+rings(pk,22)+'<circle class="dot" r="22"/><text class="v" text-anchor="middle" y="5">'+T.dom[k]+'</text><text text-anchor="middle" y="'+(up?-29:38)+'">'+esc(D.DOMAIN[k].label)+'</text></g>'); });
     s.push('<g class="wb-core'+(W.sel==='@threat'?' sel':'')+'" data-id="@threat" style="--lc:var('+T.level.col+')" tabindex="0" role="button" aria-label="Threat indicator '+T.level.name+', '+T.score+' of 100">'+rings(W.kindOf('@threat'),42)+'<circle class="dot" r="42"/><text class="v" text-anchor="middle" y="3">'+T.score+'</text><text text-anchor="middle" y="21">'+T.level.name+'</text></g>');
-    G.nodes.forEach(function(e){ var p=W.pos[e.id], st=D.STATUS[e.status]||D.STATUS.UNVERIFIED, r=W.rad(e), k=W.kindOf(e.id), right=p.x>=0;
-      s.push('<g class="wb-n'+(st.w?'':' off')+(labN[e.id]?' lab':'')+(W.sel===e.id?' sel':'')+'" data-id="'+e.id+'" style="--sc:var('+st.col+')" transform="translate('+f1(p.x)+' '+f1(p.y)+')" tabindex="0" role="button" aria-label="'+esc(e.title)+'. '+st.label+', severity '+(e.sev||1)+' of 5, '+G.adj[e.id].length+' connections">'+rings(k,r+2)+'<circle class="dot" r="'+f1(r)+'"/><text x="'+f1(right?r+5:-r-5)+'" y="3.5" text-anchor="'+(right?'start':'end')+'">'+esc(short(e.title,30))+'</text></g>'); });
+    G.nodes.forEach(function(e){ if(X&&e.id===X.id) return; var p=P(e.id), st=D.STATUS[e.status]||D.STATUS.UNVERIFIED, r=W.rad(e), k=W.kindOf(e.id), kd=W.kind(e), right=p.x>=0, row=X&&X.rowOf[e.id], lab;
+      if(row){ var tl=wrap(e.title,30,2), tx=f1(row.s*(r+8)), an=row.s>0?'start':'end'; lab='<text class="rt" text-anchor="'+an+'" y="'+(tl.length>1?-8:-1)+'">'+tl.map(function(l,i){ return '<tspan x="'+tx+'" dy="'+(i?13:0)+'">'+esc(l)+'</tspan>'; }).join('')+'</text><text class="rw" x="'+tx+'" y="'+(tl.length>1?19:13)+'" text-anchor="'+an+'">'+esc(W.KINDS[kd][0]+(row.why[0]?': '+short(row.why[0],36):''))+'</text>'; }
+      else lab='<text class="kl" x="'+f1(right?r+5:-r-5)+'" y="3.5" text-anchor="'+(right?'start':'end')+'">'+esc(W.KINDS[kd][0])+'</text>';
+      s.push('<g class="wb-n'+(st.w?'':' off')+(labN[e.id]?' lab':'')+(row?' row':'')+(W.kf===kd?' khot':'')+'" data-id="'+e.id+'" style="--sc:var('+st.col+')" transform="translate('+f1(p.x)+' '+f1(p.y)+')" tabindex="0" role="button" aria-label="'+esc(W.KINDS[kd][0]+': '+e.title)+'. '+st.label+', severity '+(e.sev||1)+' of 5, '+G.adj[e.id].length+' connections">'+rings(k,r+2)+'<circle class="dot" r="'+f1(r)+'"/>'+W.ico(kd,r)+lab+'</g>'); });
+    if(X){ var e=D.ev(X.id), st=D.STATUS[e.status]||D.STATUS.UNVERIFIED, c=X.card, kd=W.kind(e), n=G.adj[e.id].length;
+      s.push('<g class="wb-n wb-card sel'+(st.w?'':' off')+(W.kf===kd?' khot':'')+'" data-id="'+e.id+'" style="--sc:var('+st.col+')" transform="translate('+f1(X.p0.x-c.w/2)+' '+f1(X.p0.y-c.h/2)+')" tabindex="0" role="button" aria-label="'+esc(W.KINDS[kd][0]+': '+e.title)+'. Selected and expanded.">'+
+        '<rect class="cb" width="'+c.w+'" height="'+c.h+'" rx="12"/><g transform="translate(28 30)">'+rings(W.kindOf(e.id),18)+'<circle class="dot" r="16"/>'+W.ico(kd,16)+'</g>'+
+        '<text class="ck" x="54" y="26">'+esc(W.KINDS[kd][0]+' · '+st.label)+'</text><text class="cm" x="54" y="41">'+esc(fdate(e.date)+(e.region?' · '+short(e.region,24):''))+'</text>'+
+        '<text class="ct" y="66">'+c.lines.map(function(l,i){ return '<tspan x="14" dy="'+(i?15:0)+'">'+esc(l)+'</tspan>'; }).join('')+'</text>'+
+        '<text class="cm" x="14" y="'+(c.h-11)+'">'+n+' connection'+(n===1?'':'s')+(n>X.rows.length?' ('+X.rows.length+' shown)':'')+' · severity '+(e.sev||1)+' of 5</text></g>'); }
     s.push('</svg>'); return s.join(''); };
   W.changeRows = function(){ var by={}, order=[]; W.active().slice().reverse().forEach(function(p){ if(!by[p.id]){ by[p.id]=[]; order.push(p.id); } by[p.id].push(p); });
     return order.map(function(id){ var ps=by[id], k=W.kindOf(id), e=D.ev(id), name=e?e.title:id==='@threat'?'Threat indicator':id.indexOf('@dom:')===0?(D.DOMAIN[id.slice(5)]||{}).label+' domain':null; if(!name) return '';
       return '<button class="wb-chg k-'+k+'" onclick="D.web.pick(\''+id+'\')"><div class="t">'+esc(name)+'</div>'+ps.map(function(p){ return '<div class="w k-'+p.kind+'">'+KIND[p.kind]+': '+esc(p.what)+'</div>'; }).join('')+'<div class="a">'+esc(D.stamp(ps[0].at))+'</div></button>'; }).join(''); };
   W.keyHtml = function(){ return '<div class="wb-key">'+Object.keys(D.STATUS).map(function(k){ return '<span><i style="--sc:var('+D.STATUS[k].col+')"></i>'+D.STATUS[k].label+(D.STATUS[k].w?'':' (hollow: does not move the indicator)')+'</span>'; }).join('')+'<span><i class="r k-threat"></i>Red pulse: threat changed (severity, indicator or domain score)</span><span><i class="r k-language"></i>Amber pulse: language changed (headline, summary, caveat or status label)</span><span><i class="r k-new"></i>Cyan pulse: new event</span></div>'; };
+  /* the icon key sits on the web itself; a click highlights that kind */
+  W.kindBar = function(){ var cnt={}; ((W.G&&W.G.nodes)||[]).forEach(function(e){ var k=W.kind(e); cnt[k]=(cnt[k]||0)+1; });
+    return '<div class="wb-kinds" id="wb-kindbar">'+Object.keys(W.KINDS).filter(function(k){ return cnt[k]; }).map(function(k){ return '<button class="wb-kb'+(W.kf===k?' on':'')+'" onclick="D.web.kindFilter(\''+k+'\')" title="'+(W.kf===k?'Show every kind again':'Highlight these in the web')+'"><svg viewBox="0 0 24 24" aria-hidden="true">'+W.KINDS[k][1]+'</svg>'+W.KINDS[k][0]+'<b>'+cnt[k]+'</b></button>'; }).join('')+'</div>'; };
   var side0=W.sideHtml;
   W.sideHtml = function(G){ var id=W.sel, T=D.threat(), back='<div class="row" style="margin-bottom:10px"><button class="btn sm" onclick="D.web.pick(null)">&#8592; Overview</button>';
     var seen=W.seen&&W.seen.id===id&&W.seen.list.length?'<div class="hub-sec" style="margin:0 0 6px">What changed</div><div class="wb-links" style="margin-bottom:12px">'+W.seen.list.map(function(p){ return '<div class="wb-chg k-'+p.kind+'" style="cursor:default"><div class="w k-'+p.kind+'">'+KIND[p.kind]+': '+esc(p.what)+'</div><div class="a">'+esc(D.stamp(p.at))+'</div></div>'; }).join('')+'</div>':'';
@@ -2219,13 +2352,13 @@ D.render.web = function(){ D.web.render(); };
     var rows=W.changeRows();
     return '<div class="hub-sec" style="margin:0 0 8px">Live changes</div>'+(rows?'<div class="wb-links">'+rows+'</div><div class="row" style="margin-top:8px"><button class="btn sm" onclick="D.web.clear()">Clear pulses</button></div>':'<p class="note">Nothing has changed since you last looked. A point pulses when its threat or its language changes, or when a new event arrives, and keeps pulsing for 48 hours or until you open it.</p>')+
       '<div class="hub-sec" style="margin:16px 0 8px">Key</div>'+W.keyHtml()+'<div class="hub-sec" style="margin:16px 0 8px">How to read the web</div><p class="note">The threat indicator sits at the centre with the six domains around it. Each event hangs off its domain; a larger point is a more severe event. A bright line joins two events the ledger ties together: the same forecast, the same place or nearby on the map, shared distinctive terms or a source, or the same category within a week. Nothing here is guessed by a model.</p><p class="note" style="margin-top:8px">Hover a point to see what it is and light up its connections. Click it to drill in. Scroll to zoom, drag to move.</p>'; };
-  W.pick = function(id){ W.sel=id||null; W.seen=id?{id:id,list:W.pulsesOf(id)}:null; if(id&&D.ev(id)) D.ui.sel=id; if(id&&W.ack(id)){ D.save(); D.renderHub(); } D.render.web(); };
+  W.pick = function(id){ W.sel=id||null; W.vb=null; W.seen=id?{id:id,list:W.pulsesOf(id)}:null; if(id&&D.ev(id)) D.ui.sel=id; if(id&&W.ack(id)){ D.save(); D.renderHub(); } D.render.web(); };
   W.liveText = function(){ return 'LIVE · '+D.hm(new Date().toISOString()); };
   W.render = function(){ var G=W.graph(), n=W.badge()||0;
     var bar='<div class="vtabs"><button class="vtab '+(W.view==='web'?'on':'')+'" onclick="D.web.view=\'web\';D.render.web()">Web</button><button class="vtab '+(W.view==='list'?'on':'')+'" onclick="D.web.view=\'list\';D.render.web()">List</button></div>'+W.winTabs()+'<span class="wb-live" title="Checked against the ledger every few seconds"><i></i><span id="wb-live-t">'+W.liveText()+'</span></span>'+(n?'<span class="chip am">'+n+' PULSING</span>':'')+(W.view==='web'?'<div class="wb-zoom"><button class="vtab" onclick="D.web.zoom(.8)" aria-label="Zoom in">+</button><button class="vtab" onclick="D.web.zoom(1.25)" aria-label="Zoom out">−</button><button class="vtab" onclick="D.web.vb=null;D.render.web()">Fit</button></div>':'');
     if(W.view!=='web'){ W.frame(bar,W.listHtml(G),G); return; }
     if(!G.nodes.length){ W.frame(bar,'<div class="ov-scroll"><div class="banner">No events in this window.</div></div>',G); return; }
-    W.place(G); W.frame(bar,'<div id="wb-stage">'+W.svg(G)+'<div id="wb-tip"></div></div>',G); W.wire(G); W.focus(null); };
+    W.place(G); W.frame(bar,'<div id="wb-stage">'+W.svg(G)+'<div id="wb-tip"></div>'+W.kindBar()+'</div>',G); W.wire(G); W.focus(null); };
   /* ── interaction ── */
   W.setVB = function(){ var el=$('wb-svg'), v=W.vb; if(el&&v) el.setAttribute('viewBox',[v.x,v.y,v.w,v.h].map(f1).join(' ')); };
   W.zoom = function(k,cx,cy){ var v=W.vb; if(!v) return; var nw=Math.max(160,Math.min(2600,v.w*k)); k=nw/v.w; if(cx==null){ cx=v.x+v.w/2; cy=v.y+v.h/2; } v.x=cx-(cx-v.x)*k; v.y=cy-(cy-v.y)*k; v.w*=k; v.h*=k; W.setVB(); };
@@ -2236,7 +2369,7 @@ D.render.web = function(){ D.web.render(); };
     [].forEach.call(el.querySelectorAll('.wb-dom'),function(g){ var e=id&&D.ev(id); g.classList.toggle('hot',!!e&&g.getAttribute('data-id')==='@dom:'+W.domOf(e)); });
     [].forEach.call(el.querySelectorAll('.wb-e'),function(p){ p.classList.toggle('hot',!!id&&(p.getAttribute('data-a')===id||p.getAttribute('data-b')===id)); }); };
   W.tip = function(id,ev){ var t=$('wb-tip'), st=$('wb-stage'); if(!t||!st) return; if(!id){ t.classList.remove('on'); return; } var h='', T=D.threat(), e=D.ev(id), ps=W.pulsesOf(id).map(function(p){ return '<div class="p k-'+p.kind+'">'+KIND[p.kind]+': '+esc(p.what)+'</div>'; }).join('');
-    if(e){ var n=(W.G.adj[id]||[]).length; h='<div class="ev-top" style="margin:0">'+D.chip(e.status)+D.sevBars(e.sev)+'</div><div class="t">'+esc(e.title)+'</div><div class="m">'+fdate(e.date)+' · '+esc(e.region||'no region')+' · '+esc(D.CAT[e.cat]||e.cat)+'</div><div class="m">'+n+' connection'+(n===1?'':'s')+' · click to drill in</div>'+ps; }
+    if(e){ var n=(W.G.adj[id]||[]).length; h='<div class="ev-top" style="margin:0">'+D.chip(e.status)+D.sevBars(e.sev)+'</div><div class="t">'+esc(e.title)+'</div><div class="m">'+esc(W.KINDS[W.kind(e)][0])+' · '+fdate(e.date)+' · '+esc(e.region||'no region')+' · '+esc(D.CAT[e.cat]||e.cat)+'</div><div class="m">'+n+' connection'+(n===1?'':'s')+' · click to drill in</div>'+ps; }
     else if(id==='@threat') h='<div class="t" style="margin:0">Threat indicator: '+T.level.name+', '+T.score+' of 100</div><div class="m">'+esc(T.level.say)+'</div>'+ps;
     else { var k=id.slice(5); h='<div class="t" style="margin:0">'+esc((D.DOMAIN[k]||{}).label)+' domain</div><div class="m">Score '+T.dom[k]+' of 100 · click to list its events</div>'+ps; }
     t.innerHTML=h; var r=st.getBoundingClientRect(), x=ev.clientX-r.left+16, y=ev.clientY-r.top+14; t.classList.add('on');
@@ -2588,6 +2721,12 @@ D.dash = (function(){ var H={}, B={}, DCOL={conflict:'--red',homeland:'--amber',
   var PANELS=[{id:'threat',t:'Threat level'},{id:'areas',t:'By area'},{id:'trend',t:'Direction, last 45 days'},{id:'pred',t:'Predictions',wide:1},{id:'drivers',t:'What is driving it'},{id:'update',t:'Latest update'},{id:'noise',t:'Signal check'},{id:'outlook',t:'Claude’s outlook'},{id:'events',t:'Latest events',wide:1}];
   var TIP={ledger:'Every event, with its sources, status and history',drop:'Upload a file or paste text and have it assessed',verify:'Check unverified and reported items against sources',weather:'El Niño status and weather events',news:'The short version of today’s edition',paper:'The typeset edition and PDF export',web:'How events connect to each other',outage:'The 90-day outage checklist',settings:'Claude connection, theme, save and restore',ai:'Ask Claude about the events, direction and risk'};
   var ICO={cl:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>',wd:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M8 8l-4 4 4 4M16 8l4 4-4 4"/></svg>',lf:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg>',rt:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 6l6 6-6 6"/></svg>',x:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'};
+  var AICO={conflict:'strike',homeland:'threat',cyber:'ai',climate:'storm',economic:'markets',political:'talks'};
+  H.col=DCOL; H.catd=CATD;
+  var AOWN={cyber:'<path d="M13 2 5 13.5h6l-1 8.5 8-11.5h-6z"/>'};
+  H.ico = function(k){ var K=D.web&&D.web.KINDS, p=AOWN[k]||(K&&K[AICO[k]]?K[AICO[k]][1]:'<circle cx="12" cy="12" r="4"/>'); return '<svg class="ds-ic" viewBox="0 0 24 24" aria-hidden="true">'+p+'</svg>'; };
+  H.badge = function(k){ return '<span class="ds-badge" style="--c:var('+(DCOL[k]||'--txd')+')">'+H.ico(k)+'</span>'; };
+  H.dayOf = function(e,r){ return Math.max(0,Math.min(60,Math.ceil((dnum(e.date)-r.start-DAY/2)/DAY))); };
   function Ly(){ var s=D.S.dash=D.S.dash||{}; s.order=(s.order||[]).filter(function(i){ return PANELS.some(function(p){ return p.id===i; }); }); PANELS.forEach(function(p){ if(s.order.indexOf(p.id)<0) s.order.push(p.id); }); if(!s.wide){ s.wide={}; PANELS.forEach(function(p){ if(p.wide) s.wide[p.id]=1; }); } s.shut=s.shut||{}; return s; }
   function U(){ return D.ui.dash||(D.ui.dash={dom:null,inv:null,askQ:''}); }
   function cap(s){ s=String(s||'').toLowerCase(); return s.charAt(0).toUpperCase()+s.slice(1); }
@@ -2607,7 +2746,7 @@ D.dash = (function(){ var H={}, B={}, DCOL={conflict:'--red',homeland:'--amber',
   H.evTip = function(e){ var s=D.STATUS[e.status]||D.STATUS.UNVERIFIED; return '<div class="ev-top" style="margin:0">'+D.chip(e.status)+D.sevBars(e.sev||1)+'<span class="ev-date">'+esc(fdate(e.date))+'</span></div><div class="t">'+esc(e.title)+'</div><div class="m">'+esc((D.CAT[e.cat]||'')+(e.region?', '+e.region:''))+'</div><div style="margin-top:5px">'+esc(lede(e.summary||'',190))+'</div><div class="m" style="margin-top:6px">'+(s.w?'Counts toward the threat level.':'Does not move the threat level.')+' '+(e.sources||[]).length+' source'+((e.sources||[]).length===1?'':'s')+'.</div>'; };
   H.fcTip = function(f){ var b=(f.basis||[]).map(D.ev).filter(Boolean).slice(0,3), A=(D.S.fcAI||{})[f.id]; return '<div class="m">'+esc(D.DOMAIN[f.dom]?D.DOMAIN[f.dom].label:'')+', decided '+esc(days(f.due))+' ('+esc(fdate(f.due))+')</div><div class="t">'+esc(f.q)+'</div><div><b>'+pct(f.p)+'%</b>, '+likely(f.p).toLowerCase()+'.</div>'+(f.up?'<div style="margin-top:5px"><b>Raises it:</b> '+esc(f.up)+'</div>':'')+(f.down?'<div><b>Lowers it:</b> '+esc(f.down)+'</div>':'')+(b.length?'<div class="m" style="margin-top:6px">Rests on: '+esc(b.map(function(e){ return e.title; }).join('; '))+'</div>':'')+'<div class="m" style="margin-top:6px">'+(A?'Claude’s estimate: '+(A.a.estimate!=null?A.a.estimate+'%':'not given')+'. ':'')+'Click to investigate.</div>'; };
   H.domTip = function(k,X){ X=X||H.X(); var top=X.dr.filter(function(x){ return CATD[x.e.cat]===k; }).slice(0,3), d=X.T.dom[k]-X.T7.dom[k], n=X.open.filter(function(f){ return f.dom===k; }).length;
-    return '<div class="t" style="margin-top:0">'+esc(D.DOMAIN[k].label)+': '+X.T.dom[k]+' of 100</div><div class="m">'+(X.cmp?(d>0?'Up '+d:d<0?'Down '+(-d):'No change')+' in 7 days. ':'')+n+' open prediction'+(n===1?'':'s')+'.</div>'+(top.length?'<div style="margin-top:6px"><b>Biggest drivers</b></div>'+top.map(function(x){ return '<div>'+esc(x.e.title)+' <span class="m">('+Math.round(100*x.w/X.tot)+'% of the total)</span></div>'; }).join(''):'<div style="margin-top:6px">Nothing confirmed or reported is counting here.</div>')+'<div class="m" style="margin-top:6px">Click to filter the map and the panels.</div>'; };
+    return '<div class="t" style="margin-top:0;display:flex;gap:8px;align-items:center">'+H.badge(k)+esc(D.DOMAIN[k].label)+': '+X.T.dom[k]+' of 100</div><div class="m">'+(X.cmp?(d>0?'Up '+d:d<0?'Down '+(-d):'No change')+' in 7 days. ':'')+n+' open prediction'+(n===1?'':'s')+'.</div>'+(top.length?'<div style="margin-top:6px"><b>Biggest drivers</b></div>'+top.map(function(x){ return '<div>'+esc(x.e.title)+' <span class="m">('+Math.round(100*x.w/X.tot)+'% of the total)</span></div>'; }).join(''):'<div style="margin-top:6px">Nothing confirmed or reported is counting here.</div>')+'<div class="m" style="margin-top:6px">Click to filter the map and the panels.</div>'; };
   H.tipFor = function(el){ var a; if((a=el.getAttribute('data-ev'))){ var e=D.ev(a); return e?H.evTip(e):''; } if((a=el.getAttribute('data-fc'))){ var f=fc(a); return f?H.fcTip(f):''; } if((a=el.getAttribute('data-dom'))) return D.DOMAIN[a]?H.domTip(a):''; return esc(el.getAttribute('data-tip')||''); };
   H.tipAt = function(html,x,y){ var t=$('ds-tip'); if(!t) return; if(!html){ t.classList.remove('on'); return; } t.innerHTML=html; t.classList.add('on'); var r=t.getBoundingClientRect(), px=x+16, py=y+18; if(px+r.width>innerWidth-8) px=Math.max(8,x-r.width-14); if(py+r.height>innerHeight-8) py=Math.max(8,y-r.height-14); t.style.left=px+'px'; t.style.top=py+'px'; };
   H.hover = function(){ var cur=null, find=function(n){ while(n&&n.nodeType===1){ if(n.hasAttribute('data-ev')||n.hasAttribute('data-fc')||n.hasAttribute('data-dom')||n.hasAttribute('data-tip')) return n; n=n.parentNode; } return null; };
@@ -2623,7 +2762,7 @@ D.dash = (function(){ var H={}, B={}, DCOL={conflict:'--red',homeland:'--amber',
   /* ── top line: what this is, and the area filter ── */
   H.top = function(X){ var u=U(), s=Ly();
     $('ds-top').innerHTML='<div><div class="ds-title">PREDICTIVE DASHBOARD</div><div class="ds-sub">Where things stand, where they are heading, and how sure that is. Hover anything for detail.</div></div><div class="ds-filter"><button class="ds-fc'+(u.dom?'':' on')+'" onclick="D.dash.dom(null)">All areas</button>'+
-      Object.keys(D.DOMAIN).map(function(k){ return '<button class="ds-fc'+(u.dom===k?' on':'')+'" style="--c:var('+DCOL[k]+')" data-dom="'+k+'" onclick="D.dash.dom(\''+k+'\')"><i></i>'+esc(D.DOMAIN[k].label)+' '+X.T.dom[k]+'</button>'; }).join('')+
+      Object.keys(D.DOMAIN).map(function(k){ return '<button class="ds-fc'+(u.dom===k?' on':'')+'" style="--c:var('+DCOL[k]+')" data-dom="'+k+'" onclick="D.dash.dom(\''+k+'\')">'+H.badge(k)+esc(D.DOMAIN[k].label)+' '+X.T.dom[k]+'</button>'; }).join('')+
       '<button class="ds-btn" onclick="D.dash.mapSize()" data-tip="Make the map taller or shorter">'+(s.tall?'Shorter map':'Taller map')+'</button><button class="ds-btn" onclick="D.dash.side()" data-tip="Show or hide the list beside the map">'+(s.noside?'Show map list':'Hide map list')+'</button><button class="ds-btn" onclick="D.dash.reset()" data-tip="Put every panel back where it started">Reset layout</button></div>'; };
 
   /* ── panels ── */
@@ -2631,7 +2770,7 @@ D.dash = (function(){ var H={}, B={}, DCOL={conflict:'--red',homeland:'--amber',
     return '<div style="--c:var('+lv.col+')"><div class="ds-lvl" data-tip="The scale runs from 0 to 100. Only confirmed and reported events move it; bigger and newer events count more."><div class="ds-big">'+T.score+'</div><div><div class="ds-lv">'+cap(lv.name)+'</div><div class="ds-say">'+esc(lv.say)+'</div></div></div>'+
       '<div class="ds-scale">'+D.LEVELS.map(function(l,i){ return '<span class="'+(i===i0?'on':'')+'" style="--c:var('+l.col+')" data-tip="'+esc(cap(l.name)+': '+(i?D.LEVELS[i-1].max:0)+' to '+Math.min(100,l.max-1)+'. '+l.say)+'">'+cap(l.name)+'</span>'; }).join('')+'</div>'+
       '<p class="ds-meta">'+(X.cmp?'<b>'+(d>0?'Up '+d+' points':d<0?'Down '+(-d)+' points':'No change')+'</b> in 7 days. ':'')+'Built from '+T.counted+' confirmed or reported events.'+(X.cmp?'':' There is no 7-day comparison yet: the ledger began on '+esc(X.since?fdate(new Date(X.since).toISOString()):'this week')+'.')+'</p></div>'; };
-  B.areas = function(X){ var u=U(); return Object.keys(D.DOMAIN).map(function(k){ var v=X.T.dom[k], d=v-X.T7.dom[k]; return '<button class="ds-row'+(u.dom===k?' on':'')+'" style="--c:var('+DCOL[k]+');--w:'+v+'%" data-dom="'+k+'" onclick="D.dash.dom(\''+k+'\')"><span>'+esc(D.DOMAIN[k].label)+'</span><span class="ds-bar"><b></b></span><span class="n">'+v+'</span><span class="ds-d'+(X.cmp&&d>0?' up':X.cmp&&d<0?' dn':'')+'">'+(X.cmp?(d>0?'+'+d:d<0?d:'0'):'')+'</span></button>'; }).join('')+'<p class="ds-meta">'+(X.cmp?'Score now, and the change over 7 days. ':'Score now. Changes over 7 days will show once the ledger is a week old. ')+'Click an area to filter the map and the panels.</p>'; };
+  B.areas = function(X){ var u=U(); return Object.keys(D.DOMAIN).map(function(k){ var v=X.T.dom[k], d=v-X.T7.dom[k]; return '<button class="ds-row'+(u.dom===k?' on':'')+'" style="--c:var('+DCOL[k]+');--w:'+v+'%" data-dom="'+k+'" onclick="D.dash.dom(\''+k+'\')">'+H.badge(k)+'<span>'+esc(D.DOMAIN[k].label)+'</span><span class="ds-bar"><b></b></span><span class="n">'+v+'</span><span class="ds-d'+(X.cmp&&d>0?' up':X.cmp&&d<0?' dn':'')+'">'+(X.cmp?(d>0?'+'+d:d<0?d:'0'):'')+'</span></button>'; }).join('')+'<p class="ds-meta">'+(X.cmp?'Score now, and the change over 7 days. ':'Score now. Changes over 7 days will show once the ledger is a week old. ')+'Click an area to filter the map and the panels.</p>'; };
   B.trend = function(X){ var tr=H.tr=D.trend(45), n=tr.length-1, W=600, Hh=170, x=function(i){ return 8+(W-16)*i/n; }, y=function(v){ return 10+(Hh-34)*(1-v/100); };
     return '<svg id="ds-tr" viewBox="0 0 '+W+' '+Hh+'" role="img" aria-label="Threat score over the last 45 days">'+D.LEVELS.map(function(l,i){ var lo=i?D.LEVELS[i-1].max:0, hi=Math.min(100,l.max); return '<rect x="8" y="'+y(hi).toFixed(1)+'" width="'+(W-16)+'" height="'+(y(lo)-y(hi)).toFixed(1)+'" fill="var('+l.col+')" opacity=".07"/>'; }).join('')+
       '<polyline points="'+tr.map(function(p,i){ return x(i).toFixed(1)+','+y(p.v).toFixed(1); }).join(' ')+'" fill="none" stroke="var('+X.T.level.col+')" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><line id="ds-trl" x1="0" x2="0" y1="10" y2="'+(Hh-24)+'" stroke="var(--txh)" stroke-width="1" opacity="0"/><circle id="ds-trc" r="4.5" fill="var(--txh)" opacity="0"/>'+
@@ -2663,7 +2802,17 @@ D.dash = (function(){ var H={}, B={}, DCOL={conflict:'--red',homeland:'--amber',
   H.trMove = function(ev){ var sv=$('ds-tr'), tr=H.tr; if(!sv||!tr) return; var r=sv.getBoundingClientRect(), n=tr.length-1, i=Math.max(0,Math.min(n,Math.round(((ev.clientX-r.left)/r.width*600-8)/(600-16)*n))), p=tr[i], x=8+(600-16)*i/n, y=10+(170-34)*(1-p.v/100), lv=D.LEVELS.filter(function(l){ return p.v<l.max; })[0];
     $('ds-trl').setAttribute('x1',x); $('ds-trl').setAttribute('x2',x); $('ds-trl').setAttribute('opacity',.5); var c=$('ds-trc'); c.setAttribute('cx',x); c.setAttribute('cy',y); c.setAttribute('opacity',1);
     ev.stopPropagation(); H.tipAt('<b>'+esc(fdate(p.d))+'</b><div class="t">'+p.v+' of 100, '+cap(lv.name)+'</div><div class="m">'+(i?(p.v-tr[i-1].v>0?'Up '+(p.v-tr[i-1].v):p.v-tr[i-1].v<0?'Down '+(tr[i-1].v-p.v):'No change')+' from the day before.':'Start of the window.')+'</div>',ev.clientX,ev.clientY); };
-  H.draw = function(){ if(!$('dash')) return; var X=H.X(); H.tiles(); H.top(X); H.grid(X); if($('ds-inv').classList.contains('on')) H.invDraw(); };
+  H.spikes = function(){ var box=$('ds-spk'), rg=$('map-range'); if(!box||!rg) return; var r=D.mapRange(), u=U(), days=[], mx=1, v=+rg.value, i; for(i=0;i<=60;i++) days.push({n:0,w:0,by:{},c:{}});
+    D.S.events.forEach(function(e){ var d=days[H.dayOf(e,r)], k=CATD[e.cat]||'political', w=e.sev||1; d.n++; d.w+=w; d.by[k]=(d.by[k]||0)+w; d.c[k]=(d.c[k]||0)+1; }); days.forEach(function(d,i){ if(i&&d.w>mx) mx=d.w; }); H.days=days;
+    H.dayText = function(d){ return d.n+' event'+(d.n===1?'':'s')+': '+Object.keys(D.DOMAIN).filter(function(k){ return d.c[k]; }).map(function(k){ return D.DOMAIN[k].label+' '+d.c[k]; }).join(', '); };
+    box.innerHTML=days.map(function(d,i){ var when=i?fdate(new Date(r.start+i*DAY).toISOString()):'Before '+fdate(new Date(r.start+DAY).toISOString());
+      return '<button class="ds-sc'+(d.n?'':' z')+(i<=v?' lit':'')+'" tabindex="-1" data-tip="'+esc(when+'. '+(d.n?H.dayText(d)+'. Click to jump here.':'No events.'))+'" onclick="D.dash.jump('+i+')">'+Object.keys(D.DOMAIN).filter(function(k){ return d.by[k]; }).map(function(k){ return '<b class="'+(u.dom&&u.dom!==k?'dm':'')+'" style="height:'+Math.max(3,Math.round(34*Math.min(1,d.by[k]/mx)))+'px;background:var('+DCOL[k]+')"></b>'; }).join('')+'</button>'; }).join('');
+    $('ds-ax').innerHTML=[0,15,30,45,60].map(function(t){ return '<span style="left:'+(t/60*100).toFixed(1)+'%">'+(t===60?'Now':esc(fdate(new Date(r.start+t*DAY).toISOString()).replace(/, \d{4}$/,'')))+'</span>'; }).join(''); H.read(v); };
+  H.read = function(v){ var el=$('map-date'); if(!el) return; var r=D.mapRange(), d=H.days&&H.days[v], t=new Date(r.start+v*DAY);
+    el.innerHTML=v>=60?'<b>'+esc(D.stamp(new Date().toISOString()))+'</b><small>Now. Every event is showing.</small>':'<b>'+esc(t.toLocaleDateString('en-US',{weekday:'short',timeZone:'UTC'})+', '+fdate(t.toISOString()))+'</b><small>'+(v>0&&d&&d.n?esc(H.dayText(d)):'No new events this day')+'</small>'; };
+  H.lit = function(v){ var box=$('ds-spk'); if(!box) return; [].forEach.call(box.children,function(c,i){ c.classList.toggle('lit',i<=v); c.classList.remove('hit'); if(i===v&&v<60&&H.days&&H.days[i]&&H.days[i].n&&i){ void c.offsetWidth; c.classList.add('hit'); } }); };
+  H.jump = function(i){ var u=D.mapUI, rg=$('map-range'); if(u.play){ clearTimeout(u.play); u.play=null; $('map-play').textContent='Play'; } rg.value=i; D.mapTime(i); };
+  H.draw = function(){ if(!$('dash')) return; var X=H.X(); H.tiles(); H.top(X); H.grid(X); H.spikes(); if($('ds-inv').classList.contains('on')) H.invDraw(); };
 
   /* ── layout actions ── */
   H.dom = function(k){ var u=U(); u.dom=u.dom===k?null:k; H.draw(); D.mapEvents(); };
@@ -2733,18 +2882,27 @@ D.dash = (function(){ var H={}, B={}, DCOL={conflict:'--red',homeland:'--amber',
   H.mount = function(){ var hc=$('hub-center'), pk=document.createElement('div'); pk.id='chat-park'; pk.hidden=true; document.body.appendChild(pk); pk.appendChild($('chat'));
     var c=$('dock-caret'); c.querySelector('.vt').textContent='TILES'; c.setAttribute('aria-label','Show or hide the tiles panel');
     var d=document.createElement('div'); d.id='dash';
-    d.innerHTML='<div class="ds-top" id="ds-top"></div><div class="ds-map" id="ds-map"><div id="map-wrap"><div class="map-bar" id="map-bar"></div><div id="mapbox"></div><div class="map-legend" id="map-legend"></div><div class="map-note" id="map-note"></div><div class="map-time"><button class="btn sm" id="map-play" onclick="D.mapPlay()">Play</button><input type="range" id="map-range" min="0" max="60" value="60" oninput="D.mapTime(+this.value)" aria-label="Show events up to date"><span id="map-date" style="min-width:92px;text-align:right"></span></div></div><div class="ov-side"><div class="ov-scroll" id="map-side"></div></div></div><div class="ds-grid" id="ds-grid"></div>';
+    d.innerHTML='<div class="ds-top" id="ds-top"></div><div class="ds-map" id="ds-map"><div id="map-wrap"><div class="map-bar" id="map-bar"></div><div id="mapbox"></div><div class="map-legend" id="map-legend"></div><div class="map-note" id="map-note"></div><div class="map-time ds-time"><button class="btn sm" id="map-play" onclick="D.mapPlay()">Play</button><div class="ds-tlw"><div class="ds-spk" id="ds-spk"></div><input type="range" id="map-range" min="0" max="60" value="60" oninput="D.mapTime(+this.value)" aria-label="Show events up to a day"><div class="ds-ax" id="ds-ax"></div></div><div class="ds-now" id="map-date" aria-live="polite"></div></div></div><div class="ov-side"><div class="ov-scroll" id="map-side"></div></div></div><div class="ds-grid" id="ds-grid"></div>';
     hc.appendChild(d); ['ds-tip','ds-inv'].forEach(function(id){ var x=document.createElement('div'); x.id=id; if(id==='ds-inv') x.setAttribute('aria-label','Prediction analysis'); document.body.appendChild(x); });
-    try{ D.mapInit(); $('map-date').textContent='All to today'; D.map.scrollWheelZoom.disable(); D.map.on('click',function(){ D.map.scrollWheelZoom.enable(); }); $('mapbox').addEventListener('mouseleave',function(){ D.map.scrollWheelZoom.disable(); }); D.mapBar(); D.mapSide(); }
+    try{ D.mapInit(); D.map.options.wheelPxPerZoomLevel=120; D.map.scrollWheelZoom.enable(); D.mapBar(); D.mapSide(); }   /* the wheel zooms the map while the pointer is on it; the page scrolls everywhere else */
     catch(e){ $('ds-map').innerHTML='<p class="note" style="padding:16px">The map could not start in this view.</p>'; }
-    H.fit(); H.hover(); H.dnd(); window.addEventListener('resize',function(){ if(D.map) D.map.invalidateSize(); }); document.addEventListener('keydown',function(ev){ if(ev.key==='Escape'&&$('ds-inv').classList.contains('on')) H.invClose(); }); };
+    H.fit(); H.hover(); H.dnd(); setInterval(function(){ var rg=$('map-range'); if(rg&&+rg.value>=60&&!D.mapUI.play) H.read(60); },30000); window.addEventListener('resize',function(){ if(D.map) D.map.invalidateSize(); }); document.addEventListener('keydown',function(ev){ if(ev.key==='Escape'&&$('ds-inv').classList.contains('on')) H.invClose(); }); };
   return H;
 })();
 (function(){ var H=D.dash;
   /* the map draws from the dashboard now: richer hover text, and it dims what the area filter leaves out */
-  D.mapEvents = function(){ if(!D.map||!D.evLayer) return; D.evLayer.clearLayers(); var cut=D.mapUI.upTo==null?Infinity:D.mapUI.upTo+DAY/2, dom=(D.ui.dash||{}).dom, CATD={}; Object.keys(D.DOMAIN).forEach(function(k){ D.DOMAIN[k].cats.forEach(function(c){ CATD[c]=k; }); });
-    D.S.events.filter(function(e){ return e.lat!=null&&e.lon!=null&&dnum(e.date)<=cut; }).sort(function(a,b){ return a.sev-b.sev; }).forEach(function(e){ var s=D.STATUS[e.status]||D.STATUS.UNVERIFIED, col=D.css(s.col), solid=s.w>0, sel=e.id===D.ui.sel, dim=!!dom&&CATD[e.cat]!==dom;
-      L.circleMarker([e.lat,e.lon],{radius:5+e.sev*2.2,color:sel?D.css('--txh'):col,weight:sel?3:solid?1.5:2,dashArray:solid?null:'4 3',fillColor:col,fillOpacity:dim?.03:solid?.55:.12,opacity:dim?.22:1}).bindTooltip(H.evTip(e),{direction:'top',className:'ds-mtip',opacity:1}).on('click',function(){ D.pick(e.id); }).addTo(D.evLayer); }); };
+  D.mapEvents = function(){ if(!D.map||!D.evLayer) return; D.evLayer.clearLayers(); var cut=D.mapUI.upTo==null?Infinity:D.mapUI.upTo+DAY/2, dom=(D.ui.dash||{}).dom, r=D.mapRange(), pop=D.mapUI.pop;
+    D.S.events.filter(function(e){ return e.lat!=null&&e.lon!=null&&dnum(e.date)<=cut; }).sort(function(a,b){ return a.sev-b.sev; }).forEach(function(e){ var s=D.STATUS[e.status]||D.STATUS.UNVERIFIED, k=H.catd[e.cat]||'political', sel=e.id===D.ui.sel, dim=!!dom&&k!==dom, sz=20+(e.sev||1)*3, hit=pop!=null&&pop>0&&H.dayOf(e,r)===pop;
+      L.marker([e.lat,e.lon],{icon:L.divIcon({className:'ds-mk '+(s.w>=1?'c':s.w?'r':'u')+(sel?' sel':'')+(dim?' dim':'')+(hit?' pop':''),html:'<span style="--c:var('+H.col[k]+')">'+H.ico(k)+'</span>',iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]}),zIndexOffset:(sel?5000:0)+(hit?2000:0)+(e.sev||1)*100+(s.w?50:0),keyboard:false,riseOnHover:true})
+        .bindTooltip(H.evTip(e),{direction:'top',className:'ds-mtip',opacity:1,offset:[0,-sz/2]}).on('click',function(){ D.pick(e.id); }).addTo(D.evLayer); }); };
+  var bar0=D.mapBar; D.mapBar = function(){ bar0.apply(this,arguments); var lg=$('map-legend'); if(!lg) return;
+    lg.innerHTML='<div><i class="ds-lf c"></i>Confirmed</div><div><i class="ds-lf r"></i>Reported</div><div><i class="ds-lf u"></i>Not proven</div><div class="ds-lgs" style="line-height:1.4">Icon and colour: the area<br>Bigger: more severe</div>'+
+      (D.mapUI.wx.clim?'<div class="ds-lgs"><i style="background:#e0a84e;border-radius:2px"></i>Drier<br><i style="background:#18d4f8;border-radius:2px"></i>Wetter<br><i style="background:#e05555;border-radius:2px"></i>Warmer</div>':''); };
+  D.mapTime = function(v){ v=Math.max(0,Math.min(60,+v||0)); var r=D.mapRange(); D.mapUI.upTo=r.start+v*DAY; D.mapUI.pop=v<60||D.mapUI.play?v:null; H.lit(v); H.read(v); D.mapEvents(); D.mapUI.pop=null; };
+  /* play: quick through quiet days, a pause on each day that has events so the spike and the new icons can be seen */
+  D.mapPlay = function(){ var u=D.mapUI, rg=$('map-range'), b=$('map-play'); if(u.play){ clearTimeout(u.play); u.play=null; b.textContent='Play'; return; }
+    var v=+rg.value>=60?0:+rg.value, step=function(){ rg.value=v; D.mapTime(v); if(v>=60){ u.play=null; b.textContent='Play'; H.read(60); return; } var busy=v>0&&H.days&&H.days[v]&&H.days[v].n; v++; u.play=setTimeout(step,busy?900:130); };
+    b.textContent='Stop'; u.play=1; step(); };
   D.render.map = function(){ D.mapBar(); D.mapEvents(); D.mapSide(); };
   var pick0=D.pick; D.pick = function(id){ if(D.ui.open) return pick0.apply(this,arguments); D.ui.sel=id; H.side(true); D.mapSide(); D.mapEvents(); var e=D.ev(id); if(e&&e.lat!=null&&D.map) D.map.panTo([e.lat,e.lon]); $('hub-scroll').scrollTo({top:0,behavior:'smooth'}); };
   D.showOnMap = function(id){ var e=D.ev(id); if(!e||e.lat==null){ D.toast('This event has no coordinates','warn'); return; } var was=D.ui.open; if(was) D.close(); D.ui.sel=id; $('map-range').value=60; D.mapTime(60); H.side(true); D.mapSide(); $('hub-scroll').scrollTo({top:0}); setTimeout(function(){ if(D.map){ D.map.invalidateSize(); D.map.setView([e.lat,e.lon],5); } },was?460:60); };
