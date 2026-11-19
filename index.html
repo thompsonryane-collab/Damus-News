@@ -1312,6 +1312,37 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .ds-home svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
 .hv-btn.off{opacity:.6}
 body.hover-off #ds-tip,body.hover-off #wb-tip,body.hover-off .leaflet-tooltip.ds-mtip{display:none}
+
+/* ── PIN lock: refresh icon and Drop Zone ── */
+.lk-btn.free{color:var(--sage);border-color:color-mix(in srgb,var(--sage) 45%,transparent)}
+.rf-btn.locked svg{opacity:.5}
+body.pin-locked .tl[onclick*="'drop'"] .tl-c::after{content:' · locked';color:var(--amber)}
+.lk-back{position:fixed;inset:0;z-index:2500;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(4,10,18,.74);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);overflow:auto}
+[data-theme="light"] .lk-back{background:rgba(28,40,54,.46)}
+.lk-box{width:min(372px,100%);background:var(--card-bg);border:1px solid var(--border2);border-radius:16px;padding:22px 22px 18px;box-shadow:var(--card-bevel),0 30px 80px rgba(0,0,0,.5);font-family:var(--sans);color:var(--tx);text-align:center}
+.lk-badge{width:46px;height:46px;margin:0 auto;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--cyan);background:var(--cyan-d);border:1px solid color-mix(in srgb,var(--cyan) 40%,transparent)}
+.lk-box h2{font-family:var(--dsp);font-size:15px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:var(--txh);margin:12px 0 6px}
+#lk-why{font-size:14px;line-height:1.5;color:var(--txd);margin:0 auto;max-width:30ch}
+.lk-cells{position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:8px;width:min(288px,100%);margin:18px auto 8px}
+.lk-cell{height:52px;border:1px solid var(--border2);border-radius:10px;background:rgba(255,255,255,.03);display:flex;align-items:center;justify-content:center;transition:border-color .12s,box-shadow .12s}
+[data-theme="light"] .lk-cell{background:rgba(0,0,0,.025)}
+.lk-cell.on::after{content:'';width:11px;height:11px;border-radius:50%;background:var(--txh)}
+.lk-cells.foc .lk-cell.cur{border-color:var(--cyan);box-shadow:0 0 0 3px var(--cyan-d)}
+#lk-in{position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;border:0;opacity:0;font-size:16px;cursor:text}
+#lk-in:disabled{cursor:not-allowed}
+.lk-cells.no{animation:lk-no .34s}
+@keyframes lk-no{20%{transform:translateX(-7px)}45%{transform:translateX(6px)}70%{transform:translateX(-4px)}90%{transform:translateX(2px)}}
+#lk-msg{min-height:20px;margin:0;font-size:13.5px;line-height:1.45;color:var(--txd)}
+#lk-msg.bad{color:var(--amber)}
+.lk-keep{display:inline-flex;align-items:center;gap:8px;margin-top:10px;font-size:13.5px;color:var(--tx);cursor:pointer}
+.lk-keep input{width:16px;height:16px;margin:0;accent-color:var(--cyan)}
+.lk-acts{display:flex;justify-content:center;gap:10px;margin-top:16px}
+.lk-acts .btn{min-width:104px}
+.lk-acts .btn:disabled{opacity:.45;cursor:default}
+.lk-wall{max-width:440px;margin:36px auto 0;text-align:center;padding:26px 22px 24px;color:var(--amber)}
+.lk-wall h3{font-family:var(--dsp);font-size:15px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--txh);margin:10px 0 6px}
+.lk-wall .note{margin:0 0 16px}
+@media (prefers-reduced-motion:reduce){.lk-cells.no{animation:none}.lk-cell{transition:none}}
 </style>
 </head>
 <body>
@@ -2933,6 +2964,97 @@ D.dash = (function(){ var H={}, B={}, DCOL={conflict:'--red',homeland:'--amber',
   var shell0=D.buildShell; D.buildShell = function(){ var r=shell0.apply(this,arguments); D.hvMount(); return r; };
   H.mount(); D.hvMount(); D.renderHub(); D.mapEvents(); if(window.innerWidth>860){ $('dock').classList.remove('closed'); document.body.classList.remove('dock-closed'); }
   setTimeout(function(){ if(D.map){ D.map.invalidateSize(); if(!D.ui.sel) H.home(true); } },400);
+})();
+
+/* ── PIN lock (19 Nov 2026): the refresh icon and the Drop Zone ask for a six-digit PIN. The automatic feed check (on open, every 30 minutes) is not locked.
+   This is a courtesy lock, not security. The page runs in the reader's browser, so the check does too. Only a salted, repeated hash of the PIN is kept here, never the PIN,
+   but a six-digit PIN can be worked out from that hash by anyone who reads this file, and the check can be stepped around in the browser's own tools. ── */
+(function(){
+  var SALT='bdfe21e36c6e2a02', HASH='9f0ddad0d1cc9d2ddf44a5721ad0e51cd57dd7f00132a7a8c3534ba2b1216440', ITER=40000, TRIES=5, KEY='damus-unlock', TRY='damus-lock-try';
+  var K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  /* SHA-256 of an ASCII string, as hex. Written out so the lock works the same in the published page, the downloaded file and the GitHub copy. */
+  function sha(m){ var H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19], b=[], w=[], i, j, n=m.length;
+    for(i=0;i<n;i++) b.push(m.charCodeAt(i)&255);
+    b.push(128); while(b.length%64!==56) b.push(0);
+    b.push(0,0,0,(n>>>29)&255,(n>>>21)&255,(n>>>13)&255,(n>>>5)&255,(n<<3)&255);
+    for(i=0;i<b.length;i+=64){
+      for(j=0;j<16;j++) w[j]=(b[i+4*j]<<24)|(b[i+4*j+1]<<16)|(b[i+4*j+2]<<8)|b[i+4*j+3];
+      for(j=16;j<64;j++){ var x=w[j-15], y=w[j-2]; w[j]=(w[j-16]+(((x>>>7)|(x<<25))^((x>>>18)|(x<<14))^(x>>>3))+w[j-7]+(((y>>>17)|(y<<15))^((y>>>19)|(y<<13))^(y>>>10)))|0; }
+      var a=H[0], c=H[1], d=H[2], e=H[3], f=H[4], g=H[5], h=H[6], k=H[7];
+      for(j=0;j<64;j++){ var t1=(k+(((f>>>6)|(f<<26))^((f>>>11)|(f<<21))^((f>>>25)|(f<<7)))+((f&g)^(~f&h))+K[j]+w[j])|0, t2=((((a>>>2)|(a<<30))^((a>>>13)|(a<<19))^((a>>>22)|(a<<10)))+((a&c)^(a&d)^(c&d)))|0;
+        k=h; h=g; g=f; f=(e+t1)|0; e=d; d=c; c=a; a=(t1+t2)|0; }
+      H[0]=(H[0]+a)|0; H[1]=(H[1]+c)|0; H[2]=(H[2]+d)|0; H[3]=(H[3]+e)|0; H[4]=(H[4]+f)|0; H[5]=(H[5]+g)|0; H[6]=(H[6]+h)|0; H[7]=(H[7]+k)|0; }
+    return H.map(function(v){ return ('0000000'+(v>>>0).toString(16)).slice(-8); }).join(''); }
+  function get(st,k){ try{ return window[st].getItem(k); }catch(e){ return null; } }
+  function put(st,k,v){ try{ if(v==null) window[st].removeItem(k); else window[st].setItem(k,v); }catch(e){} }
+
+  var L=D.lock={}, TOKEN=sha('keep:'+HASH), ui=null;
+  /* unlocked for this tab (session storage), or on this device if the reader asked for that (local storage). The stored value changes whenever the PIN does. */
+  var free = get('sessionStorage',KEY)===TOKEN || get('localStorage',KEY)===TOKEN;
+  var T=(function(){ try{ var t=JSON.parse(get('localStorage',TRY)||'null'); if(t&&t.n>0) return {n:+t.n||0,until:+t.until||0}; }catch(e){} return {n:0,until:0}; })();
+  function saveT(){ put('localStorage',TRY,T.n?JSON.stringify(T):null); }
+  L.locked = function(){ return !free; };
+  L.wait = function(){ return Math.max(0,Math.ceil((T.until-Date.now())/1000)); };
+  L.check = function(pin){ if(!/^\d{6}$/.test(pin)) return false; var h=sha(SALT+':'+pin); for(var i=0;i<ITER;i++) h=sha(h+SALT); return h===HASH; };
+  L.ico = function(shut,size){ return '<svg width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/>'+(shut?'<path d="M8 11V8a4 4 0 0 1 8 0v3"/>':'<path d="M8 11V8a4 4 0 0 1 7.6-1.8"/>')+'</svg>'; };
+
+  /* ── the PIN dialog ── */
+  var WHY={refresh:'Refresh is locked. Enter the six-digit PIN to check for updates now.',drop:'The Drop Zone is locked. Enter the six-digit PIN to upload files or file claims.','':'Enter the six-digit PIN to unlock refresh and the Drop Zone.'};
+  function paint(){ var v=$('lk-in').value, c=$('lk-cells').querySelectorAll('.lk-cell'); for(var i=0;i<6;i++){ c[i].classList.toggle('on',i<v.length); c[i].classList.toggle('cur',i===Math.min(v.length,5)); } $('lk-go').disabled=v.length!==6||L.wait()>0; }
+  function say(t,cls){ var m=$('lk-msg'); m.textContent=t||''; m.className=cls||''; }
+  /* after five wrong tries in a row the dialog pauses: 30 seconds, then double each time, up to 15 minutes */
+  function hold(){ if(!ui) return; clearInterval(ui.timer); var inp=$('lk-in'), tick=function(){ if(!ui) return; var s=L.wait();
+      if(s>0){ inp.disabled=true; say('Too many wrong tries. Try again in '+(s>=60?Math.floor(s/60)+' min '+(s%60)+' s':s+' s')+'.','bad'); paint(); }
+      else { clearInterval(ui.timer); if(inp.disabled){ inp.disabled=false; say(''); inp.focus(); } paint(); } };
+    if(L.wait()>0){ tick(); ui.timer=setInterval(tick,500); } }
+  function shut(){ if(!ui) return; clearInterval(ui.timer); var from=ui.from; ui.back.remove(); ui=null; if(from&&document.contains(from)&&from.focus) from.focus(); }
+  function submit(){ if(!ui) return; var inp=$('lk-in'), v=inp.value; if(v.length!==6||L.wait()>0) return;
+    if(L.check(v)){ var keep=$('lk-keep').checked, then=ui.then; free=true; T={n:0,until:0}; saveT(); put('sessionStorage',KEY,TOKEN); if(keep) put('localStorage',KEY,TOKEN);
+      shut(); L.sync(); D.toast(keep?'Unlocked on this device':'Unlocked until this tab is closed','ok',2600); if(then) then(); return; }
+    T.n++; if(T.n%TRIES===0) T.until=Date.now()+Math.min(900,30*Math.pow(2,T.n/TRIES-1))*1000; saveT();
+    inp.value=''; var cells=$('lk-cells'); cells.classList.remove('no'); void cells.offsetWidth; cells.classList.add('no');
+    var left=TRIES-T.n%TRIES; if(L.wait()>0) hold(); else { say('Wrong PIN. '+left+(left===1?' try':' tries')+' left before a pause.','bad'); paint(); inp.focus(); } }
+  L.ask = function(what,then){ if(free){ if(then) then(); return; } if(ui) shut();
+    var back=document.createElement('div'); back.className='lk-back'; back.id='lk-back';
+    back.innerHTML='<div class="lk-box" role="dialog" aria-modal="true" aria-labelledby="lk-h" aria-describedby="lk-why"><div class="lk-badge">'+L.ico(true,22)+'</div><h2 id="lk-h">Enter PIN</h2><p id="lk-why">'+WHY[WHY[what]?what:'']+'</p>'+
+      '<div class="lk-cells" id="lk-cells"><span class="lk-cell"></span><span class="lk-cell"></span><span class="lk-cell"></span><span class="lk-cell"></span><span class="lk-cell"></span><span class="lk-cell"></span>'+
+      '<input id="lk-in" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="off" aria-label="Six-digit PIN" aria-describedby="lk-msg"></div>'+
+      '<p id="lk-msg" role="alert"></p><label class="lk-keep"><input type="checkbox" id="lk-keep"> Stay unlocked on this device</label>'+
+      '<div class="lk-acts"><button type="button" class="btn sm" id="lk-no">Cancel</button><button type="button" class="btn cy sm" id="lk-go" disabled>Unlock</button></div></div>';
+    ui={back:back,then:then,from:document.activeElement,timer:0}; document.body.appendChild(back);
+    var inp=$('lk-in'), cells=$('lk-cells');
+    inp.addEventListener('input',function(){ var v=inp.value.replace(/\D/g,'').slice(0,6); if(v!==inp.value) inp.value=v; if(v.length&&L.wait()===0) say(''); paint(); if(v.length===6) setTimeout(submit,90); });
+    inp.addEventListener('focus',function(){ cells.classList.add('foc'); }); inp.addEventListener('blur',function(){ cells.classList.remove('foc'); });
+    $('lk-no').onclick=shut; $('lk-go').onclick=submit;
+    back.addEventListener('mousedown',function(e){ if(e.target===back) shut(); });
+    back.addEventListener('keydown',function(e){ e.stopPropagation();
+      if(e.key==='Escape'){ e.preventDefault(); shut(); }
+      else if(e.key==='Enter'&&e.target!==$('lk-no')&&e.target!==$('lk-keep')){ e.preventDefault(); submit(); }
+      else if(e.key==='Tab'){ var f=[inp,$('lk-keep'),$('lk-no'),$('lk-go')].filter(function(x){ return !x.disabled; }), at=f.indexOf(document.activeElement);
+        if(e.shiftKey&&at<=0){ e.preventDefault(); f[f.length-1].focus(); } else if(!e.shiftKey&&at===f.length-1){ e.preventDefault(); f[0].focus(); } } });
+    paint(); if(L.wait()>0){ hold(); $('lk-no').focus(); } else inp.focus(); };
+  L.cancel = shut;
+  L.lock = function(){ if(!free) return; free=false; put('sessionStorage',KEY,null); put('localStorage',KEY,null); L.sync(); D.toast('Locked. Refresh and the Drop Zone need the PIN.','ok',2800); };
+  L.toggle = function(){ if(free) L.lock(); else L.ask(''); };
+
+  /* ── what the lock covers ── */
+  L.sync = function(){ document.body.classList.toggle('pin-locked',!free);
+    [].forEach.call(document.querySelectorAll('.lk-btn'),function(b){ b.innerHTML=L.ico(!free,15); b.classList.toggle('free',free); b.setAttribute('aria-pressed',String(!free)); b.title=free?'Refresh and the Drop Zone are unlocked. Click to lock them.':'Refresh and the Drop Zone are locked. Click to enter the PIN.'; b.setAttribute('aria-label',b.title); });
+    D.rfSync(); if(D.ui.open==='drop') D.render.drop(); };
+  var rfs0=D.rfSync; D.rfSync = function(){ rfs0.apply(this,arguments); [].forEach.call(document.querySelectorAll('.rf-btn'),function(b){ b.classList.toggle('locked',!free); if(!free) b.title='Refresh is locked. Click to enter the PIN. '+D.rfLine(); }); };
+  var rf0=D.refreshNow; D.refreshNow = function(){ if(!free){ L.ask('refresh',function(){ rf0(); }); return; } return rf0.apply(this,arguments); };
+  var open0=D.open; D.open = function(id){ if(id==='drop'&&!free){ L.ask('drop',function(){ D.open('drop'); }); return; } return open0.apply(this,arguments); };
+  /* if the page is locked again while the Drop Zone is open, the page shows this in place of the upload panel and the review queue */
+  var rd0=D.render.drop; D.render.drop = function(){ if(free) return rd0.apply(this,arguments); $('tag-drop').textContent='LOCKED';
+    $('body-drop').innerHTML='<div class="ov-scroll"><div class="wrap"><div class="panel lk-wall">'+L.ico(true,28)+'<h3>The Drop Zone is locked</h3><p class="note">Uploading files and filing claims need the six-digit PIN.</p><button class="btn cy" onclick="D.lock.ask(\'drop\')">Enter PIN</button></div></div></div>'; };
+  /* the same check on every way in, so a stale button or a dropped file cannot get past the lock screen */
+  ['handleFiles','pasteAssess','qAdd','qDrop'].forEach(function(k){ var f0=D[k]; D[k]=function(){ if(!free){ D.toast('The Drop Zone is locked. Enter the PIN first.','warn',3200); return; } return f0.apply(this,arguments); }; });
+  var ex0=D.extract; D.extract = function(){ if(!free) return Promise.reject(new Error('the Drop Zone is locked')); return ex0.apply(this,arguments); };
+
+  /* padlock button beside refresh, in the top bar and in every tile's bar: shows the state, asks for the PIN, or locks again */
+  L.mount = function(){ [].forEach.call(document.querySelectorAll('#chrome, .ov-chrome'),function(bar){ if(bar.querySelector('.lk-btn')) return; var at=bar.querySelector('.hv-btn')||bar.querySelector('.fs-btn'), b=document.createElement('button'); b.className='c-btn icon lk-btn'; b.onclick=L.toggle; if(at) bar.insertBefore(b,at); else bar.appendChild(b); }); L.sync(); };
+  var shell0=D.buildShell; D.buildShell = function(){ var r=shell0.apply(this,arguments); L.mount(); return r; };
+  L.mount();
 })();
 </script>
 </body>
