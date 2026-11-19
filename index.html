@@ -1002,6 +1002,232 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .wb-chg .t{font-family:var(--sans);font-size:13.5px;font-weight:600;color:var(--txh);line-height:1.3}
 .wb-chg .w{font-family:var(--sans);font-size:12.5px;color:var(--pc);line-height:1.45;margin-top:2px}
 .wb-chg .a{font-size:11px;color:var(--txf);margin-top:2px}
+/* complete update before a new edition */
+.cu-row{border:1px solid var(--border);border-left:3px solid var(--txf);border-radius:10px;padding:10px 12px;display:grid;gap:5px}
+.cu-row.on{border-left-color:var(--sage);background:color-mix(in srgb,var(--sage) 6%,transparent)}
+.cu-list{display:grid;gap:8px;margin:10px 0}
+.cu-chg{font-family:var(--sans);font-size:13.5px;color:var(--txh);font-weight:600;line-height:1.4}
+.cu-meter{font-family:var(--sans);font-size:14px;color:var(--tx);margin:4px 0 10px}
+.np-upd{margin-top:8px;padding:8px 10px;border-left:2px solid var(--sage);background:var(--sage-d);border-radius:0 6px 6px 0}
+/* DMS-13 DAMUS News: the short version. Colour names the section; the left bar's fill shows how sure the story is (solid, broken, hollow). */
+.dn{--dn-blue:#6aa6ff;--dn-head:"Arial Black","Helvetica Neue",Helvetica,Arial,sans-serif;flex:1;min-width:0;min-height:0;display:flex;font-family:var(--sans);color:var(--tx)}
+[data-theme="light"] .dn{--dn-blue:#2456c7}
+.dn :focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.dn-panel{width:296px;flex-shrink:0;display:flex;flex-direction:column;min-height:0;border-right:1px solid var(--border);background:color-mix(in srgb,var(--card-bg) 72%,transparent);transition:width .22s var(--slide-ease)}
+.dn.rail .dn-panel{width:51px}
+.dn.rail .dn-pt,.dn.rail .dn-pscroll,.dn.rail #dn-all{display:none}
+.dn-ph{display:flex;align-items:center;gap:6px;padding:8px;border-bottom:1px solid var(--border);min-height:51px}
+.dn-pt{flex:1;font-size:15px;font-weight:700;color:var(--txh);padding-left:2px}
+.dn-ic{width:34px;height:34px;display:grid;place-items:center;border-radius:8px;border:1px solid var(--border2);background:transparent;color:var(--tx);cursor:pointer;flex-shrink:0;padding:0}
+.dn-ic:hover{border-color:var(--cyan);color:var(--cyan)}
+.dn-ic svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.dn.rail .dn-ic.rl svg{transform:scaleX(-1)}
+.dn-pscroll{flex:1;min-height:0;overflow:auto;padding:8px 8px calc(14px + var(--sab))}
+.dn-home,.dn-gh,.dn-it{width:100%;text-align:left;font-family:var(--sans);background:transparent;border:0;color:var(--tx);cursor:pointer}
+.dn-home{display:block;font-size:15px;font-weight:700;padding:10px;border-radius:8px;color:var(--txh)}
+.dn-home.on,.dn-it.on{background:color-mix(in srgb,var(--c,var(--cyan)) 18%,transparent);color:var(--txh)}
+.dn-gh:hover,.dn-it:hover,.dn-home:hover{background:color-mix(in srgb,var(--tx) 8%,transparent)}
+.dn-plab{font-size:12.5px;color:var(--txf);padding:14px 10px 4px}
+.dn-gh{display:flex;align-items:center;gap:9px;padding:10px;font-size:15px;font-weight:600;border-radius:8px}
+.dn-dot{width:10px;height:10px;border-radius:3px;background:var(--c);flex-shrink:0}
+.dn-gn{flex:1;min-width:0}
+.dn-gc{font-size:13px;color:var(--txd);font-weight:500}
+.dn-chev{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .18s;flex-shrink:0;color:var(--txd)}
+.dn-g.open .dn-chev{transform:rotate(90deg)}
+.dn-gi{display:none;padding:2px 0 8px 8px;margin-left:14px;border-left:2px solid color-mix(in srgb,var(--c) 55%,transparent)}
+.dn-g.open .dn-gi{display:block}
+.dn-it{display:block;font-size:14px;line-height:1.35;padding:7px 9px;border-radius:7px}
+.dn-mini{padding:3px 9px;font-size:13.5px;line-height:1.4;color:var(--txd)}
+.dn-mini b{color:var(--txh)}
+.dn-mb{display:grid;grid-template-columns:86px 1fr 24px;gap:8px;align-items:center;font-size:12.5px;color:var(--txd);padding:2px 9px}
+.dn-mb i{height:7px;border-radius:4px;background:color-mix(in srgb,var(--tx) 10%,transparent);overflow:hidden;display:block}
+.dn-mb i::after{content:"";display:block;height:100%;width:var(--w);background:var(--c);border-radius:4px}
+.dn-main{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column}
+.dn-bar{display:flex;gap:8px 16px;align-items:center;flex-wrap:wrap;padding:8px 16px;border-bottom:1px solid var(--border);background:color-mix(in srgb,var(--card-bg) 55%,transparent)}
+.dn-ed{flex:1;min-width:220px;display:grid;gap:1px;font-size:13.5px;line-height:1.35;color:var(--txd)}
+.dn-ed b{font-size:15px;color:var(--txh)}
+.dn-tools{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.dn-btn{font-family:var(--sans);font-size:14px;font-weight:600;padding:8px 13px;min-height:36px;border-radius:8px;border:1px solid var(--border2);background:transparent;color:var(--tx);cursor:pointer}
+.dn-btn:hover{border-color:var(--c,var(--cyan));color:var(--txh)}
+.dn-btn:disabled{opacity:.45;cursor:not-allowed}
+.dn-btn.pri{background:var(--cyan-d);border-color:color-mix(in srgb,var(--cyan) 55%,transparent);color:var(--cyan)}
+.dn-ver{font-family:var(--sans);font-size:13.5px;padding:7px 8px;max-width:240px;min-height:36px}
+.dn-screen{flex:1;min-height:0;overflow:auto;padding:18px clamp(14px,3vw,44px) calc(44px + var(--sab));outline:0}
+.dn-col{max-width:1180px;margin:0 auto;display:grid;gap:24px}
+.dn-note{font-size:14px;line-height:1.5;color:var(--tx);border-left:3px solid var(--amber);padding:7px 12px;background:var(--amber-d);border-radius:0 8px 8px 0;margin:0}
+.dn-rib{display:block;width:100%;text-align:left;font-family:var(--sans);font-size:15px;line-height:1.4;color:var(--tx);background:color-mix(in srgb,var(--c) 13%,transparent);border:0;border-left:7px solid var(--c);border-radius:0 10px 10px 0;padding:10px 14px;cursor:pointer}
+.dn-rib b{color:var(--txh)}
+.dn-leg{font-size:13px;color:var(--txd);display:flex;gap:6px 18px;flex-wrap:wrap;align-items:center;--c:var(--txd)}
+.dn-leg span{display:inline-flex;gap:7px;align-items:center}
+.dn-st{position:relative;padding:2px 0 2px 24px;min-width:0}
+.dn-st::before{content:"";position:absolute;left:0;top:0;bottom:0;width:7px;border-radius:4px;background:var(--c);box-sizing:border-box}
+.dn-st.pr2::before{background:repeating-linear-gradient(180deg,var(--c) 0 10px,transparent 10px 15px)}
+.dn-st.pr1::before,.dn-st.pr0::before{background:transparent;border:2px dashed var(--c)}
+.dn-sec{font-size:14px;font-weight:700;color:var(--c);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.dn-top{font-size:12.5px;font-weight:700;color:var(--void);background:var(--c);border-radius:4px;padding:1px 7px}
+.dn-h{font-family:var(--dn-head);font-weight:900;letter-spacing:-.02em;line-height:1.08;color:var(--txh);font-size:clamp(21px,1.2vw + 12px,29px);margin:6px 0 8px;text-wrap:balance}
+.dn-st.big .dn-h{font-size:clamp(30px,3.1vw + 12px,60px);line-height:1.02;margin:8px 0 12px}
+.dn-hb{all:unset;cursor:pointer;display:block}
+.dn-hb:hover{text-decoration:underline;text-decoration-thickness:3px;text-decoration-color:var(--c);text-underline-offset:4px}
+.dn-short{font-size:clamp(16px,.45vw + 13px,19px);line-height:1.5;color:var(--tx);max-width:64ch;margin:0}
+.dn-st.big .dn-short{font-size:clamp(18px,.8vw + 13px,23px);line-height:1.45;max-width:58ch}
+.dn-meta{display:flex;gap:6px 14px;flex-wrap:wrap;align-items:center;font-size:13.5px;color:var(--txd);margin-top:10px}
+.dn-proof{display:inline-flex;align-items:center;gap:7px;color:var(--txh);font-weight:600}
+.dn-sw{width:22px;height:8px;border-radius:3px;background:var(--c);display:inline-block;box-sizing:border-box;flex-shrink:0}
+.dn-sw.pr2{background:repeating-linear-gradient(90deg,var(--c) 0 6px,transparent 6px 9px)}
+.dn-sw.pr1,.dn-sw.pr0{background:transparent;border:1.5px dashed var(--c)}
+.dn-acts{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+.dn-det{margin-top:16px;display:grid;gap:18px;max-width:76ch}
+.dn-det[hidden]{display:none}
+.dn-dsec{min-width:0}
+.dn-dsec h3{font-family:var(--sans);font-size:15px;font-weight:700;color:var(--txh);margin:0 0 7px}
+.dn-dsec p{font-size:15.5px;line-height:1.6;margin:0 0 9px;color:var(--tx);max-width:72ch}
+.dn-dl{font-size:13px;font-weight:700;color:var(--txd);letter-spacing:.04em}
+.dn-facts{display:flex;gap:6px 20px;flex-wrap:wrap;font-size:14px;color:var(--txd)}
+.dn-facts b{color:var(--txh)}
+.dn-ev{border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-bottom:8px;background:color-mix(in srgb,var(--card-bg) 60%,transparent)}
+.dn-evt{font-size:15px;font-weight:600;color:var(--txh);line-height:1.3}
+.dn-evs{font-size:14px;color:var(--txd);line-height:1.5;margin:4px 0 6px}
+.dn-cav{font-size:14px;color:var(--txd);margin:4px 0 8px}
+.dn-cav summary{cursor:pointer;color:var(--tx);font-weight:600}
+.dn-cav p{font-size:14px;line-height:1.55;margin:6px 0 0;color:var(--txd)}
+.dn-grid{display:grid;gap:30px 36px;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));align-items:start}
+.dn-lbl{font-family:var(--sans);font-size:16px;font-weight:700;color:var(--txd);margin:6px 0 -8px;padding-top:16px;border-top:1px solid var(--border)}
+.dn-odd{display:grid;grid-template-columns:92px 1fr;gap:16px;align-items:center;padding:13px 0;border-bottom:1px solid var(--border)}
+.dn-pct{font-family:var(--dn-head);font-weight:900;font-size:clamp(26px,1.6vw + 12px,38px);color:var(--txh);letter-spacing:-.02em;text-align:right}
+.dn-oq{font-size:16px;line-height:1.4;color:var(--tx);max-width:70ch}
+.dn-os{font-size:13.5px;color:var(--txd);margin-top:5px}
+.dn-ob{height:8px;border-radius:5px;background:color-mix(in srgb,var(--tx) 10%,transparent);margin-top:7px;overflow:hidden;max-width:520px}
+.dn-ob i{display:block;height:100%;width:var(--w);background:var(--c,var(--cyan));border-radius:5px}
+.dn-lvl{display:flex;gap:10px 22px;align-items:center;flex-wrap:wrap;margin-top:6px}
+.dn-num{font-family:var(--dn-head);font-weight:900;font-size:clamp(68px,9vw,132px);line-height:.9;color:var(--c);letter-spacing:-.04em}
+.dn-scale{display:grid;grid-template-columns:20fr 20fr 20fr 20fr 20fr;gap:4px;margin-top:16px;max-width:620px}
+.dn-scale span{display:block;border-top:10px solid color-mix(in srgb,var(--tx) 12%,transparent);padding-top:5px;font-size:12.5px;color:var(--txf)}
+.dn-scale span.on{border-top-color:var(--c);color:var(--txh);font-weight:700}
+.dn-scale em{font-style:normal}
+.dn-dom{display:grid;grid-template-columns:minmax(110px,170px) 1fr 36px;gap:12px;align-items:center;font-size:15px;padding:5px 0;max-width:620px}
+.dn-dom i{height:12px;border-radius:6px;background:color-mix(in srgb,var(--tx) 10%,transparent);overflow:hidden;display:block}
+.dn-dom i b{display:block;height:100%;width:var(--w);background:var(--c);border-radius:6px}
+.dn-spark{width:100%;max-width:620px;height:70px;display:block}
+.dn-spark polyline{fill:none;stroke:var(--c);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.dn-foot{font-size:13.5px !important;color:var(--txd) !important}
+.dn-split{display:flex;height:16px;gap:3px;max-width:620px;--c:var(--tx)}
+.dn-split i{display:block;border-radius:4px;background:var(--c);box-sizing:border-box;min-width:6px}
+.dn-split i.pr2{background:repeating-linear-gradient(90deg,var(--c) 0 6px,transparent 6px 9px)}
+.dn-split i.pr1{background:transparent;border:1.5px dashed var(--c)}
+.dn-nav{display:flex;gap:8px;flex-wrap:wrap;padding-top:16px;border-top:1px solid var(--border)}
+.dn-cu{max-width:1180px;margin:0 auto 18px}
+@media (max-width:760px){.dn-panel{width:250px}.dn-odd{grid-template-columns:70px 1fr}}
+@media (prefers-reduced-motion:reduce){.dn-panel,.dn-chev{transition:none}}
+/* Hub rebuilt: tiles in a left panel, predictive dashboard with the map on top. The old status panel and title bar are not shown. */
+:root{--dn-blue:#6aa6ff}
+[data-theme="light"]{--dn-blue:#2456c7}
+#hub-side,#hub-titlebar{display:none !important}
+#card-grid{display:none}
+@media (min-width:861px){:root{--dockw:236px}#stage{padding:12px 16px 30px calc(var(--dockw) + 28px)}#dock{padding:10px 0 10px 10px}}
+@media (max-width:860px){#card-grid{display:grid;flex:none;padding:8px 0 16px}}
+#dock-body{border-color:var(--border2);border-radius:14px}
+.tl-h{display:flex;align-items:center;gap:8px;padding:12px 14px 10px;font-family:var(--dsp);font-size:11.5px;letter-spacing:2px;color:var(--txd);border-bottom:1px solid var(--border);text-transform:uppercase}
+.tl-list{flex:1;min-height:0;overflow:auto;padding:8px;display:grid;gap:3px;align-content:start}
+.tl{display:grid;grid-template-columns:38px 1fr auto;gap:10px;align-items:center;width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:10px;padding:6px 8px;color:var(--tx);cursor:pointer;font-family:var(--sans)}
+.tl:hover{background:color-mix(in srgb,var(--tx) 7%,transparent);border-color:var(--border)}
+.tl:focus-visible,.ds-fc:focus-visible,.ds-row:focus-visible,.ds-li:focus-visible,.ds-pb:focus-visible,.ds-btn:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.tl-ico{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(160deg,var(--g1),var(--g2));box-shadow:inset 0 1px 0 rgba(255,255,255,.28)}
+.tl-ico svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tl-n{display:block;font-size:14px;font-weight:600;color:var(--txh);line-height:1.25}
+.tl-c{display:block;font-size:11px;color:var(--txf);letter-spacing:.06em}
+.tl-b{min-width:22px;height:22px;border-radius:11px;background:var(--amber);color:#1a1200;font-size:12.5px;font-weight:700;display:grid;place-items:center;padding:0 6px}
+#dash{position:relative;z-index:2;display:grid;gap:14px;min-width:0;font-family:var(--sans);container-type:inline-size}
+.ds-top{display:flex;gap:8px 14px;align-items:center;flex-wrap:wrap}
+.ds-title{font-family:var(--dsp);font-size:15px;letter-spacing:2.5px;color:var(--txh);font-weight:700}
+.ds-sub{font-size:13px;color:var(--txd)}
+.ds-filter{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto;align-items:center}
+.ds-fc{font-family:var(--sans);font-size:13px;font-weight:600;padding:6px 11px;border-radius:999px;border:1px solid var(--border2);background:var(--card-bg);color:var(--tx);cursor:pointer;display:inline-flex;gap:7px;align-items:center}
+.ds-fc i{width:9px;height:9px;border-radius:3px;background:var(--c)}
+.ds-fc.on{background:color-mix(in srgb,var(--c,var(--cyan)) 20%,var(--card-bg));border-color:var(--c,var(--cyan));color:var(--txh)}
+.ds-btn{font-family:var(--sans);font-size:13.5px;font-weight:600;padding:7px 12px;min-height:34px;border-radius:8px;border:1px solid var(--border2);background:transparent;color:var(--tx);cursor:pointer}
+.ds-btn:hover{border-color:var(--cyan);color:var(--txh)}
+.ds-btn:disabled{opacity:.45;cursor:not-allowed}
+.ds-btn.pri{background:var(--cyan-d);border-color:color-mix(in srgb,var(--cyan) 55%,transparent);color:var(--cyan)}
+.ds-map{display:flex;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--card-bg);height:clamp(340px,48vh,560px);min-height:0;box-shadow:var(--card-bevel)}
+.ds-map.tall{height:clamp(480px,74vh,880px)}
+.ds-map #map-wrap{flex:1;min-width:0}
+.ds-map .ov-side{width:330px}
+.ds-map.noside .ov-side{display:none}
+.leaflet-tooltip.ds-mtip{white-space:normal;width:270px;padding:9px 11px;border-radius:10px;font-family:var(--sans);font-size:13px;line-height:1.4}
+.ds-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));align-items:start}
+.ds-p{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;box-shadow:var(--card-bevel);min-width:0}
+.ds-p.wide{grid-column:span 2}
+@container (max-width:720px){.ds-p.wide{grid-column:auto}.ds-map .ov-side{display:none}}
+.ds-p.flash{animation:dsflash 1.3s ease-out}
+@keyframes dsflash{0%{box-shadow:0 0 0 3px var(--cyan)}100%{box-shadow:0 0 0 3px transparent}}
+.ds-p.over{outline:2px dashed var(--cyan);outline-offset:2px}
+.ds-ph{display:flex;align-items:center;gap:4px;padding:8px 8px 8px 14px;border-bottom:1px solid var(--border);cursor:grab}
+.ds-p.shut .ds-ph{border-bottom:0}
+.ds-p.shut .ds-pbody{display:none}
+.ds-pt{flex:1;font-size:14.5px;font-weight:700;color:var(--txh);min-width:0}
+.ds-pc{font-size:12.5px;color:var(--txd);font-weight:500;margin-left:8px}
+.ds-pb{width:28px;height:28px;display:grid;place-items:center;border-radius:7px;border:1px solid transparent;background:transparent;color:var(--txd);cursor:pointer;padding:0;flex-shrink:0}
+.ds-pb:hover{border-color:var(--border2);color:var(--txh)}
+.ds-pb svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ds-p.shut .ds-pb.cl svg{transform:rotate(180deg)}
+.ds-pbody{padding:12px 14px 14px;min-width:0}
+.ds-lvl{display:flex;gap:14px;align-items:center}
+.ds-big{font-family:var(--dsp);font-weight:900;font-size:56px;line-height:1;color:var(--c)}
+.ds-lv{font-size:20px;font-weight:700;color:var(--txh)}
+.ds-say{font-size:14px;line-height:1.45;color:var(--txd);margin-top:3px}
+.ds-scale{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin-top:14px}
+.ds-scale span{border-top:8px solid color-mix(in srgb,var(--tx) 12%,transparent);font-size:11.5px;color:var(--txf);padding-top:4px}
+.ds-scale span.on{border-top-color:var(--c);color:var(--txh);font-weight:700}
+.ds-meta{font-size:13px;line-height:1.45;color:var(--txd);margin:10px 0 0}
+.ds-meta b{color:var(--txh)}
+.ds-row{display:grid;grid-template-columns:104px 1fr 28px 40px;gap:10px;align-items:center;padding:7px 8px;border-radius:8px;font-size:14px;width:100%;background:transparent;border:0;color:var(--tx);text-align:left;cursor:pointer;font-family:var(--sans)}
+.ds-row:hover,.ds-li:hover{background:color-mix(in srgb,var(--tx) 7%,transparent)}
+.ds-row.on{background:color-mix(in srgb,var(--c) 18%,transparent)}
+.ds-row .n{text-align:right;color:var(--txh);font-variant-numeric:tabular-nums}
+.ds-bar{height:10px;border-radius:5px;background:color-mix(in srgb,var(--tx) 10%,transparent);overflow:hidden;display:block}
+.ds-bar b{display:block;height:100%;width:var(--w);background:var(--c);border-radius:5px}
+.ds-d{font-size:12.5px;text-align:right;color:var(--txd);font-variant-numeric:tabular-nums}
+.ds-d.up{color:var(--red)}.ds-d.dn{color:var(--sage)}
+.ds-li{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;width:100%;text-align:left;padding:8px;border-radius:8px;background:transparent;border:0;color:var(--tx);cursor:pointer;font-family:var(--sans);font-size:14px;line-height:1.35}
+.ds-li small{display:block;font-size:12.5px;color:var(--txd);margin-top:2px}
+.ds-dot{width:11px;height:11px;border-radius:50%;background:var(--c);box-sizing:border-box}
+.ds-dot.h{background:transparent;border:2px dashed var(--c)}
+.ds-pct{font-family:var(--dsp);font-weight:700;font-size:19px;color:var(--txh);min-width:52px;text-align:right}
+.ds-tl{position:relative;height:46px;margin:2px 8px 12px;border-bottom:2px solid var(--border2)}
+.ds-tl button{position:absolute;bottom:-8px;transform:translateX(-50%);width:var(--s);height:var(--s);border-radius:50%;border:2px solid var(--card-bg);background:var(--c);cursor:pointer;padding:0}
+.ds-tl button:hover{outline:2px solid var(--txh)}
+.ds-tl span{position:absolute;top:0;font-size:11.5px;color:var(--txf)}
+.ds-ask{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.ds-ask input{flex:1;min-width:200px;font-size:14px;padding:8px 10px}
+.ds-split{display:flex;height:16px;gap:3px;--c:var(--tx)}
+.ds-split i{display:block;border-radius:4px;background:var(--c);min-width:6px;box-sizing:border-box}
+.ds-split i.r{background:repeating-linear-gradient(90deg,var(--c) 0 6px,transparent 6px 9px)}
+.ds-split i.u{background:transparent;border:1.5px dashed var(--c)}
+.ds-chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.ds-chip{font-family:var(--mono);font-size:11.5px;padding:3px 7px;border-radius:5px;border:1px solid var(--border2);background:transparent;color:var(--txd);cursor:pointer}
+.ds-chip:hover{border-color:var(--cyan);color:var(--txh)}
+.ds-txt{font-size:14px;line-height:1.55;color:var(--tx);margin:0}
+.ds-clamp{display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+.ds-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+#ds-tr{width:100%;height:auto;display:block;cursor:crosshair}
+#ds-tip{position:fixed;z-index:950;max-width:340px;pointer-events:none;background:var(--card-bg);border:1px solid var(--border2);border-radius:10px;padding:10px 12px;box-shadow:0 12px 34px rgba(0,0,0,.45);font-family:var(--sans);font-size:13.5px;line-height:1.45;color:var(--tx);opacity:0;visibility:hidden;transition:opacity .12s}
+#ds-tip.on{opacity:1;visibility:visible}
+#ds-tip b,.ds-mtip b{color:var(--txh)}
+#ds-tip .t,.ds-mtip .t{font-weight:700;color:var(--txh);font-size:14px;line-height:1.3;margin:5px 0 4px}
+#ds-tip .m,.ds-mtip .m{font-size:12.5px;color:var(--txd)}
+#ds-inv{position:fixed;top:calc(var(--chrome-h) + var(--sat));right:0;bottom:0;width:min(580px,100vw);z-index:470;background:var(--card-bg);border-left:1px solid var(--border2);box-shadow:-18px 0 44px rgba(0,0,0,.4);display:flex;flex-direction:column;transform:translateX(103%);visibility:hidden;transition:transform .26s var(--slide-ease),visibility .26s;font-family:var(--sans)}
+#ds-inv.on{transform:none;visibility:visible}
+.ds-ih{display:flex;gap:10px;align-items:center;padding:10px 12px 10px 16px;border-bottom:1px solid var(--border)}
+.ds-ib{flex:1;min-height:0;overflow:auto;padding:16px 18px 30px;display:grid;gap:18px;align-content:start}
+.ds-iq{font-size:21px;font-weight:700;line-height:1.25;color:var(--txh);margin:0}
+.ds-is h3{font-family:var(--sans);font-size:14.5px;font-weight:700;color:var(--txh);margin:0 0 6px}
+.ds-is p,.ds-is li{font-size:14.5px;line-height:1.55;color:var(--tx);margin:0 0 6px}
+.ds-is ul{margin:0;padding-left:19px}
+.ds-bl{font-size:17px !important;line-height:1.45 !important;color:var(--txh) !important}
+.ds-ai{border:1px solid color-mix(in srgb,var(--cyan) 40%,transparent);border-radius:12px;padding:14px;background:color-mix(in srgb,var(--cyan) 5%,transparent);display:grid;gap:14px}
+.ds-est{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+@media (prefers-reduced-motion:reduce){#ds-inv,#ds-tip{transition:none}.ds-p.flash{animation:none}}
 </style>
 </head>
 <body>
@@ -1186,18 +1412,19 @@ D.gauge = function(T){ var segs=D.LEVELS.map(function(l,i){ var a0=Math.PI*(1-(i
 
 /* ── shell ── */
 D.APPS = [
-  {id:'map',code:'DMS-01',label:'Global Map',g:['#2fb8ff','#1d63c9'],ico:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.800 0 18M12 3c-3 3.2-3 14.800 0 18"/>',name:'GLOBAL MAP · EVENTS · WEATHER'},
+  {id:'map',hub:false,code:'DMS-01',label:'Global Map',g:['#2fb8ff','#1d63c9'],ico:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.800 0 18M12 3c-3 3.2-3 14.800 0 18"/>',name:'GLOBAL MAP · EVENTS · WEATHER'},
   {id:'ledger',code:'DMS-02',label:'Event Ledger',g:['#5fa8ff','#2456c7'],ico:'<path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/>',name:'EVENT LEDGER'},
   {id:'drop',code:'DMS-03',label:'Drop Zone',g:['#41c8e8','#1f78a6'],ico:'<path d="M12 4v11M7.5 10.500 12 15l4.500-4.500M5 19h14"/>',name:'DROP ZONE · UPLOAD AND ASSESS',badge:function(){ return D.S.queue.length||null; }},
   {id:'verify',code:'DMS-04',label:'Verification Desk',g:['#ffc76b','#c07a12'],ico:'<path d="M12 3l7 3v5c0 4.500-3 8-7 10-4-2-7-5.500-7-10V6z"/><path d="M9 12l2.200 2.200L15 10.400"/>',name:'VERIFICATION DESK',badge:function(){ return D.S.events.filter(function(e){return e.status==='UNVERIFIED';}).length||null; }},
-  {id:'forecast',code:'DMS-05',label:'Forecast Board',g:['#b48cff','#6a3fd1'],ico:'<path d="M4 18l5-6 4 3 7-9"/><path d="M15 6h5v5"/>',name:'FORECAST BOARD'},
-  {id:'threat',code:'DMS-06',label:'Threat Indicator',g:['#ff8f6b','#b33a26'],ico:'<path d="M4 17a8 8 0 0 1 16 0"/><path d="M12 17l4-6"/><circle cx="12" cy="17" r="1.300"/>',name:'THREAT WARNING INDICATOR'},
+  {id:'forecast',hub:false,code:'DMS-05',label:'Forecast Board',g:['#b48cff','#6a3fd1'],ico:'<path d="M4 18l5-6 4 3 7-9"/><path d="M15 6h5v5"/>',name:'FORECAST BOARD'},
+  {id:'threat',hub:false,code:'DMS-06',label:'Threat Indicator',g:['#ff8f6b','#b33a26'],ico:'<path d="M4 17a8 8 0 0 1 16 0"/><path d="M12 17l4-6"/><circle cx="12" cy="17" r="1.300"/>',name:'THREAT WARNING INDICATOR'},
   {id:'weather',code:'DMS-07',label:'Weather & Climate',g:['#58e0b8','#1e9a7a'],ico:'<path d="M7 17h10a4 4 0 0 0 .500-7.970A6 6 0 0 0 6 10.500 3.300 3.300 0 0 0 7 17z"/>',name:'WEATHER AND CLIMATE LAYER'},
-  {id:'brief',code:'DMS-08',label:'Daily Brief',g:['#c9a2ff','#6a3fb5'],ico:'<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/>',name:'DAILY BRIEF'},
+  {id:'brief',hub:false,code:'DMS-08',label:'Daily Brief',g:['#c9a2ff','#6a3fb5'],ico:'<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/>',name:'DAILY BRIEF'},
+  {id:'news',code:'DMS-13',label:'DAMUS News',g:['#ffb35c','#d6336c'],ico:'<rect x="3.500" y="4.500" width="17" height="15" rx="2"/><path d="M7 9.200h10" stroke-width="2.800"/><path d="M7 13.200h10M7 16.200h6"/>',name:'DAMUS NEWS · THE SHORT VERSION'},
   {id:'paper',code:'DMS-11',label:'Newspaper',g:['#ff8fa8','#b02a55'],ico:'<path d="M4 5h13v14H6a2 2 0 0 1-2-2z"/><path d="M17 9h3v8a2 2 0 0 1-2 2H6M7.500 9h6M7.500 12.500h6M7.500 16h3.500"/>',name:'NEWSPAPER · AI EDITION · PDF EXPORT'},
   {id:'web',code:'DMS-12',label:'Web',g:['#9be36a','#2f8f4e'],ico:'<circle cx="12" cy="12" r="2.4"/><circle cx="5" cy="6" r="1.8"/><circle cx="19" cy="6.500" r="1.8"/><circle cx="6" cy="18.500" r="1.8"/><circle cx="18.500" cy="18" r="1.8"/><path d="M10.200 10.400 6.300 7.200M13.900 10.600l3.700-3M10.300 13.700l-3.100 3.500M13.900 13.500l3.300 3.200M6.800 6.200l10.400.200"/>',name:'WEB · LIVE MIND WEB OF EVENTS',badge:function(){ return D.web&&D.web.badge?D.web.badge():null; }},
   {id:'outage',code:'DMS-10',label:'90-Day Outage Checklist',g:['#f0b860','#a86a1c'],ico:'<path d="M5 4h14v16H5z"/><path d="M8 9l1.500 1.500L12 8M8 15l1.500 1.500L12 14M14 9.500h2.500M14 15.500h2.500"/>',name:'90-DAY OUTAGE CHECKLIST',badge:function(){ return D.S.outage&&D.S.outage.crit?D.S.outage.crit:null; }},
-  {id:'ai',hub:false,code:'AI-01',label:'Damus Analyst',g:['#3ed6ff','#1286b4'],ico:'<path d="M4 5h16v11H9l-5 4z"/>',name:'DAMUS ANALYST'},
+  {id:'ai',code:'AI-01',label:'AI Analyst',g:['#3ed6ff','#1286b4'],ico:'<path d="M4 5h16v11H9l-5 4z"/>',name:'DAMUS ANALYST'},
   {id:'settings',code:'DMS-09',label:'Settings',g:['#8f9aab','#4a5566'],ico:'<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.600 5.600l2.100 2.100M16.300 16.300l2.100 2.100M18.400 5.600l-2.100 2.100M7.700 16.300l-2.100 2.100"/>',name:'SETTINGS · CLAUDE CONNECTION · DATA'}
 ];
 D.render = {};
@@ -1220,10 +1447,10 @@ D.renderHub = function(){ var T=D.threat(); var c=D.counts();
   $('gate-metrics').innerHTML='<div><div class="gm-v">'+D.S.events.length+'</div><div class="gm-l">EVENTS</div></div><div><div class="gm-v">'+c.CONFIRMED+'</div><div class="gm-l">CONFIRMED</div></div><div><div class="gm-v" style="color:var('+lv.col+')">'+lv.name+'</div><div class="gm-l">THREAT</div></div>';
 };
 D.counts = function(){ var c={}; Object.keys(D.STATUS).forEach(function(k){ c[k]=0; }); D.S.events.forEach(function(e){ c[e.status]=(c[e.status]||0)+1; }); return c; };
-D.open = function(id){ if(id==='ai'&&window.innerWidth>860){ $('dock').classList.remove('closed'); document.body.classList.remove('dock-closed'); $('chat-in').focus(); return; }
+D.open = function(id){ 
   D.close(true); D.ui.open=id; var o=$('ov-'+id); if(id==='ai') $('body-ai').appendChild($('chat')); if(D.render[id]) D.render[id](); o.classList.add('visible'); o.setAttribute('aria-hidden','false'); $('shell').classList.add('pushed');
   if(id==='map') setTimeout(function(){ if(D.map) D.map.invalidateSize(); },420); };
-D.close = function(silent){ if(!D.ui.open) return; var id=D.ui.open; $('ov-'+id).classList.remove('visible'); $('ov-'+id).setAttribute('aria-hidden','true'); if(id==='ai') $('dock-body').appendChild($('chat')); if(id==='outage') D.outageSync(); D.ui.open=null; if(!silent){ $('shell').classList.remove('pushed'); D.renderHub(); } };
+D.close = function(silent){ if(!D.ui.open) return; var id=D.ui.open; $('ov-'+id).classList.remove('visible'); $('ov-'+id).setAttribute('aria-hidden','true'); if(id==='ai') ($('chat-park')||$('dock-body')).appendChild($('chat')); if(id==='outage') D.outageSync(); D.ui.open=null; if(!silent){ $('shell').classList.remove('pushed'); D.renderHub(); } };
 D.refresh = function(){ D.save(); D.renderHub(); if(D.ui.open&&D.render[D.ui.open]&&D.ui.open!=='ai') D.render[D.ui.open](); if(D.map) D.mapEvents(); };
 D.enter = function(){ $('gate').classList.add('off'); };
 D.applyTheme = function(t){ document.documentElement.setAttribute('data-theme',t); D.S.theme=t; var m=document.querySelector('meta[name="theme-color"]'); if(m) m.setAttribute('content',t==='light'?'#f7f9fb':'#0e1824'); if(D.map) D.mapBase(); if(D.outageSync) D.outageSync(); };
@@ -1488,8 +1715,8 @@ D.boot = function(){ D.load();
   if(location.protocol!=='file:'&&!D.sandboxed){ var ml=document.createElement('link'); ml.rel='manifest'; ml.href='manifest.webmanifest'; document.head.appendChild(ml); } D.applyTheme(D.S.theme||'dark'); D.buildShell(); D.applySide(); D.fsSync(); D.chatInit(); D.initAI();
   $('file-in').addEventListener('change',function(){ D.handleFiles(this.files); this.value=''; });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape') D.close(); if(e.key==='Enter'&&!$('gate').classList.contains('off')) D.enter(); });
-  var tick=function(){ var d=new Date(); $('clock').textContent=D.clockText?D.clockText(d):d.toISOString().slice(11,16)+'Z · '+d.toLocaleDateString('en-US',{month:'short',day:'numeric'}); }; tick(); setInterval(tick,30000); D.feedCheck(); setInterval(D.feedCheck,30*60000);
-  if(window.innerWidth<=1180&&window.innerWidth>860){ $('dock').classList.add('closed'); document.body.classList.add('dock-closed'); } };
+  var tick=function(){ var d=new Date(); $('clock').textContent=D.clockText?D.clockText(d):d.toISOString().slice(11,16)+'Z · '+d.toLocaleDateString('en-US',{month:'short',day:'numeric'}); }; tick(); setInterval(tick,30000); (function(){ var go=function(){ D.feedCheck(); }; if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',go); else setTimeout(go,0); })(); setInterval(function(){ D.feedCheck(); },30*60000);
+   };
 D.boot();
 </script>
 <script>
@@ -1696,7 +1923,7 @@ D.NP = (function(){
     var get=function(ids){ return [].concat(ids==null?[]:ids).map(function(i){ return D.ev(String(i).trim()); }).filter(function(e){ if(!e||used[e.id]) return false; used[e.id]=1; return true; }); };
     var paras=function(b,max){ return (Array.isArray(b)?b:String(b||'').split(/\n+/)).map(clean).filter(Boolean).slice(0,max); };
     var S=function(o,big){ if(!o) return null; var evs=get(o.ids||o.id); if(!evs.length) return null; var b=paras(o.body||o.text,8); if(!b.length) b=[clean(evs[0].summary)||clean(evs[0].title)];
-      return {evs:evs,kicker:clean(o.kicker||D.CAT[evs[0].cat]||'News').slice(0,40),headline:clean(o.headline||evs[0].title).slice(0,big?130:110),deck:clean(o.deck).slice(0,240),dateline:clean(o.dateline).slice(0,40),body:b}; };
+      return {evs:evs,kicker:clean(o.kicker||D.CAT[evs[0].cat]||'News').slice(0,40),headline:clean(o.headline||evs[0].title).slice(0,big?130:110),deck:clean(o.deck).slice(0,240),dateline:clean(o.dateline).slice(0,40),body:b,short:clean(o.short).slice(0,280),why:clean(o.why).slice(0,220)}; };
     var lead=S(raw.lead,true); if(!lead) return null; var list=function(a,max){ return (Array.isArray(a)?a:[]).map(function(x){ return S(x); }).filter(Boolean).slice(0,max); };
     var st=list(raw.stories,9), br=list(raw.briefs,14), v=raw.view&&paras(raw.view.body,6);
     return {by:'ai',lead:lead,stories:st,briefs:br,view:v&&v.length?{headline:clean(raw.view.headline||'Where this is heading').slice(0,100),body:v}:null}; };
@@ -1737,10 +1964,10 @@ D.paperPDF = function(){ var L=D.ui.paper; if(!L){ D.toast('Nothing to export ye
 D.NP.prompt = function(){ var Tt=D.threat(), NL='\n', evs=D.NP.rank().slice(0,60).sort(function(a,b){ return dnum(b.date)-dnum(a.date); });
   var led=evs.map(function(e){ return e.id+' | '+e.date+' | '+e.status+' | '+(D.CAT[e.cat]||e.cat)+' | severity '+(e.sev||1)+' of 5 | '+e.title+' | '+(e.region||'no region')+NL+'  summary: '+(e.summary||'none')+(e.note?NL+'  caveat: '+e.note:'')+NL+'  sources: '+((e.sources||[]).map(function(s){ return s.name; }).join('; ')||'none'); }).join(NL);
   var fc=D.S.forecasts.filter(function(f){ return f.outcome==null; }).sort(function(a,b){ return dnum(a.due)-dnum(b.due); }).slice(0,12).map(function(f){ return f.id+' | '+Math.round(f.p*100)+'% | due '+f.due+' | '+f.q; }).join(NL)||'none';
-  var lay=['@@LEAD E-000, E-000','KICKER: [two or three words]','HEADLINE: [at most 11 words]','DECK: [one sentence, at most 28 words]','DATELINE: [the city in capitals if the ledger names one, otherwise nothing]','','[4 or 5 paragraphs, 170 to 210 words in all, one blank line between paragraphs]','','@@STORY E-000','KICKER: [two or three words]','HEADLINE: [at most 10 words]','DATELINE: [as above]','','[2 or 3 paragraphs, 70 to 100 words in all]','','@@BRIEF E-000','HEADLINE: [at most 8 words]','','[one or two sentences, at most 35 words]','','@@VIEW','HEADLINE: [at most 9 words]','','[3 paragraphs, 110 to 150 words in all: where things are heading, what is loud but unproven, and what to watch next, using the forecast odds]','','@@END'].join(NL);
+  var lay=['@@LEAD E-000, E-000','KICKER: [two or three words]','HEADLINE: [at most 11 words]','SHORT: [the whole story in one or two plain sentences, at most 32 words, for a reader with ten seconds]','WHY: [one sentence, at most 22 words: why it matters, or what it does not mean]','DECK: [one sentence, at most 28 words]','DATELINE: [the city in capitals if the ledger names one, otherwise nothing]','','[4 or 5 paragraphs, 170 to 210 words in all, one blank line between paragraphs]','','@@STORY E-000','KICKER: [two or three words]','HEADLINE: [at most 10 words]','SHORT: [as above]','WHY: [as above]','DATELINE: [as above]','','[2 or 3 paragraphs, 70 to 100 words in all]','','@@BRIEF E-000','HEADLINE: [at most 8 words]','','[one or two sentences, at most 35 words]','','@@VIEW','HEADLINE: [at most 9 words]','','[3 paragraphs, 110 to 150 words in all: where things are heading, what is loud but unproven, and what to watch next, using the forecast odds]','','@@END'].join(NL);
   return {system:'You are the editor of Damus News, a newspaper edition built from a checked event ledger. Work as a careful professional reporter. Use only facts that are in the ledger you are given: never add events, numbers, names or quotations that are not there. Keep the verification status of each event visible in the copy. Write Confirmed events as fact. Attribute Reported events to their source. For Unverified, Speculation and Disputed items say plainly that they are not established, and never make one of them the lead story. Carry each caveat into the story it belongs to. Do not inflate fear and do not offer false comfort; aim for realistic planning. Be politically even-handed. Plain newspaper English.',
-    prompt:'Edit the edition dated '+today()+'. Pick the lead by significance and recency: prefer Confirmed events of high severity from the past 7 days. Group closely related events into one story. Leave out what does not earn its space.'+NL+NL+'Write plain text in exactly the layout below. Each block starts with a line that begins with @@, then the block type, then the ledger ids it covers. Square brackets mark what to write in that place; do not print the brackets. No JSON, no markdown, no bullet points and no commentary before or after. Write one @@LEAD block, then 5 @@STORY blocks, then up to 6 @@BRIEF blocks with one event each, then one @@VIEW block, and end with a line that says @@END.'+NL+NL+lay+NL+NL+'Every id must come from the ledger, and each event may appear in only one block. Headlines are sentence case with no full stop. Do not repeat the dateline inside the body.'+NL+NL+'THREAT INDICATOR: '+Tt.level.name+', '+Tt.score+' of 100. By domain: '+Object.keys(D.DOMAIN).map(function(k){ return D.DOMAIN[k].label+' '+Tt.dom[k]; }).join(', ')+'.'+NL+NL+'OPEN FORECASTS (id | odds | due | question):'+NL+fc+NL+NL+'LEDGER (id | date | status | category | severity | title | region):'+NL+led}; };
-D.NP.parse = function(text){ var t=String(text||''), out={stories:[],briefs:[]}, cur=null, ended=false, keys={KICKER:'kicker',HEADLINE:'headline',DECK:'deck',DATELINE:'dateline'};
+    prompt:'Edit the edition dated '+today()+'. Pick the lead by significance and recency: prefer Confirmed events of high severity from the past 7 days. Group closely related events into one story. Leave out what does not earn its space.'+NL+NL+'Write plain text in exactly the layout below. Each block starts with a line that begins with @@, then the block type, then the ledger ids it covers. Square brackets mark what to write in that place; do not print the brackets. No JSON, no markdown, no bullet points and no commentary before or after. Write one @@LEAD block, then 5 @@STORY blocks, then up to 6 @@BRIEF blocks with one event each, then one @@VIEW block, and end with a line that says @@END.'+NL+NL+lay+NL+NL+'Every id must come from the ledger, and each event may appear in only one block. Headlines are sentence case with no full stop. Do not repeat the dateline inside the body. SHORT and WHY are shown on their own to people who will not read the story: use everyday words, spell out abbreviations, say how sure the story is when it is not confirmed, and never state anything more firmly than its status allows.'+NL+NL+'THREAT INDICATOR: '+Tt.level.name+', '+Tt.score+' of 100. By domain: '+Object.keys(D.DOMAIN).map(function(k){ return D.DOMAIN[k].label+' '+Tt.dom[k]; }).join(', ')+'.'+NL+NL+'OPEN FORECASTS (id | odds | due | question):'+NL+fc+NL+NL+'LEDGER (id | date | status | category | severity | title | region):'+NL+led}; };
+D.NP.parse = function(text){ var t=String(text||''), out={stories:[],briefs:[]}, cur=null, ended=false, keys={KICKER:'kicker',HEADLINE:'headline',DECK:'deck',DATELINE:'dateline',SHORT:'short',WHY:'why'};
   if(t.indexOf('@@')<0){ try{ var j=D.json(t); return j&&j.lead?j:null; }catch(e){ return null; } }
   var unb=function(s){ return s.replace(/^\[(.*)\]$/,'$1').trim(); };
   var close=function(cut){ if(!cur) return; var ps=cur.buf.join('\n').split(/\n\s*\n/).map(function(p){ return unb(p.replace(/\s+/g,' ').trim()); }).filter(Boolean);
@@ -1752,7 +1979,7 @@ D.NP.parse = function(text){ var t=String(text||''), out={stories:[],briefs:[]},
     if(k){ cur.o[k]=unb(h[2]); return; } if(ln) cur.head=false; cur.buf.push(ln); });
   close(!ended); return out.lead?out:null; };
 D.paperWrite = function(){ if(D.engine()==='none'){ D.toast('Connect Claude in Settings first','warn'); return; } if(D.ai.busy){ D.toast('Claude is busy with another request. Try again in a moment.','warn'); return; } D.ai.busy=true; D.ui.paperErr=null;
-  var say=function(t){ var el=$('np-status'); if(el) el.textContent=t; }, b=$('np-write'), q=D.NP.prompt(), acc='', round=0, via=D.engine()==='api'?'Claude API key, model '+D.ai.model:'built-in Claude connection'; if(b) b.disabled=true; say('Claude is thinking… the first text can take a minute or two');
+  var say=function(t){ var el=$('np-status'); if(el) el.textContent=t; el=$('dn-status'); if(el) el.textContent=t; }, b=$('np-write'), q=D.NP.prompt(), acc='', round=0, via=D.engine()==='api'?'Claude API key, model '+D.ai.model:'built-in Claude connection'; if(b) b.disabled=true; say('Claude is thinking… the first text can take a minute or two');
   var ask=function(msgs){ return D.ask({system:q.system,messages:msgs,max:4500,onText:function(t){ say('Claude is writing the edition… '+(acc.length+String(t||'').length).toLocaleString('en-US')+' characters'+(round?', part '+(round+1):'')); }}).then(function(r){ var t=String(r.text||''); acc+=(acc&&/^\s*@@/.test(t)&&!/\n$/.test(acc)?'\n':'')+t;
       var done=/@@\s*END/i.test(acc)||(/@@\s*VIEW/i.test(acc)&&/[.!?"')”’][\s`*]*$/.test(acc));
       if(acc.indexOf('@@')>=0&&!done&&round<2){ round++; return ask([{role:'user',content:q.prompt},{role:'assistant',content:acc},{role:'user',content:'Your reply stopped before @@END. Continue from exactly where it stopped, without repeating anything already written, keep the same layout, and finish with @@END.'}]).catch(function(){ return acc; }); }
@@ -1761,7 +1988,7 @@ D.paperWrite = function(){ if(D.engine()==='none'){ D.toast('Connect Claude in S
     .then(function(text){ var raw=D.NP.parse(text); if(!raw||!D.NP.norm(raw)){ D.ui.paperErr={why:!text.trim()?'Claude sent back an empty reply.':text.indexOf('@@')<0?'The reply did not follow the edition layout.':'The reply had no lead story tied to an event in the ledger.',raw:text,via:via}; throw new Error('Claude’s draft could not be used. Details are shown under the buttons.'); }
       D.S.paper={at:new Date().toISOString(),sig:D.NP.sig(),ed:raw}; D.save(); if(D.arch) D.arch.keep(false); D.toast(/@@\s*(END|VIEW)/i.test(text)||text.indexOf('@@')<0?'Edition written':'Edition written, but the reply was cut short, so it is shorter than usual','ok',4200); })
     .catch(function(e){ var msg=(e&&e.message)||'Claude request failed'; if(!D.ui.paperErr) D.ui.paperErr={why:msg,raw:acc,via:via}; D.toast(msg,'bad',5200); })
-    .then(function(){ D.ai.busy=false; if(D.ui.open==='paper') D.render.paper(); }); };
+    .then(function(){ D.ai.busy=false; if(D.ui.open==='paper') D.render.paper(); else if(D.ui.open==='news'&&D.render.news) D.render.news(); }); };
 D.paperShow = D.render.paper;
 D.render.paper = function(){ D.paperShow(); var er=D.ui.paperErr, p=document.querySelector('#body-paper .panel'); if(!er||!p) return; var d=document.createElement('div'), raw=String(er.raw||'');
   d.innerHTML='<div class="banner" style="margin-top:10px"><b>The last attempt did not produce an edition.</b> '+esc(er.why)+(raw?' <button class="btn sm" style="margin-left:6px" onclick="D.copy(D.ui.paperErr.raw)">Copy reply</button>':'')+'</div>'+(er.via?'<p class="note" style="margin-top:8px">Connection used: '+esc(er.via)+'.</p>':'')+(raw?'<details style="margin-top:8px"><summary class="note" style="cursor:pointer">Show what Claude sent back ('+raw.length.toLocaleString('en-US')+' characters)</summary><pre class="out" style="max-height:280px;overflow:auto;margin-top:8px">'+esc(raw.slice(0,12000))+'</pre></details>':'');
@@ -1809,7 +2036,7 @@ D.arch = (function(){
   A.del = function(id){ return run('readwrite',function(s){ return s.delete(id); }); };
   A.list = function(){ return D.S.editions||[]; };
   A.find = function(id){ return A.list().filter(function(x){ return x.id===id; })[0]||null; };
-  function slim(s){ return s?{ids:(s.evs||[]).map(function(e){ return e.id; }),kicker:s.kicker||'',headline:s.headline||'',deck:s.deck||'',dateline:s.dateline||'',body:(s.body||[]).slice()}:null; }
+  function slim(s){ return s?{ids:(s.evs||[]).map(function(e){ return e.id; }),kicker:s.kicker||'',headline:s.headline||'',deck:s.deck||'',dateline:s.dateline||'',body:(s.body||[]).slice(),short:s.short||'',why:s.why||''}:null; }
   A.pack = function(ed){ return {lead:slim(ed.lead),stories:(ed.stories||[]).map(slim),briefs:(ed.briefs||[]).map(slim),view:ed.view?{headline:ed.view.headline||'',body:(ed.view.body||[]).slice()}:null}; };
   A.unpack = function(en){ var ed=D.NP.norm(en.ed); if(ed){ ed.by=en.by==='ai'?'ai':'wire'; ed.at=en.at; } return ed; };
   /* save the edition on screen; printed=true when it has just been exported as a PDF */
@@ -2030,6 +2257,505 @@ D.render.web = function(){ D.web.render(); };
   var r0=D.refresh; D.refresh=function(){ W.scan(); return r0.apply(this,arguments); };
   W.scan(); D.save(); D.renderHub();
   setInterval(function(){ var n=W.scan(); if(n){ D.save(); D.renderHub(); } if(D.ui.open==='web'){ if(n) D.render.web(); else { var t=$('wb-live-t'); if(t) t.textContent=W.liveText(); } } },5000);
+})();
+/* ── Complete update before a new edition. "Write edition with Claude" now runs three steps:
+      1. read the latest daily feed; 2. have Claude check every upload not yet reviewed (claims waiting in the Drop Zone queue and events filed from uploads) against the existing events and PROPOSE changes;
+      3. after Ryan approves or skips each proposal, apply the approved ones (the threat meter recalculates from the ledger) and write the edition.
+      Nothing is changed without approval. An upload can never propose Confirmed. State: D.ui.cu (this run), D.S.cuSeen (uploads already reviewed), D.S.cuLast (what the last run applied). ── */
+D.cu = (function(){ var C={MAXSRC:24}, REL={corroborates:'Corroborates',contradicts:'Contradicts',develops:'New development'};
+  var write0=D.paperWrite;
+  function lab(k){ return (D.STATUS[k]||{}).label||k; }
+  function draw(){ if(D.ui.open==='paper') D.render.paper(); else if(D.ui.open==='news'&&D.render.news) D.render.news(); }
+  C.sources = function(){ var seen=D.S.cuSeen||{}, out=[], cut=Date.now()-14*DAY;
+    (D.S.queue||[]).forEach(function(c){ if(!seen[c.qid]) out.push({key:c.qid,kind:'claim',title:c.title,date:c.date||'',status:c.status,summary:c.summary||'',region:c.region||'',who:c.attributed_to||'',file:c.file,at:c.at,self:c.matches||''}); });
+    D.S.events.forEach(function(e){ if(seen[e.id]||!/^upload /.test(String(e.origin||''))) return; var h=(e.hist||[])[0]; if(h&&dnum(h.at)<cut) return; out.push({key:e.id,kind:'event',title:e.title,date:e.date,status:e.status,summary:e.summary||'',region:e.region||'',who:'',file:String(e.origin).replace(/^upload /,''),at:null,self:e.id}); });
+    return out.slice(-C.MAXSRC); };
+  C.srcName = function(s){ var st=s.at?D.stamp(s.at):''; return 'Upload: '+s.file+(st&&s.file.indexOf(st)<0?', uploaded '+st:''); };
+  C.prompt = function(src){ return 'NEW UPLOADED MATERIAL (not yet checked against the ledger):\n'+src.map(function(s){ return s.key+' | '+(s.date||'no date')+' | first-pass status '+s.status+' | '+s.title+' ('+(s.region||'no place')+')'+(s.who?' | attributed to '+s.who:' | no attribution')+' | from '+s.file+(s.kind==='event'?' | already filed as this ledger event':'')+'\n   '+s.summary; }).join('\n')+
+    '\n\nEXISTING LEDGER:\n'+D.digest(70)+
+    '\n\nTask: for each item of new material, decide whether it bears on a DIFFERENT, already existing ledger event: it corroborates that event, contradicts it, or is a new development of it. Propose a change to the existing event only where the material justifies one. Be conservative; most material changes nothing, and an empty list is a good answer.\nLimits: uploaded material alone never justifies CONFIRMED. It may justify raising UNVERIFIED or SPECULATION to REPORTED only when it is attributed to a named outlet or named official. It may justify DISPUTED when it directly contradicts the event with an attributed account. Severity may move by one step at most. Opinion, theory or satire never changes status or severity. Never propose a change to the item itself.\n\nReturn only JSON: {"proposals":[{"source":"id of the new material","target":"existing ledger id","relation":"corroborates|contradicts|develops","status":"REPORTED or DISPUTED, or empty to keep","sev":number or null,"note":"one sentence to add to the event caveat, or empty","why":"one sentence: what in the material supports this"}]}'; };
+  C.clean = function(j,src){ var by={}, out=[], dup={}; src.forEach(function(s){ by[s.key]=s; });
+    ((j&&j.proposals)||[]).forEach(function(p){ var s=by[String(p.source||'').trim()], e=D.ev(String(p.target||'').trim()); if(!s||!e||e.id===s.self||e.id===s.key||dup[s.key+'>'+e.id]) return;
+      var rel=REL[p.relation]?p.relation:'develops', st=String(p.status||'').toUpperCase(), sev=p.sev==null||p.sev===''?null:Math.round(+p.sev);
+      if(st==='REPORTED'){ if(e.status!=='UNVERIFIED'&&e.status!=='SPECULATION') st=''; } else if(st==='DISPUTED'){ if(e.status==='DISPUTED'||rel!=='contradicts') st=''; } else st='';
+      if(s.status==='SPECULATION'){ st=''; sev=null; } if(!s.who) st=''; if(st==='REPORTED'&&s.status!=='REPORTED') st='';
+      if(sev!=null&&isFinite(sev)){ sev=Math.max(1,Math.min(5,Math.max((e.sev||1)-1,Math.min((e.sev||1)+1,sev)))); if(sev===(e.sev||1)) sev=null; } else sev=null;
+      var note=String(p.note||'').trim().slice(0,320), why=String(p.why||'').trim().slice(0,320); if(!st&&sev==null&&!note) return;
+      dup[s.key+'>'+e.id]=1; out.push({src:s,target:e.id,rel:rel,status:st,sev:sev,note:note,why:why,ok:false}); });
+    return out.slice(0,30); };
+  /* what the meter would read with the approved proposals applied; the ledger is put back exactly */
+  C.preview = function(props){ var keep=[], T; try{ props.forEach(function(p){ if(!p.ok) return; var e=D.ev(p.target); if(!e) return; keep.push([e,e.status,e.sev]); if(p.status) e.status=p.status; if(p.sev!=null) e.sev=p.sev; }); T=D.threat(); } finally { keep.reverse().forEach(function(k){ k[0].status=k[1]; k[0].sev=k[2]; }); } return T; };
+  C.start = function(){ if(D.engine()==='none'){ D.toast('Connect Claude in Settings first','warn'); return; } if(D.ai.busy){ D.toast('Claude is busy with another request. Try again in a moment.','warn'); return; } if(D.ui.cu&&D.ui.cu.stage!=='error') return;
+    var cu=D.ui.cu={stage:'feed',feed:null,props:[],src:[]}; D.ui.paperErr=null; draw();
+    fetch('feed.json',{cache:'no-store'}).then(function(r){ if(!r.ok) throw new Error('x'); return r.json(); }).then(function(feed){ var n=D.feedApply(feed); D.S.checked=new Date().toISOString(); cu.feed=n; if(n) D.refresh(); else D.save(); },function(){ cu.feed=-1; })
+      .then(function(){ if(D.ui.cu!==cu) return; C.relate(); }); };
+  C.relate = function(){ var cu=D.ui.cu; if(!cu) return; cu.src=C.sources(); cu.err=null; if(!cu.src.length){ C.finish(); return; }
+    cu.stage='relate'; draw(); D.ai.busy=true;
+    D.ask({system:D.RULES,prompt:C.prompt(cu.src),max:3000,tier:'complex'}).then(function(r){ return C.clean(D.json(r.text),cu.src); })
+      .then(function(props){ D.ai.busy=false; if(D.ui.cu!==cu) return; cu.props=props; if(!props.length){ C.markSeen(cu); C.finish(); return; } cu.stage='review'; draw(); },
+            function(e){ D.ai.busy=false; if(D.ui.cu!==cu) return; cu.stage='error'; cu.err=(e&&e.message)||'Claude request failed'; draw(); }); };
+  C.markSeen = function(cu){ var seen=D.S.cuSeen=D.S.cuSeen||{}; cu.src.forEach(function(s){ seen[s.key]=1; }); var ks=Object.keys(seen); if(ks.length>600) ks.slice(0,ks.length-600).forEach(function(k){ delete seen[k]; }); };
+  C.toggle = function(i){ var p=D.ui.cu&&D.ui.cu.props[i]; if(p){ p.ok=!p.ok; draw(); } };
+  C.all = function(v){ var cu=D.ui.cu; if(cu){ cu.props.forEach(function(p){ p.ok=!!v; }); draw(); } };
+  C.cancel = function(){ D.ui.cu=null; draw(); };
+  C.what = function(p,e){ var a=[]; if(p.status) a.push('Status '+lab(e.status)+' → '+lab(p.status)); if(p.sev!=null) a.push('Severity '+(e.sev||1)+' → '+p.sev); if(p.note) a.push('Caveat added'); return a.join(' · '); };
+  /* apply the approved proposals, then write. skip=true writes without applying any */
+  C.apply = function(skip){ var cu=D.ui.cu; if(!cu||cu.stage!=='review') return; var before=D.threat(), done=[];
+    if(!skip) cu.props.forEach(function(p){ if(!p.ok) return; var e=D.ev(p.target); if(!e) return; var what=C.what(p,e), name=C.srcName(p.src);
+      D.log(e,'Complete update, approved: '+REL[p.rel].toLowerCase()+' from '+name.replace(/^Upload: /,'upload ')+(what?'. '+what:''));
+      if(p.status) e.status=p.status; if(p.sev!=null) e.sev=p.sev; if(p.note) e.note=(e.note?e.note+' ':'')+'Update '+(D.stamp(new Date().toISOString()).split(',').slice(0,2).join(',')||fdate(today()))+': '+p.note;
+      e.sources=e.sources||[]; if(!e.sources.some(function(s){ return s.name===name; })) e.sources.push({name:name,url:''});
+      done.push({id:e.id,title:e.title,what:what,rel:p.rel,from:p.src.title}); });
+    C.markSeen(cu); if(done.length) D.refresh(); var after=D.threat();
+    D.S.cuLast={at:new Date().toISOString(),done:done,skipped:cu.props.length-done.length,before:{score:before.score,level:before.level.name},after:{score:after.score,level:after.level.name}}; D.save(); C.finish(); };
+  C.finish = function(){ var cu=D.ui.cu; if(cu&&cu.stage!=='review'){ var T=D.threat(); D.S.cuLast={at:new Date().toISOString(),done:[],skipped:0,none:true,before:{score:T.score,level:T.level.name},after:{score:T.score,level:T.level.name}}; }
+    C.note=C.editionNote(); D.ui.cu=null; draw(); write0(); C.note=''; };
+  C.editionNote = function(){ var L=D.S.cuLast; if(!L||!L.done||!L.done.length) return '';
+    return 'CHANGES APPROVED IN THE UPDATE JUST BEFORE THIS EDITION (already applied to the ledger above). Where one of these events appears in the edition, say plainly what changed and that it rests on uploaded material:\n'+L.done.map(function(d){ return d.id+': '+d.what+' ('+REL[d.rel].toLowerCase()+', from uploaded material: '+d.from+')'; }).join('\n')+'\nThreat indicator before the update '+L.before.level+' '+L.before.score+', after '+L.after.level+' '+L.after.score+'.'; };
+  C.steps = function(cu){ var f=cu.feed; return '<p class="note"><b>Step 1, daily feed:</b> '+(f==null?'checking…':f<0?'could not be reached from here; using what is already loaded.':f?f+' new item'+(f===1?'':'s')+' applied.':'nothing new.')+'</p>'; };
+  C.panel = function(){ var cu=D.ui.cu, h='';
+    if(!cu){ var L=D.S.cuLast; if(!L) return ''; return '<div class="panel" id="cu-last"><div class="p-h">Last complete update<span class="r">'+esc(D.stamp(L.at))+'</span></div>'+(L.done&&L.done.length?'<div class="cu-list">'+L.done.map(function(d){ return '<div class="cu-row on"><div class="cu-chg">'+esc(d.id+' · '+d.title)+'</div><div class="ev-s">'+esc(d.what||'Upload added as a source')+' · '+esc(REL[d.rel].toLowerCase())+' from: '+esc(d.from)+'</div></div>'; }).join('')+'</div><p class="cu-meter">Threat meter '+esc(L.before.level+' '+L.before.score)+' → <b>'+esc(L.after.level+' '+L.after.score)+'</b></p>':'<p class="note">'+(L.none?'No uploaded material needed a change to an existing event.':'No changes were approved'+(L.skipped?' ('+L.skipped+' proposed, none applied)':'')+'.')+' Threat meter '+esc(L.after.level+' '+L.after.score)+'.</p>')+'</div>'; }
+    h='<div class="panel" id="cu-panel"><div class="p-h">Complete update before the new edition<span class="r">'+(cu.stage==='review'?'YOUR APPROVAL NEEDED':'WORKING')+'</span></div>'+C.steps(cu);
+    if(cu.stage==='feed') return h+'</div>';
+    if(cu.stage==='relate') return h+'<p class="note"><b>Step 2, uploads:</b> Claude is checking '+cu.src.length+' uploaded item'+(cu.src.length===1?'':'s')+' against the existing events… this can take a minute.</p></div>';
+    if(cu.stage==='error') return h+'<div class="banner" style="margin-top:8px"><b>Step 2 did not finish.</b> '+esc(cu.err)+(/[.!?]$/.test(cu.err)?'':'.')+' Nothing was changed.</div><div class="row" style="margin-top:10px"><button class="btn cy" onclick="D.cu.relate()">Try again</button><button class="btn" onclick="D.cu.writeOnly()">Write the edition without it</button><button class="btn" onclick="D.cu.cancel()">Cancel</button></div></div>';
+    var n=cu.props.filter(function(p){ return p.ok; }).length, T0=D.threat(), T1=C.preview(cu.props);
+    h+='<p class="note"><b>Step 2, uploads:</b> Claude checked '+cu.src.length+' uploaded item'+(cu.src.length===1?'':'s')+' and proposes '+cu.props.length+' change'+(cu.props.length===1?'':'s')+' to existing events. Nothing is applied until you approve it. Uploaded material alone can never make an event Confirmed.</p><div class="cu-list">'+
+      cu.props.map(function(p,i){ var e=D.ev(p.target); if(!e) return ''; return '<div class="cu-row '+(p.ok?'on':'')+'"><div class="ev-top" style="margin:0">'+D.chip(e.status)+'<span class="chip '+(p.rel==='contradicts'?'rd':p.rel==='corroborates'?'sg':'cy')+'">'+REL[p.rel].toUpperCase()+'</span><span class="ev-date">'+esc(e.id)+'</span></div><div class="ev-t">'+esc(e.title)+'</div><div class="cu-chg">Proposed: '+esc(C.what(p,e)||'add the upload as a source')+'</div>'+(p.note?'<div class="ev-s">Caveat to add: '+esc(p.note)+'</div>':'')+'<div class="ev-s">Why: '+esc(p.why||'no reason given')+'</div><div class="ev-s">From '+esc(p.src.file)+(p.src.at?D.upWhen(p.src.at):'')+': '+esc(p.src.title)+' ('+lab(p.src.status)+(p.src.who?', attributed to '+esc(p.src.who):', no attribution')+')</div><div class="row" style="margin-top:4px"><button class="btn '+(p.ok?'sg':'')+' sm" onclick="D.cu.toggle('+i+')" aria-pressed="'+p.ok+'">'+(p.ok?'Approved ✓':'Approve')+'</button></div></div>'; }).join('')+'</div>'+
+      '<p class="cu-meter">Threat meter now <b>'+esc(T0.level.name+' '+T0.score)+'</b>'+(n?' → with the '+n+' approved change'+(n===1?'':'s')+': <b>'+esc(T1.level.name+' '+T1.score)+'</b>':' · no changes approved yet')+'</p>'+
+      '<div class="row"><button class="btn cy" onclick="D.cu.apply(false)">'+(n?'Apply '+n+' and write the edition':'Write the edition with no changes')+'</button><button class="btn sm" onclick="D.cu.all(true)">Approve all</button><button class="btn sm" onclick="D.cu.all(false)">Clear</button><button class="btn sm" onclick="D.cu.cancel()">Cancel</button></div><p class="note" style="margin-top:8px">Proposals you leave unapproved are not offered again for the same upload. Cancel keeps them for next time.</p></div>';
+    return h; };
+  C.writeOnly = function(){ D.ui.cu=null; C.note=''; draw(); write0(); };
+  return C;
+})();
+(function(){ D.paperWrite=function(){ D.cu.start(); };
+  var p1=D.NP.prompt; D.NP.prompt=function(){ var q=p1(); if(D.cu.note) q.prompt+='\n\n'+D.cu.note; return q; };
+  var show=D.render.paper; D.render.paper=function(){ show(); if(D.ui.archView) return; var h=D.cu.panel(), w=document.querySelector('#body-paper .np-wrap'), first=w&&w.querySelector('.panel'); if(!h||!first) return; var d=document.createElement('div'); d.innerHTML=h; first.insertAdjacentElement('afterend',d.firstChild); var b=$('np-write'); if(b&&D.ui.cu) b.disabled=true; };
+})();
+/* ── Editions delivered with an update: an update published from chat can carry a finished newspaper edition (runs[].edition in feed.json).
+      Order matters. Before anything in the ledger changes, the copy on screen is saved to the edition archive. Then the update is applied. Then the delivered edition becomes today's edition and is archived too. ── */
+(function(){ var A=D.arch, WEEK=7*864e5;
+  /* save the edition on screen whatever it is (Claude's or the ledger's), exactly as it is typeset now */
+  A.snapshot = function(why){ try{ var S=D.S, now=new Date().toISOString(), list=S.editions=S.editions||[], st=S.paper, ai=!!(st&&st.ed&&D.NP.norm(st.ed)), ed=D.paperEdition(); if(!ed||!ed.lead) return null;
+      var key=(ai?'ai:'+st.at:'wire:'+D.NP.iso(new Date()))+':'+D.NP.sig(), en=list.filter(function(x){ return x.key===key; })[0];
+      if(!en){ var T=D.threat(); S.edSeq=(S.edSeq||0)+1;
+        en={id:'ED-'+Date.now().toString(36)+'-'+S.edSeq,no:S.edSeq,key:key,at:ai&&st.at?st.at:now,saved:now,by:ai?'ai':'wire',printed:null,prints:0,head:ed.lead.headline,threat:{score:T.score,level:T.level.name},n:S.events.length,ed:A.pack(ed)};
+        list.push(en); A.put(en.id,D.NP.layout(ed)); while(list.length>A.MAX){ var old=list.shift(); A.del(old.id); } }
+      if(why&&!en.why) en.why=why; return en; }catch(e){ return null; } };
+  var apply0=D.feedApply;
+  D.feedApply = function(feed){ var S=D.S, ap=S.applied=S.applied||{}, runs=feed&&Array.isArray(feed.runs)?feed.runs:[], extra=0;
+    var fresh=runs.filter(function(r){ return r&&r.edition&&r.edition.id&&r.edition.lead&&!ap[r.edition.id]; });
+    var returning=!!(S.paper||Object.keys(ap).length), prev=fresh.length&&returning?A.snapshot('update'):null;   /* a browser that has never held an edition has nothing to save */
+    var n=apply0.apply(this,arguments);
+    if(fresh.length){ var r=fresh[fresh.length-1], raw=r.edition, at=raw.at||r.at||new Date().toISOString(), t=Date.parse(at)||0, cur=S.paper&&S.paper.at?Date.parse(S.paper.at)||0:0;
+      fresh.forEach(function(x){ ap[x.edition.id]=1; });
+      try{ if(D.NP.norm(raw)&&t>cur&&Date.now()-t<WEEK){
+          S.paper={at:at,sig:runs[runs.length-1]===r?D.NP.sig():'',ed:{lead:raw.lead,stories:raw.stories||[],briefs:raw.briefs||[],view:raw.view||null},via:'update',eid:String(raw.id),rev:+raw.rev||1,run:r.date||'',prev:prev?prev.no:0};
+          var av=D.ui.archView; D.ui.archView=null; var en=A.keep(false); D.ui.archView=av; if(en) en.why='delivered';
+          extra++; } }catch(e){} }
+    /* a later revision of the edition already on screen (same id, higher rev) replaces its text in place: no new version, no second save */
+    runs.forEach(function(r){ var e=r&&r.edition, st=S.paper; if(!e||!e.id||!st||st.via!=='update'||st.eid!==String(e.id)||(+e.rev||1)<=(+st.rev||1)) return;
+      try{ var ed={lead:e.lead,stories:e.stories||[],briefs:e.briefs||[],view:e.view||null}, ok=D.NP.norm(ed); if(!ok) return; st.ed=ed; st.rev=+e.rev;
+        (S.editions||[]).forEach(function(x){ if(x.by==='ai'&&x.at===st.at){ x.ed=A.pack(ok); x.head=ok.lead.headline; } }); extra++; }catch(err){} });
+    return n+extra; };
+  var row0=A.row;
+  A.row = function(en){ var h=row0(en), c=en.why==='update'?'<span class="chip am" title="Saved automatically just before an update replaced it">SAVED BEFORE UPDATE</span>':en.why==='delivered'?'<span class="chip sg" title="Written in chat and delivered with an update">CAME WITH UPDATE</span>':''; return c?h.replace('<span class="ev-date">',c+'<span class="ev-date">'):h; };
+  var show=D.render.paper;
+  D.render.paper = function(){ show.apply(this,arguments); var st=D.S.paper; if(D.ui.archView||!st||st.via!=='update') return;
+    var s=$('np-status'), w=document.querySelector('#body-paper .np-wrap'), first=w&&w.querySelector('.panel'); if(!s||!first||s.textContent.indexOf('written by Claude')!==0) return;
+    s.textContent='came with an update · '+D.stamp(st.at);
+    var p=document.createElement('p'); p.className='note np-upd';
+    p.innerHTML='<b>This edition came with the update'+(st.run?' of '+esc(fdate(st.run)):'')+'.</b> Claude wrote it in chat from the updated ledger after checking the new material against open reporting.'+(st.prev?' The copy that was here before is saved in the edition archive below as No. '+st.prev+'.':'');
+    first.appendChild(p); };
+})();
+/* ── DMS-13 DAMUS News: the short version of the edition.
+      One edition feeds two views and two exports. The edition is the one the Newspaper shows (Claude's, or the ledger's when Claude has not written one).
+      Claude writes it once; each lead and story carries SHORT (the plain summary) and WHY lines that this tile shows first, with the full story behind a Details button.
+      The edition archive is the version history. Exports: the newspaper PDF, or a simple brief (one HTML file) with the numbers. ── */
+D.news = (function(){ var N={}, A=D.arch, SEC=['CONFLICT','SECURITY','CYBER','INFRA','WEATHER','ECON','POLITICAL'];
+  var COL={CONFLICT:'--red',SECURITY:'--amber',CYBER:'--violet',INFRA:'--orange',WEATHER:'--cyan',ECON:'--sage',POLITICAL:'--dn-blue'}, DCOL={conflict:'--red',homeland:'--amber',cyber:'--violet',climate:'--cyan',economic:'--sage',political:'--dn-blue'};
+  var HEX={'--red':'#c8372d','--amber':'#a8690f','--violet':'#6d4bd1','--orange':'#c25e12','--cyan':'#0b7fa8','--sage':'#1f8a5c','--dn-blue':'#2456c7','--txd':'#5b6878'};
+  var PROOF={CONFIRMED:{n:3,say:'Confirmed'},REPORTED:{n:2,say:'Reported, not confirmed'},UNVERIFIED:{n:1,say:'Unverified claim'},SPECULATION:{n:0,say:'Opinion or theory'},DISPUTED:{n:0,say:'Disputed'}};
+  var IMPACT=['','minor','local','significant','major','extreme'], ABBR={Mr:1,Mrs:1,Ms:1,Dr:1,Gen:1,Sen:1,Rep:1,Gov:1,St:1,No:1,vs:1,Jr:1,Sr:1,Lt:1,Col:1,Brig:1,Adm:1,Capt:1,Inc:1,Co:1};
+  var ICO={rail:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M9 4.5v15M15.5 9.5 13 12l2.5 2.5"/></svg>',
+    exp:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9.5l5-5 5 5M7 14.5l5 5 5-5"/></svg>', col:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5l5 5 5-5M7 19.5l5-5 5 5"/></svg>',
+    chev:'<svg class="dn-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>'};
+  function U(){ return D.ui.dn||(D.ui.dn={open:{},sel:{t:'front'},det:{},rail:false,ver:null}); }
+  function cap(s){ s=String(s||'').toLowerCase(); return s.charAt(0).toUpperCase()+s.slice(1); }
+  function pct(p){ return Math.round((+p||0)*100); }
+  function likely(p){ return p>=.85?'Very likely':p>=.6?'Likely':p>=.4?'Could go either way':p>=.15?'Unlikely':'Very unlikely'; }
+  function cut(s,n){ s=String(s||''); return s.length>n?s.slice(0,n-1).replace(/\s+\S*$/,'')+'…':s; }
+  function link(s){ return s.url&&/^https?:\/\//i.test(s.url)?'<a href="'+esc(s.url)+'" target="_blank" rel="noopener">'+esc(s.name)+'</a>':'<span>'+esc(s.name)+'</span>'; }
+  /* the first sentence or two of a text, for stories that carry no SHORT line */
+  N.lede = function(text,max){ var t=D.NP.clean(text), re=/[.!?]["')”’]*(?=\s|$)/g, m, ends=[]; max=max||230;
+    while((m=re.exec(t))){ var w=(t.slice(0,m.index).match(/([A-Za-z]+)$/)||[])[1]||''; if(t.charAt(m.index)==='.'&&(w.length===1||ABBR[w])) continue; ends.push(m.index+m[0].length); if(ends.length>=2) break; }
+    if(!ends.length||ends[0]>max+60) return cut(t,max);
+    return t.slice(0,ends[1]&&ends[1]<=max&&ends[0]<90?ends[1]:ends[0]); };
+  N.sources = function(o){ var out=[], seen={}; o.evs.forEach(function(e){ (e.sources||[]).forEach(function(s){ var k=s.url||s.name; if(!k||seen[k]) return; seen[k]=1; out.push(s); }); }); return out; };
+  N.entry = function(){ var s=D.S.paper; if(!s||!s.at) return null; var l=A.list().filter(function(x){ return x.by==='ai'&&x.at===s.at; }); return l[l.length-1]||null; };
+  /* the edition being read (current, or a saved version) with everything the screens need */
+  N.model = function(){ var u=U(), en=u.ver&&A.find(u.ver), ed=null, meta=null;
+    if(en){ ed=A.unpack(en); if(ed) meta={saved:true,en:en,no:en.no,at:en.at,by:en.by,via:en.why==='delivered'?'update':''}; }
+    if(!ed){ u.ver=null; ed=D.paperEdition(); if(!ed||!ed.lead) return null; var s=D.S.paper, ai=ed.by==='ai', cur=ai?N.entry():null; meta={saved:false,en:cur,no:cur?cur.no:0,at:ai&&s.at?s.at:new Date().toISOString(),by:ai?'ai':'wire',via:ai?s.via||'':'',moved:ai&&s.sig!==D.NP.sig()}; }
+    var items=[], add=function(o,k,kind){ if(!o||!o.evs||!o.evs.length) return; var e=o.evs[0], est=!!(D.STATUS[e.status]||{}).w, weak=o.evs.filter(function(x){ return !(D.STATUS[x.status]||{}).w; }).length, body=(o.body||[]).filter(Boolean);
+      items.push({k:k,kind:kind,o:o,body:body,sec:COL[e.cat]?e.cat:'POLITICAL',status:PROOF[e.status]?e.status:'UNVERIFIED',weak:est?weak:Math.max(0,weak-1),
+        short:o.short||(kind==='lead'&&o.deck)||N.lede(kind==='brief'?body.join(' '):body[0]||e.summary||e.title,kind==='brief'?260:230)}); };
+    add(ed.lead,'L','lead'); (ed.stories||[]).forEach(function(o,i){ add(o,'S'+i,'story'); }); (ed.briefs||[]).forEach(function(o,i){ add(o,'B'+i,'brief'); });
+    if(!items.length) return null;
+    return {ed:ed,meta:meta,items:items,view:ed.view&&ed.view.body&&ed.view.body.length?ed.view:null,T:D.threat()}; };
+  /* what is different from the edition saved before this one */
+  N.diff = function(m){ var list=A.list(), me=m.meta, cur=me.en, prev=null; if(cur){ var i=list.indexOf(cur); prev=i>0?list[i-1]:null; } else prev=list[list.length-1]||null;
+    if(!prev||!prev.ed) return null; var T=m.T, then=prev.threat||{score:0,level:''}, now=me.saved&&cur&&cur.threat?cur.threat:{score:T.score,level:T.level.name}, nNow=me.saved&&cur?cur.n:D.S.events.length, was={}, is={};
+    var blocks=[prev.ed.lead].concat(prev.ed.stories||[]).filter(Boolean); [prev.ed.lead].concat(prev.ed.stories||[],prev.ed.briefs||[]).forEach(function(s){ if(s) (s.ids||[]).forEach(function(x){ was[x]=1; }); });
+    m.items.forEach(function(it){ it.o.evs.forEach(function(e){ is[e.id]=1; }); });
+    return {prev:prev,then:then,now:now,nThen:prev.n,nNow:nNow,added:m.items.filter(function(it){ return !it.o.evs.some(function(e){ return was[e.id]; }); }),gone:blocks.filter(function(s){ return !(s.ids||[]).some(function(x){ return is[x]; }); }),
+      leadSame:!!(prev.ed.lead&&(prev.ed.lead.ids||[]).some(function(x){ return m.items[0].o.evs.some(function(e){ return e.id===x; }); })),line:'Since edition No. '+prev.no+': threat '+then.score+' to '+now.score+', events '+prev.n+' to '+nNow+'.'}; };
+
+  /* ── left panel ── */
+  N.groups = function(m){ var g=[], T=m.T, lead=m.items[0].kind==='lead'?m.items[0]:null, it=function(i){ return {t:'story',k:i.k,label:i.o.headline}; };
+    if(lead) g.push({id:'top',name:'Top story',col:COL[lead.sec],count:'',items:[it(lead)]});
+    SEC.forEach(function(s){ var l=m.items.filter(function(i){ return i.sec===s; }); if(l.length) g.push({id:'sec:'+s,name:D.CAT[s],col:COL[s],count:l.length,items:l.map(it)}); });
+    if(m.view) g.push({id:'view',name:'The Damus View',col:'--txd',count:'',items:[{t:'view',k:'',label:m.view.headline}]});
+    var open=D.S.forecasts.filter(function(f){ return f.outcome==null; }).sort(function(a,b){ return dnum(a.due)-dnum(b.due); }), c=D.counts(), weak=c.UNVERIFIED+c.SPECULATION+c.DISPUTED, ch=N.diff(m);
+    g.push({num:1,id:'threat',name:'Threat level',col:T.level.col,count:T.score,mini:'<div class="dn-mini"><b>'+cap(T.level.name)+'</b>, '+T.score+' of 100</div>'+Object.keys(D.DOMAIN).map(function(k){ return '<div class="dn-mb" style="--c:var('+DCOL[k]+');--w:'+T.dom[k]+'%"><span>'+esc(D.DOMAIN[k].label)+'</span><i></i><span>'+T.dom[k]+'</span></div>'; }).join(''),items:[{t:'threat',k:'',label:'Open the threat level'}]});
+    g.push({num:1,id:'odds',name:'Odds',col:'--cyan',count:open.length,mini:open.slice(0,3).map(function(f){ return '<div class="dn-mini"><b>'+pct(f.p)+'%</b> '+esc(cut(f.q,74))+'</div>'; }).join(''),items:[{t:'odds',k:'',label:'See all the odds'}]});
+    g.push({num:1,id:'proof',name:'Proven or not',col:'--sage',count:'',mini:'<div class="dn-mini"><b>'+c.CONFIRMED+'</b> confirmed, <b>'+c.REPORTED+'</b> reported, <b>'+weak+'</b> not proven</div>',items:[{t:'proof',k:'',label:'See what is not proven'}]});
+    g.push({num:1,id:'changes',name:'What changed',col:'--violet',count:'',mini:'<div class="dn-mini">'+esc(ch?ch.line:'No earlier edition is saved yet.')+'</div>',items:[{t:'changes',k:'',label:'See the changes'}]});
+    return g; };
+  N.panel = function(m){ var u=U(), gs=N.groups(m), any=gs.some(function(g){ return u.open[g.id]; }), num=false;
+    return '<aside class="dn-panel" aria-label="Sections and numbers"><div class="dn-ph"><button class="dn-ic rl" onclick="D.news.rail()" aria-label="'+(u.rail?'Show the panel':'Hide the panel')+'" title="'+(u.rail?'Show the panel':'Hide the panel')+'">'+ICO.rail+'</button><span class="dn-pt">Sections</span><button class="dn-ic" id="dn-all" onclick="D.news.all()" aria-label="'+(any?'Collapse all':'Expand all')+'" title="'+(any?'Collapse all':'Expand all')+'">'+(any?ICO.col:ICO.exp)+'</button></div>'+
+      '<div class="dn-pscroll"><button class="dn-home'+(u.sel.t==='front'?' on':'')+'" onclick="D.news.go(\'front\')">Front page</button>'+gs.map(function(g){ var o=!!u.open[g.id], lab=''; if(g.num&&!num){ num=true; lab='<div class="dn-plab">The numbers</div>'; }
+        return lab+'<div class="dn-g'+(o?' open':'')+'" data-g="'+g.id+'" style="--c:var('+g.col+')"><button class="dn-gh" aria-expanded="'+o+'" onclick="D.news.tog(\''+g.id+'\')"><span class="dn-dot"></span><span class="dn-gn">'+esc(g.name)+'</span>'+(g.count!==''?'<span class="dn-gc">'+g.count+'</span>':'')+ICO.chev+'</button><div class="dn-gi">'+(g.mini||'')+
+          g.items.map(function(x){ return '<button class="dn-it'+(u.sel.t===x.t&&(u.sel.k||'')===x.k?' on':'')+'" onclick="D.news.go(\''+x.t+'\',\''+x.k+'\')">'+esc(x.label)+'</button>'; }).join('')+'</div></div>'; }).join('')+'</div></aside>'; };
+
+  /* ── story pieces ── */
+  N.proof = function(it){ var p=PROOF[it.status]; return '<span class="dn-proof" title="'+esc((D.STATUS[it.status]||{}).def||'')+'"><i class="dn-sw pr'+p.n+'"></i>'+p.say+'</span>'+(it.weak?'<span>Includes '+it.weak+' unproven claim'+(it.weak===1?'':'s')+'</span>':''); };
+  N.odd = function(f){ var done=f.outcome!=null; return '<div class="dn-odd"><div class="dn-pct">'+(done?(f.outcome?'Yes':'No'):pct(f.p)+'%')+'</div><div><div class="dn-oq">'+esc(f.q)+'</div>'+(done?'':'<div class="dn-ob" style="--w:'+pct(f.p)+'%;--c:var('+(DCOL[f.dom]||'--cyan')+')"><i></i></div>')+'<div class="dn-os">'+(done?(f.outcome?'It happened.':'It did not happen.'):likely(f.p)+'. Decided by '+esc(fdate(f.due))+'.')+'</div></div></div>'; };
+  N.detail = function(it){ var o=it.o, ids=o.evs.map(function(e){ return e.id; }), srcs=N.sources(o), sev=Math.max.apply(null,o.evs.map(function(e){ return e.sev||1; })), last=o.evs.slice().sort(function(a,b){ return dnum(b.date)-dnum(a.date); })[0];
+    var fc=D.S.forecasts.filter(function(f){ return (f.basis||[]).some(function(b){ return ids.indexOf(b)>=0; }); }), same=it.kind==='brief'&&it.body.join(' ')===it.short;
+    return (same?'':'<div class="dn-dsec"><h3>The full story</h3>'+it.body.map(function(p,i){ return '<p>'+(i===0&&o.dateline?'<span class="dn-dl">'+esc(o.dateline)+'</span> ':'')+esc(p)+'</p>'; }).join('')+'</div>')+
+      (o.why?'<div class="dn-dsec"><h3>Why it matters</h3><p>'+esc(o.why)+'</p></div>':'')+
+      '<div class="dn-facts"><span><b>'+o.evs.length+'</b> event'+(o.evs.length===1?'':'s')+' behind it</span><span><b>'+srcs.length+'</b> source'+(srcs.length===1?'':'s')+'</span><span>Impact: <b>'+IMPACT[sev]+'</b> ('+sev+' of 5)</span><span>Latest: <b>'+esc(fdate(last.date))+'</b></span></div>'+
+      '<div class="dn-dsec"><h3>What this is based on</h3>'+o.evs.map(function(e){ return '<div class="dn-ev"><div class="ev-top">'+D.chip(e.status)+D.sevBars(e.sev||1)+'<span class="ev-id">'+esc(e.id)+'</span><span class="ev-date">'+esc(fdate(e.date))+'</span></div><div class="dn-evt">'+esc(e.title)+'</div><div class="dn-evs">'+esc(e.summary||'')+'</div>'+(e.note?'<details class="dn-cav"><summary>Caveats and updates</summary><p>'+esc(e.note)+'</p></details>':'')+'<div class="row"><button class="btn sm" onclick="D.news.rec(\''+esc(e.id)+'\')">Open the record</button></div></div>'; }).join('')+'</div>'+
+      (fc.length?'<div class="dn-dsec"><h3>Odds linked to this story</h3>'+fc.map(N.odd).join('')+'</div>':'')+
+      (srcs.length?'<div class="dn-dsec"><h3>Sources</h3><div class="src">'+srcs.map(link).join('')+'</div></div>':''); };
+  N.story = function(it,big,focus){ var u=U(), open=!!u.det[it.k], o=it.o, p=PROOF[it.status];
+    return '<article class="dn-st pr'+p.n+(big?' big':'')+(open?' open':'')+'" id="dn-st-'+it.k+'" style="--c:var('+COL[it.sec]+')"><div class="dn-sec">'+esc(D.CAT[it.sec])+(it.kind==='lead'?'<span class="dn-top">Top story</span>':'')+'</div>'+
+      '<h2 class="dn-h">'+(focus?esc(o.headline):'<button class="dn-hb" onclick="D.news.go(\'story\',\''+it.k+'\')">'+esc(o.headline)+'</button>')+'</h2><p class="dn-short">'+esc(it.short)+'</p>'+
+      '<div class="dn-meta">'+N.proof(it)+'<span>'+esc(fdate(o.evs[0].date))+'</span></div>'+
+      '<div class="dn-acts"><button class="dn-btn" aria-expanded="'+open+'" aria-controls="dn-det-'+it.k+'" onclick="D.news.det(\''+it.k+'\')">'+(open?'Hide details':'Details')+'</button></div>'+
+      '<div class="dn-det" id="dn-det-'+it.k+'"'+(open?'':' hidden')+'>'+(open?N.detail(it):'')+'</div></article>'; };
+  N.viewDetail = function(m){ return '<div class="dn-dsec">'+m.view.body.map(function(p){ return '<p>'+esc(p)+'</p>'; }).join('')+'<p class="dn-foot">'+(m.ed.by==='ai'?'Analysis written by Claude from the ledger.':'Set from the ledger’s own numbers.')+' Odds are estimates, not promises.</p></div>'; };
+  N.viewCard = function(m,focus){ var u=U(), open=focus||!!u.det.V;
+    return '<article class="dn-st'+(focus?' big':'')+(open?' open':'')+'" id="dn-st-V" style="--c:var(--txd)"><div class="dn-sec">The Damus View</div><h2 class="dn-h">'+(focus?esc(m.view.headline):'<button class="dn-hb" onclick="D.news.go(\'view\',\'\')">'+esc(m.view.headline)+'</button>')+'</h2>'+
+      (focus?'':'<p class="dn-short">'+esc(N.lede(m.view.body[0],260))+'</p><div class="dn-acts"><button class="dn-btn" aria-expanded="'+open+'" aria-controls="dn-det-V" onclick="D.news.det(\'V\')">'+(open?'Hide details':'Details')+'</button></div>')+
+      '<div class="dn-det" id="dn-det-V"'+(open?'':' hidden')+'>'+(open?N.viewDetail(m):'')+'</div></article>'; };
+
+  /* ── main screens ── */
+  N.front = function(m){ var T=m.T, lead=m.items[0].kind==='lead'?m.items[0]:null, st=m.items.filter(function(i){ return i.kind==='story'; }), br=m.items.filter(function(i){ return i.kind==='brief'; });
+    return '<div class="dn-col"><button class="dn-rib" style="--c:var('+T.level.col+')" onclick="D.news.go(\'threat\',\'\')"><b>'+cap(T.level.name)+' threat level, '+T.score+' of 100.</b> '+esc(T.level.say)+'</button>'+
+      (lead?N.story(lead,true):'')+
+      '<div class="dn-leg"><span><i class="dn-sw"></i>Confirmed</span><span><i class="dn-sw pr2"></i>Reported, not confirmed</span><span><i class="dn-sw pr1"></i>Not proven</span></div>'+
+      (st.length?'<h3 class="dn-lbl">More stories</h3><div class="dn-grid">'+st.map(function(i){ return N.story(i); }).join('')+'</div>':'')+
+      (br.length?'<h3 class="dn-lbl">Quick reads</h3><div class="dn-grid">'+br.map(function(i){ return N.story(i); }).join('')+'</div>':'')+
+      (m.view?'<h3 class="dn-lbl">Where this is heading</h3>'+N.viewCard(m):'')+'</div>'; };
+  N.focus = function(m,it){ var i=m.items.indexOf(it), a=m.items[i-1], b=m.items[i+1];
+    return '<div class="dn-col">'+N.story(it,true,true)+'<div class="dn-nav">'+(a?'<button class="dn-btn" onclick="D.news.go(\'story\',\''+a.k+'\')">Previous story</button>':'')+(b?'<button class="dn-btn" onclick="D.news.go(\'story\',\''+b.k+'\')">Next story</button>':'')+'<button class="dn-btn" onclick="D.news.go(\'front\',\'\')">Front page</button></div></div>'; };
+  N.threat = function(m){ var T=m.T, lv=T.level, tr=D.trend(14), i0=D.LEVELS.indexOf(lv), n=tr.length-1, pts=tr.map(function(p,i){ return (i*300/n).toFixed(1)+','+(60-p.v*.56).toFixed(1); }).join(' ');
+    return '<div class="dn-col" style="--c:var('+lv.col+')"><div><div class="dn-sec">Threat level</div><div class="dn-lvl"><div class="dn-num">'+T.score+'</div><div><h2 class="dn-h" style="margin:0 0 6px">'+cap(lv.name)+'</h2><p class="dn-short">'+esc(lv.say)+' The scale runs from 0 to 100.</p></div></div>'+
+      '<div class="dn-scale">'+D.LEVELS.map(function(l,i){ return '<span class="'+(i===i0?'on':'')+'" style="--c:var('+l.col+')"><em>'+cap(l.name)+'</em></span>'; }).join('')+'</div></div>'+
+      '<div class="dn-dsec"><h3>Where the pressure is</h3>'+Object.keys(D.DOMAIN).map(function(k){ return '<div class="dn-dom" style="--c:var('+DCOL[k]+');--w:'+T.dom[k]+'%"><span>'+esc(D.DOMAIN[k].label)+'</span><i><b></b></i><span>'+T.dom[k]+'</span></div>'; }).join('')+'</div>'+
+      '<div class="dn-dsec"><h3>The past two weeks</h3><svg class="dn-spark" viewBox="0 0 300 64" preserveAspectRatio="none" role="img" aria-label="Threat score over the past 14 days"><polyline points="'+pts+'"/></svg><p class="dn-foot">'+tr[0].v+' two weeks ago, '+tr[n].v+' today.</p></div>'+
+      '<div class="dn-dsec"><h3>What moves this number</h3><p>Only checked events count. A confirmed event counts in full and a reported one at 40%. Unproven claims, opinion and disputed items count for nothing. Bigger and newer events count more. Right now it rests on '+T.counted+' events.</p>'+
+      (T.recent?'<p>Of the '+T.recent+' items logged in the past 14 days, '+T.noiseN+(T.noiseN===1?' is':' are')+' not established and '+(T.noiseN===1?'does':'do')+' not move it.</p>':'')+'<div class="dn-acts"><button class="dn-btn" onclick="D.open(\'threat\')">See it on the dashboard</button></div></div></div>'; };
+  N.odds = function(){ var all=D.S.forecasts.slice().sort(function(a,b){ return dnum(a.due)-dnum(b.due); }), open=all.filter(function(f){ return f.outcome==null; }), done=all.filter(function(f){ return f.outcome!=null; });
+    return '<div class="dn-col"><div><div class="dn-sec" style="--c:var(--cyan)">Odds</div><h2 class="dn-h">What might happen next</h2><p class="dn-short">Each line is a yes or no question with a deadline. The number is the chance of yes. These are estimates, not promises.</p></div>'+
+      '<div>'+(open.length?open.map(N.odd).join(''):'<p class="dn-short">No open questions right now.</p>')+'</div>'+(done.length?'<div class="dn-dsec"><h3>Already decided</h3>'+done.map(N.odd).join('')+'</div>':'')+
+      '<div class="dn-acts"><button class="dn-btn" onclick="D.open(\'forecast\')">See them on the dashboard</button></div></div>'; };
+  N.proofScreen = function(){ var c=D.counts(), tot=D.S.events.length||1, weak=c.UNVERIFIED+c.SPECULATION+c.DISPUTED, now=Date.now();
+    var loud=D.S.events.filter(function(e){ return !(D.STATUS[e.status]||{}).w&&(now-dnum(e.date))/DAY<=14; }).sort(function(a,b){ return (b.sev||1)-(a.sev||1)||dnum(b.date)-dnum(a.date); });
+    return '<div class="dn-col"><div><div class="dn-sec" style="--c:var(--sage)">Proven or not</div><h2 class="dn-h">'+c.CONFIRMED+' confirmed, '+c.REPORTED+' reported, '+weak+' not proven</h2><p class="dn-short">Out of '+D.S.events.length+' items in the ledger. Only confirmed and reported items move the threat level.</p>'+
+      '<div class="dn-split" style="margin-top:14px"><i style="flex:'+c.CONFIRMED+'"></i><i class="pr2" style="flex:'+c.REPORTED+'"></i><i class="pr1" style="flex:'+weak+'"></i></div><div class="dn-leg" style="margin-top:8px"><span><i class="dn-sw"></i>Confirmed</span><span><i class="dn-sw pr2"></i>Reported, not confirmed</span><span><i class="dn-sw pr1"></i>Not proven</span></div></div>'+
+      '<div class="dn-dsec"><h3>Loud, but not proven</h3>'+(loud.length?'<p>Claims from the past two weeks that nobody has backed up yet. Do not plan around them.</p>'+loud.map(function(e){ var it={status:PROOF[e.status]?e.status:'UNVERIFIED',weak:0}; return '<div class="dn-ev" style="--c:var('+(COL[e.cat]||'--txd')+')"><div class="dn-meta" style="margin:0 0 6px">'+N.proof(it)+'<span>'+esc(D.CAT[e.cat]||'')+'</span><span>'+esc(fdate(e.date))+'</span></div><div class="dn-evt">'+esc(e.title)+'</div><div class="dn-evs">'+esc(N.lede(e.note||e.summary||'',260))+'</div></div>'; }).join(''):'<p>Nothing unproven was logged in the past two weeks.</p>')+
+      '<div class="dn-acts"><button class="dn-btn" onclick="D.open(\'verify\')">Open the Verification Desk</button></div></div></div>'; };
+  N.changes = function(m){ var d=N.diff(m), L=D.S.cuLast;
+    if(!d) return '<div class="dn-col"><div><div class="dn-sec" style="--c:var(--violet)">What changed</div><h2 class="dn-h">Nothing to compare yet</h2><p class="dn-short">Changes show here once an earlier edition is saved. An edition is saved each time Claude writes one, an update delivers one, or you export one.</p></div></div>';
+    var up=d.now.score-d.then.score;
+    return '<div class="dn-col"><div><div class="dn-sec" style="--c:var(--violet)">What changed</div><h2 class="dn-h">Threat '+(up>0?'up':up<0?'down':'steady')+', '+d.then.score+' to '+d.now.score+'</h2><p class="dn-short">Compared with edition No. '+d.prev.no+' from '+esc(D.stamp(d.prev.at))+'. The ledger went from '+d.nThen+' to '+d.nNow+' events.</p></div>'+
+      '<div class="dn-dsec"><h3>Top story</h3><p>'+(d.leadSame?'Still the same story, updated: ':'A new top story: ')+esc(m.items[0].o.headline)+'.'+(d.leadSame||!d.prev.ed.lead?'':' Before, it was: '+esc(d.prev.ed.lead.headline)+'.')+'</p></div>'+
+      '<div class="dn-dsec"><h3>New in this edition</h3>'+(d.added.length?d.added.map(function(it){ return '<p><button class="dn-hb" style="display:inline" onclick="D.news.go(\'story\',\''+it.k+'\')">'+esc(it.o.headline)+'</button></p>'; }).join(''):'<p>No story here is wholly new.</p>')+'</div>'+
+      (d.gone.length?'<div class="dn-dsec"><h3>No longer a headline</h3>'+d.gone.map(function(s){ return '<p>'+esc(s.headline)+'</p>'; }).join('')+'</div>':'')+
+      (L&&L.done&&L.done.length?'<div class="dn-dsec"><h3>Changed by the last complete update</h3>'+L.done.map(function(x){ return '<p>'+esc(x.id+': '+(x.what||'upload added as a source'))+'</p>'; }).join('')+'</div>':'')+'</div>'; };
+  N.err = function(){ var er=D.ui.paperErr; return er?'<div class="dn-cu"><div class="banner"><b>The last attempt to write an edition did not work.</b> '+esc(er.why||'')+' Connection used: '+esc(er.via||'unknown')+'. <button class="btn sm" style="margin-left:6px" onclick="D.open(\'paper\')">See Claude’s reply</button></div></div>':''; };
+  N.screen = function(m){ var u=U(), t=u.sel.t, h=(D.ui.cu?'<div class="dn-cu">'+D.cu.panel()+'</div>':'')+N.err(), it;
+    if(t==='story'){ it=m.items.filter(function(i){ return i.k===u.sel.k; })[0]; if(it) return h+N.focus(m,it); u.sel={t:'front'}; }
+    if(t==='view'){ if(m.view) return h+'<div class="dn-col">'+N.viewCard(m,true)+'<div class="dn-nav"><button class="dn-btn" onclick="D.news.go(\'front\',\'\')">Front page</button></div></div>'; u.sel={t:'front'}; }
+    return h+(t==='threat'?N.threat(m):t==='odds'?N.odds(m):t==='proof'?N.proofScreen(m):t==='changes'?N.changes(m):N.front(m)); };
+  N.bar = function(m){ var me=m.meta, eng=D.engine(), busy=!!D.ui.cu||D.ai.busy, list=A.list().slice().reverse();
+    var who=me.by==='ai'?(me.via==='update'?'Written by Claude in chat, delivered with an update':'Written by Claude'):'Set straight from the ledger, not written by Claude';
+    return '<div class="dn-bar"><div class="dn-ed"><b>'+(me.saved?'Saved edition No. '+me.no:me.no?'Edition No. '+me.no:'Today’s edition')+'</b><span id="dn-status">'+esc(who+(me.by==='ai'||me.saved?', '+D.stamp(me.at):''))+'</span></div><div class="dn-tools">'+
+      (list.length?'<select class="dn-ver" aria-label="Edition version" onchange="D.news.ver(this.value)"><option value="">Current edition</option>'+list.map(function(en){ return '<option value="'+esc(en.id)+'"'+(me.saved&&me.en.id===en.id?' selected':'')+'>No. '+en.no+', '+(en.by==='ai'?'Claude':'ledger')+', '+esc(D.stamp(en.at))+'</option>'; }).join('')+'</select>':'')+
+      (me.saved?'<button class="dn-btn" onclick="D.news.ver(\'\')">Back to current</button>'+(me.by==='ai'?'<button class="dn-btn" onclick="D.news.restore(\''+esc(me.en.id)+'\')">Make this the current edition</button>':'')
+        :'<button class="dn-btn pri" id="dn-write" onclick="D.paperWrite()"'+(eng==='none'||busy?' disabled':'')+' title="'+(eng==='none'?'Connect Claude in Settings first':'Checks for updates, then has Claude write the edition')+'">'+(me.by==='ai'?'Write a new edition':'Write with Claude')+'</button>')+
+      '<button class="dn-btn" onclick="D.news.exportPaper()">Export newspaper PDF</button><button class="dn-btn" onclick="D.news.exportBrief()">Export simple brief</button></div></div>'+
+      (me.saved?'<p class="dn-note" style="margin:10px 16px 0">You are reading a saved edition. The stories are as written then. Proof labels and numbers show the ledger as it is now.</p>':me.moved?'<p class="dn-note" style="margin:10px 16px 0">The ledger has changed since this edition was written. Proof labels and numbers are current, the stories are not. Write a new edition to catch up.</p>':''); };
+  N.draw = function(top){ var box=$('body-news'), u=U(); if(!box) return; var m=N.m=N.model();
+    if(!m){ $('tag-news').textContent='NO EVENTS'; box.innerHTML='<div class="ov-scroll"><div class="wrap"><div class="banner">The ledger is empty, so there is no news to show yet. Add events in the Event Ledger or the Drop Zone.</div></div></div>'; return; }
+    var ps=box.querySelector('.dn-pscroll'), ss=$('dn-screen'), py=ps?ps.scrollTop:0, sy=ss&&top!==true?ss.scrollTop:0;
+    $('tag-news').textContent=(m.meta.saved?'SAVED NO. '+m.meta.no:m.meta.by==='ai'?'AI EDITION':'LEDGER EDITION')+' · '+m.items.length+' STORIES';
+    box.innerHTML='<div class="dn'+(u.rail?' rail':'')+'" id="dn">'+N.panel(m)+'<div class="dn-main">'+N.bar(m)+'<div class="dn-screen ov-scroll" id="dn-screen">'+N.screen(m)+'</div></div></div>';
+    ps=box.querySelector('.dn-pscroll'); if(ps) ps.scrollTop=py; $('dn-screen').scrollTop=sy; };
+  N.repanel = function(focus){ var a=document.querySelector('#body-news .dn-panel'), m=N.m; if(!a||!m){ N.draw(); return; } var y=a.querySelector('.dn-pscroll').scrollTop; a.outerHTML=N.panel(m);
+    a=document.querySelector('#body-news .dn-panel'); a.querySelector('.dn-pscroll').scrollTop=y; var f=focus==='all'?$('dn-all'):focus?a.querySelector('[data-g="'+focus+'"] .dn-gh'):null; if(f) f.focus(); };
+
+  /* ── actions ── */
+  N.tog = function(id){ var u=U(); u.open[id]=!u.open[id]; N.repanel(id); };
+  N.all = function(){ var u=U(), m=N.m; if(!m) return; var gs=N.groups(m), any=gs.some(function(g){ return u.open[g.id]; }); u.open={}; if(!any) gs.forEach(function(g){ u.open[g.id]=true; }); N.repanel('all'); };
+  N.rail = function(){ var u=U(); u.rail=!u.rail; N.draw(); };
+  N.go = function(t,k){ U().sel={t:t,k:k||''}; N.draw(true); };
+  N.det = function(k){ var u=U(), m=N.m, el=$('dn-st-'+k), d=$('dn-det-'+k); u.det[k]=!u.det[k]; if(!el||!d||!m){ N.draw(); return; }
+    var it=m.items.filter(function(i){ return i.k===k; })[0], on=!!u.det[k], b=el.querySelector('.dn-acts .dn-btn'); if(k!=='V'&&!it){ N.draw(); return; }
+    el.classList.toggle('open',on); d.innerHTML=on?(k==='V'?N.viewDetail(m):N.detail(it)):''; d.hidden=!on; if(b){ b.textContent=on?'Hide details':'Details'; b.setAttribute('aria-expanded',on?'true':'false'); } };
+  N.rec = function(id){ D.ui.sel=id; D.open('ledger'); };
+  N.ver = function(id){ var u=U(); u.ver=id||null; u.sel={t:'front'}; u.det={}; N.draw(true); };
+  N.restore = function(id){ var en=A.find(id); if(!en||en.by!=='ai'||!D.NP.norm(en.ed)){ D.toast('That edition cannot be restored: its events are no longer in the ledger','warn',4200); return; }
+    A.snapshot('restore'); D.S.paper={at:en.at,sig:String(en.key||'').split(':').pop(),ed:JSON.parse(JSON.stringify(en.ed)),via:en.why==='delivered'?'update':'',restored:en.no}; D.save(); U().ver=null; D.toast('Edition No. '+en.no+' is the current edition again','ok',3600); N.draw(true); };
+  N.save = function(name,blob,label,done){ var ok=function(){ D.toast(label+' saved: '+name,'ok',3400); if(done) done(); };
+    if(D.sandboxed&&window.claude&&typeof window.claude.use==='function'){ window.claude.use('downloads').then(function(dl){ if(!dl) throw {code:'unavailable'}; return dl.save({filename:name,data:blob}); }).then(ok)
+        .catch(function(e){ var c=e&&e.code; D.toast(c==='declined'?'Save was declined. Choose the export again to retry.':c==='rate_limited'?'A save prompt is already open. Answer it, then try again.':c==='rejected_extension'||c==='extension_not_enabled'?'This view does not allow that file type.':'This view cannot save files. Open the web-hosted Damus site to export.','warn',4600); }); return; }
+    var a=document.createElement('a'), u=URL.createObjectURL(blob); a.href=u; a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ URL.revokeObjectURL(u); },8000); ok(); };
+  /* an export also saves the edition to the archive, so every exported version can be found again */
+  N.mark = function(m,printed){ var now=new Date().toISOString(), en=m.meta.saved?m.meta.en:null; if(en){ if(printed){ en.printed=now; en.prints=(en.prints||0)+1; } }
+    else { var av=D.ui.archView; D.ui.archView=null; if(printed) A.keep(true); else A.snapshot(); D.ui.archView=av; } D.save(); if(D.ui.open==='news') N.draw(); };
+  N.exportPaper = function(){ var m=N.model(); if(!m) return; var go=function(L){ var bytes; try{ if(!L||!L.pages||!L.pages.length) L=D.NP.layout(m.ed); bytes=D.NP.pdf(L); }catch(e){ D.toast('The PDF could not be built: '+e.message,'bad',4600); return; }
+      N.save('damus-news-'+L.iso+'.pdf',new Blob([bytes],{type:'application/pdf'}),'Newspaper PDF',function(){ N.mark(m,true); }); };
+    if(m.meta.saved) A.get(m.meta.en.id).then(go); else go(null); };
+  N.exportBrief = function(){ var m=N.model(); if(!m) return; var html; try{ html=N.brief(m); }catch(e){ D.toast('The brief could not be built: '+e.message,'bad',4600); return; }
+    N.save('damus-news-brief-'+D.NP.iso(new Date(m.meta.at))+'.html',new Blob([html],{type:'text/html'}),'Simple brief',function(){ N.mark(m,false); }); };
+
+  /* ── the simple brief: one self-contained page, readable on a phone, no scripts ── */
+  N.brief = function(m){ var T=m.T, lv=T.level, me=m.meta, c=D.counts(), weak=c.UNVERIFIED+c.SPECULATION+c.DISPUTED, now=Date.now(), d=N.diff(m), hx=function(v){ return HEX[v]||'#5b6878'; }, sw=function(n){ return '<i class="sw p'+(n>=3?3:n===2?2:1)+'"></i>'; };
+    var open=D.S.forecasts.filter(function(f){ return f.outcome==null; }).sort(function(a,b){ return dnum(a.due)-dnum(b.due); });
+    var loud=D.S.events.filter(function(e){ return !(D.STATUS[e.status]||{}).w&&(now-dnum(e.date))/DAY<=14; }).sort(function(a,b){ return (b.sev||1)-(a.sev||1)||dnum(b.date)-dnum(a.date); });
+    var src=function(s){ return s.url&&/^https?:\/\//i.test(s.url)?'<a href="'+esc(s.url)+'">'+esc(s.name)+'</a>':esc(s.name); };
+    var story=function(it,big){ var o=it.o, p=PROOF[it.status], srcs=N.sources(o), same=it.kind==='brief'&&it.body.join(' ')===it.short;
+      return '<article class="st'+(big?' big':'')+' p'+(p.n>=3?3:p.n===2?2:1)+'" style="--c:'+hx(COL[it.sec])+'"><div class="sec">'+esc(D.CAT[it.sec])+(it.kind==='lead'?' <b>Top story</b>':'')+'</div><h2>'+esc(o.headline)+'</h2><p class="short">'+esc(it.short)+'</p><p class="proof">'+sw(p.n)+esc(p.say)+(it.weak?'. Includes '+it.weak+' unproven claim'+(it.weak===1?'':'s'):'')+'</p>'+
+        '<details><summary>Details</summary>'+(same?'':it.body.map(function(x){ return '<p>'+esc(x)+'</p>'; }).join(''))+(o.why?'<p><b>Why it matters.</b> '+esc(o.why)+'</p>':'')+
+        '<h4>What this is based on</h4><ul>'+o.evs.map(function(e){ return '<li><b>'+esc((D.STATUS[e.status]||{}).label||e.status)+'.</b> '+esc(e.title)+' ('+esc(fdate(e.date))+')'+(e.note?'<br><span class="cav">'+esc(e.note)+'</span>':'')+'</li>'; }).join('')+'</ul>'+
+        (srcs.length?'<h4>Sources</h4><p class="src">'+srcs.map(src).join(', ')+'</p>':'')+'</details></article>'; };
+    var lead=m.items[0].kind==='lead'?m.items[0]:null, st=m.items.filter(function(i){ return i.kind==='story'; }), br=m.items.filter(function(i){ return i.kind==='brief'; });
+    var css=':root{color-scheme:light dark;--bg:#fff;--tx:#1b2430;--dim:#5b6878;--line:#d9dee5;--soft:#f3f5f8;--head:"Arial Black","Helvetica Neue",Helvetica,Arial,sans-serif}'+
+      '@media(prefers-color-scheme:dark){:root{--bg:#121820;--tx:#e6edf5;--dim:#9aa9ba;--line:#2a3644;--soft:#1a2330}.st,.thr,.bar,.odd{--k:color-mix(in srgb,var(--c) 58%,#fff)}}'+
+      '*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:17px/1.55 -apple-system,"Segoe UI",Helvetica,Arial,sans-serif}main{max-width:760px;margin:0 auto;padding:22px 18px 60px}'+
+      '.st,.thr,.bar,.odd{--k:var(--c)}h1{font:900 clamp(38px,9vw,64px)/1 var(--head);letter-spacing:-.03em;margin:0}.sub{color:var(--dim);font-size:15px;margin:8px 0 22px}'+
+      '.thr{border-left:8px solid var(--k);background:var(--soft);border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:26px}.thr .top{display:flex;gap:14px;align-items:center}.thr .n{font:900 56px/1 var(--head);color:var(--k);letter-spacing:-.03em}.thr p{margin:0}.thr .bars{padding-top:12px}'+
+      '.bar{display:grid;grid-template-columns:120px 1fr 30px;gap:10px;align-items:center;font-size:14px;margin:4px 0}.bar i{height:9px;border-radius:5px;background:var(--line);overflow:hidden;display:block}.bar i b{display:block;height:100%;background:var(--k);border-radius:5px}'+
+      '.leg{font-size:13.5px;color:var(--dim);display:flex;gap:6px 16px;flex-wrap:wrap;margin:0 0 22px;--k:var(--dim)}.leg span{display:inline-flex;gap:7px;align-items:center}'+
+      '.sw{display:inline-block;width:22px;height:8px;border-radius:3px;background:var(--k);margin-right:7px;vertical-align:middle}.sw.p2{background:repeating-linear-gradient(90deg,var(--k) 0 6px,transparent 6px 9px)}.sw.p1{background:transparent;border:1.5px dashed var(--k)}.leg .sw{margin:0}'+
+      '.st{position:relative;padding:0 0 0 22px;margin:0 0 30px}.st::before{content:"";position:absolute;left:0;top:2px;bottom:2px;width:7px;border-radius:4px;background:var(--k)}.st.p2::before{background:repeating-linear-gradient(180deg,var(--k) 0 10px,transparent 10px 15px)}.st.p1::before{background:transparent;border:2px dashed var(--k)}'+
+      '.sec{font-size:14px;font-weight:700;color:var(--k)}.sec b{background:var(--k);color:var(--bg);border-radius:4px;padding:1px 7px;font-size:12.5px;margin-left:6px}h2{font:900 clamp(22px,5vw,28px)/1.1 var(--head);letter-spacing:-.02em;margin:5px 0 8px}.big h2{font-size:clamp(30px,8vw,46px);line-height:1.03}'+
+      '.short{margin:0;font-size:18px}.big .short{font-size:20px}.proof{font-size:14px;font-weight:600;margin:9px 0 0}details{margin-top:10px}summary{cursor:pointer;font-weight:700;font-size:15px;display:inline-block;border:1px solid var(--line);border-radius:8px;padding:6px 13px}details[open] summary{margin-bottom:10px}'+
+      'details p,details li{font-size:16px}h4{font-size:15px;margin:14px 0 5px}ul{padding-left:20px;margin:0}li{margin-bottom:8px}.cav{color:var(--dim);font-size:14.5px}.src{font-size:14.5px}a{color:inherit}'+
+      'h3{font-size:17px;color:var(--dim);border-top:1px solid var(--line);padding-top:16px;margin:34px 0 18px}.odd{display:grid;grid-template-columns:76px 1fr;gap:14px;align-items:start;margin-bottom:16px}.odd .p{font:900 30px/1 var(--head);text-align:right;letter-spacing:-.02em}.odd small{display:block;color:var(--dim);font-size:13.5px;margin-top:3px}'+
+      '.plain{font-size:16px}footer{color:var(--dim);font-size:13.5px;border-top:1px solid var(--line);margin-top:34px;padding-top:14px}@media print{body{font-size:12pt}details{break-inside:avoid}}';
+    var edn=(me.no?'Edition No. '+me.no+'. ':'')+(me.by==='ai'?'Written by Claude from the Damus event ledger':'Set straight from the Damus event ledger')+', '+D.stamp(me.at)+'.';
+    return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Damus News, the short version, '+esc(fdate(D.NP.iso(new Date(me.at))))+'</title><style>'+css+'<\/style><\/head><body><main>'+
+      '<h1>Damus News</h1><p class="sub">The short version. '+esc(edn)+'</p>'+
+      '<section class="thr" style="--c:'+hx(lv.col)+'"><div class="top"><div class="n">'+T.score+'</div><p><b>'+cap(lv.name)+' threat level, '+T.score+' of 100.</b><br>'+esc(lv.say)+'</p></div><div class="bars">'+Object.keys(D.DOMAIN).map(function(k){ return '<div class="bar" style="--c:'+hx(DCOL[k])+'"><span>'+esc(D.DOMAIN[k].label)+'</span><i><b style="width:'+T.dom[k]+'%"></b></i><span>'+T.dom[k]+'</span></div>'; }).join('')+'</div></section>'+
+      '<p class="leg"><span><i class="sw p3"></i>Confirmed</span><span><i class="sw p2"></i>Reported, not confirmed</span><span><i class="sw p1"></i>Not proven</span></p>'+
+      (lead?story(lead,true):'')+st.map(function(i){ return story(i); }).join('')+(br.length?'<h3>Quick reads</h3>'+br.map(function(i){ return story(i); }).join(''):'')+
+      (m.view?'<h3>Where this is heading</h3><article class="st p3" style="--c:#5b6878"><h2>'+esc(m.view.headline)+'</h2>'+m.view.body.map(function(x){ return '<p class="plain">'+esc(x)+'</p>'; }).join('')+'</article>':'')+
+      (open.length?'<h3>Odds: what might happen next</h3>'+open.map(function(f){ return '<div class="odd" style="--c:'+hx(DCOL[f.dom]||'--cyan')+'"><div class="p">'+pct(f.p)+'%</div><div>'+esc(f.q)+'<small>'+likely(f.p)+'. Decided by '+esc(fdate(f.due))+'.</small></div></div>'; }).join(''):'')+
+      '<h3>Proven or not</h3><p class="plain"><b>'+c.CONFIRMED+'</b> confirmed, <b>'+c.REPORTED+'</b> reported and <b>'+weak+'</b> not proven, out of '+D.S.events.length+' items in the ledger. Only confirmed and reported items move the threat level.</p>'+
+      (loud.length?'<h4>Loud, but not proven</h4><ul>'+loud.map(function(e){ return '<li><b>'+esc(PROOF[e.status]?PROOF[e.status].say:'Unverified claim')+'.</b> '+esc(e.title)+'<br><span class="cav">'+esc(N.lede(e.note||e.summary||'',240))+'</span></li>'; }).join('')+'</ul>':'')+
+      (d?'<h3>What changed</h3><p class="plain">'+esc(d.line)+(d.added.length?' New in this edition: '+esc(d.added.map(function(it){ return it.o.headline; }).join('; '))+'.':'')+'</p>':'')+
+      '<footer>How to read this. Confirmed means two or more independent outlets, or a primary source. Reported means one outlet or unnamed officials. Not proven covers unverified claims, opinion and disputed items. The threat level runs from 0 to 100 and counts only confirmed and reported events. Odds are estimates, not promises. Made by Damus News on '+esc(D.stamp(new Date().toISOString()))+'.</footer></main><\/body><\/html>'; };
+  return N;
+})();
+D.render.news = function(){ D.news.draw(); };
+(function(){ var open0=D.open;
+  /* every time the tile is opened: front page, all sections collapsed */
+  D.open = function(id){ if(id==='news'){ var was=D.ui.dn; D.ui.dn={open:{},sel:{t:'front'},det:{},rail:was?!!was.rail:window.innerWidth<820,ver:null}; } return open0.apply(this,arguments); };
+  var show=D.render.paper;
+  D.render.paper = function(){ show.apply(this,arguments); if(D.ui.archView) return; var r=document.querySelector('#body-paper .np-wrap .panel .row'); if(!r||r.querySelector('.np-dn')) return; var b=document.createElement('button'); b.className='btn np-dn'; b.textContent='Read in DAMUS News'; b.onclick=function(){ D.open('news'); }; r.appendChild(b); };
+})();
+/* ── The hub as a predictive dashboard.
+      Left: the tiles (the analyst is now a tile; the old dock holds the tile list). Right: the dashboard, with the global map on top and flexible panels under it.
+      The dashboard takes over what the status panel and the Global Map, Threat Indicator, Forecast Board and Daily Brief tiles showed, so those tiles are gone from the hub.
+      Hover shows a card for any event, prediction or area. Investigating a prediction asks Claude for an analysis written from the ledger. ── */
+D.dash = (function(){ var H={}, B={}, DCOL={conflict:'--red',homeland:'--amber',cyber:'--violet',climate:'--cyan',economic:'--sage',political:'--dn-blue'}, CATD={};
+  Object.keys(D.DOMAIN).forEach(function(k){ D.DOMAIN[k].cats.forEach(function(c){ CATD[c]=k; }); });
+  var PANELS=[{id:'threat',t:'Threat level'},{id:'areas',t:'By area'},{id:'trend',t:'Direction, last 45 days'},{id:'pred',t:'Predictions',wide:1},{id:'drivers',t:'What is driving it'},{id:'update',t:'Latest update'},{id:'noise',t:'Signal check'},{id:'outlook',t:'Claude’s outlook'},{id:'events',t:'Latest events',wide:1}];
+  var TIP={ledger:'Every event, with its sources, status and history',drop:'Upload a file or paste text and have it assessed',verify:'Check unverified and reported items against sources',weather:'El Niño status and weather events',news:'The short version of today’s edition',paper:'The typeset edition and PDF export',web:'How events connect to each other',outage:'The 90-day outage checklist',settings:'Claude connection, theme, save and restore',ai:'Ask Claude about the events, direction and risk'};
+  var ICO={cl:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>',wd:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M8 8l-4 4 4 4M16 8l4 4-4 4"/></svg>',lf:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg>',rt:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 6l6 6-6 6"/></svg>',x:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'};
+  function Ly(){ var s=D.S.dash=D.S.dash||{}; s.order=(s.order||[]).filter(function(i){ return PANELS.some(function(p){ return p.id===i; }); }); PANELS.forEach(function(p){ if(s.order.indexOf(p.id)<0) s.order.push(p.id); }); if(!s.wide){ s.wide={}; PANELS.forEach(function(p){ if(p.wide) s.wide[p.id]=1; }); } s.shut=s.shut||{}; return s; }
+  function U(){ return D.ui.dash||(D.ui.dash={dom:null,inv:null,askQ:''}); }
+  function cap(s){ s=String(s||'').toLowerCase(); return s.charAt(0).toUpperCase()+s.slice(1); }
+  function pct(p){ return Math.round((+p||0)*100); }
+  function likely(p){ return p>=.85?'Very likely':p>=.6?'Likely':p>=.4?'Could go either way':p>=.15?'Unlikely':'Very unlikely'; }
+  function fc(id){ return D.S.forecasts.filter(function(f){ return f.id===id; })[0]; }
+  function days(d){ var n=Math.round((dnum(d)-dnum(today()))/DAY); return n<0?(-n)+' day'+(n===-1?'':'s')+' overdue':n===0?'today':'in '+n+' day'+(n===1?'':'s'); }
+  function wOf(e,t){ var st=D.STATUS[e.status]||D.STATUS.UNVERIFIED, age=((t||Date.now())-dnum(e.date))/DAY; return st.w&&age<=120&&age>-.5?st.w*D.SEVW[e.sev||1]*Math.pow(.5,age/14):0; }
+  function inDom(e){ var d=U().dom; return !d||CATD[e.cat]===d; }
+  function fin(f){ var d=U().dom; return !d||f.dom===d; }
+  function lede(t,n){ return D.news?D.news.lede(t,n):String(t||'').slice(0,n||200); }
+  H.X = function(){ var T=D.threat(), T7=D.threat(new Date(Date.now()-7*DAY).toISOString().slice(0,10)), dr=D.S.events.map(function(e){ return {e:e,w:wOf(e)}; }).filter(function(x){ return x.w>0; }).sort(function(a,b){ return b.w-a.w; });
+    var since=Infinity; D.S.events.forEach(function(e){ var h=(e.hist||[])[0]; if(h&&h.at){ var v=dnum(String(h.at).slice(0,10)); if(v<since) since=v; } });
+    return {since:isFinite(since)?since:null,cmp:isFinite(since)&&since<=Date.now()-7*DAY,T:T,T7:T7,dr:dr,tot:dr.reduce(function(s,x){ return s+x.w; },0)||1,open:D.S.forecasts.filter(function(f){ return f.outcome==null; }).sort(function(a,b){ return dnum(a.due)-dnum(b.due); })}; };
+
+  /* ── hover cards ── */
+  H.evTip = function(e){ var s=D.STATUS[e.status]||D.STATUS.UNVERIFIED; return '<div class="ev-top" style="margin:0">'+D.chip(e.status)+D.sevBars(e.sev||1)+'<span class="ev-date">'+esc(fdate(e.date))+'</span></div><div class="t">'+esc(e.title)+'</div><div class="m">'+esc((D.CAT[e.cat]||'')+(e.region?', '+e.region:''))+'</div><div style="margin-top:5px">'+esc(lede(e.summary||'',190))+'</div><div class="m" style="margin-top:6px">'+(s.w?'Counts toward the threat level.':'Does not move the threat level.')+' '+(e.sources||[]).length+' source'+((e.sources||[]).length===1?'':'s')+'.</div>'; };
+  H.fcTip = function(f){ var b=(f.basis||[]).map(D.ev).filter(Boolean).slice(0,3), A=(D.S.fcAI||{})[f.id]; return '<div class="m">'+esc(D.DOMAIN[f.dom]?D.DOMAIN[f.dom].label:'')+', decided '+esc(days(f.due))+' ('+esc(fdate(f.due))+')</div><div class="t">'+esc(f.q)+'</div><div><b>'+pct(f.p)+'%</b>, '+likely(f.p).toLowerCase()+'.</div>'+(f.up?'<div style="margin-top:5px"><b>Raises it:</b> '+esc(f.up)+'</div>':'')+(f.down?'<div><b>Lowers it:</b> '+esc(f.down)+'</div>':'')+(b.length?'<div class="m" style="margin-top:6px">Rests on: '+esc(b.map(function(e){ return e.title; }).join('; '))+'</div>':'')+'<div class="m" style="margin-top:6px">'+(A?'Claude’s estimate: '+(A.a.estimate!=null?A.a.estimate+'%':'not given')+'. ':'')+'Click to investigate.</div>'; };
+  H.domTip = function(k,X){ X=X||H.X(); var top=X.dr.filter(function(x){ return CATD[x.e.cat]===k; }).slice(0,3), d=X.T.dom[k]-X.T7.dom[k], n=X.open.filter(function(f){ return f.dom===k; }).length;
+    return '<div class="t" style="margin-top:0">'+esc(D.DOMAIN[k].label)+': '+X.T.dom[k]+' of 100</div><div class="m">'+(X.cmp?(d>0?'Up '+d:d<0?'Down '+(-d):'No change')+' in 7 days. ':'')+n+' open prediction'+(n===1?'':'s')+'.</div>'+(top.length?'<div style="margin-top:6px"><b>Biggest drivers</b></div>'+top.map(function(x){ return '<div>'+esc(x.e.title)+' <span class="m">('+Math.round(100*x.w/X.tot)+'% of the total)</span></div>'; }).join(''):'<div style="margin-top:6px">Nothing confirmed or reported is counting here.</div>')+'<div class="m" style="margin-top:6px">Click to filter the map and the panels.</div>'; };
+  H.tipFor = function(el){ var a; if((a=el.getAttribute('data-ev'))){ var e=D.ev(a); return e?H.evTip(e):''; } if((a=el.getAttribute('data-fc'))){ var f=fc(a); return f?H.fcTip(f):''; } if((a=el.getAttribute('data-dom'))) return D.DOMAIN[a]?H.domTip(a):''; return esc(el.getAttribute('data-tip')||''); };
+  H.tipAt = function(html,x,y){ var t=$('ds-tip'); if(!t) return; if(!html){ t.classList.remove('on'); return; } t.innerHTML=html; t.classList.add('on'); var r=t.getBoundingClientRect(), px=x+16, py=y+18; if(px+r.width>innerWidth-8) px=Math.max(8,x-r.width-14); if(py+r.height>innerHeight-8) py=Math.max(8,y-r.height-14); t.style.left=px+'px'; t.style.top=py+'px'; };
+  H.hover = function(){ var cur=null, find=function(n){ while(n&&n.nodeType===1){ if(n.hasAttribute('data-ev')||n.hasAttribute('data-fc')||n.hasAttribute('data-dom')||n.hasAttribute('data-tip')) return n; n=n.parentNode; } return null; };
+    document.addEventListener('mousemove',function(ev){ var el=find(ev.target); if(el!==cur){ cur=el; H.tipAt(el?H.tipFor(el):'',ev.clientX,ev.clientY); } else if(cur) H.tipAt($('ds-tip').innerHTML,ev.clientX,ev.clientY); },{passive:true});
+    document.addEventListener('click',function(){ cur=null; H.tipAt(''); },true);
+    document.addEventListener('focusin',function(ev){ var el=find(ev.target), kb=false; try{ kb=!!el&&el.matches(':focus-visible'); }catch(e){} if(!kb) return; var r=el.getBoundingClientRect(); cur=el; H.tipAt(H.tipFor(el),r.left+20,r.bottom-8); });
+    document.addEventListener('focusout',function(){ cur=null; H.tipAt(''); }); document.addEventListener('scroll',function(){ cur=null; H.tipAt(''); },true); };
+
+  /* ── left panel: the tiles ── */
+  H.tiles = function(){ var apps=D.APPS.filter(function(a){ return a.hub!==false; });
+    $('dock-body').innerHTML='<div class="tl-h">Tiles<span style="margin-left:auto">'+apps.length+'</span></div><div class="tl-list">'+apps.map(function(a){ var b=a.badge?a.badge():null; return '<button class="tl" onclick="D.open(\''+a.id+'\')" data-tip="'+esc(TIP[a.id]||a.label)+'"><span class="tl-ico" style="--g1:'+a.g[0]+';--g2:'+a.g[1]+'"><svg viewBox="0 0 24 24" aria-hidden="true">'+a.ico+'</svg></span><span><span class="tl-n">'+esc(a.label)+'</span><span class="tl-c">'+a.code+'</span></span>'+(b?'<span class="tl-b">'+b+'</span>':'')+'</button>'; }).join('')+'</div>'; };
+
+  /* ── top line: what this is, and the area filter ── */
+  H.top = function(X){ var u=U(), s=Ly();
+    $('ds-top').innerHTML='<div><div class="ds-title">PREDICTIVE DASHBOARD</div><div class="ds-sub">Where things stand, where they are heading, and how sure that is. Hover anything for detail.</div></div><div class="ds-filter"><button class="ds-fc'+(u.dom?'':' on')+'" onclick="D.dash.dom(null)">All areas</button>'+
+      Object.keys(D.DOMAIN).map(function(k){ return '<button class="ds-fc'+(u.dom===k?' on':'')+'" style="--c:var('+DCOL[k]+')" data-dom="'+k+'" onclick="D.dash.dom(\''+k+'\')"><i></i>'+esc(D.DOMAIN[k].label)+' '+X.T.dom[k]+'</button>'; }).join('')+
+      '<button class="ds-btn" onclick="D.dash.mapSize()" data-tip="Make the map taller or shorter">'+(s.tall?'Shorter map':'Taller map')+'</button><button class="ds-btn" onclick="D.dash.side()" data-tip="Show or hide the list beside the map">'+(s.noside?'Show map list':'Hide map list')+'</button><button class="ds-btn" onclick="D.dash.reset()" data-tip="Put every panel back where it started">Reset layout</button></div>'; };
+
+  /* ── panels ── */
+  B.threat = function(X){ var T=X.T, lv=T.level, d=T.score-X.T7.score, i0=D.LEVELS.indexOf(lv);
+    return '<div style="--c:var('+lv.col+')"><div class="ds-lvl" data-tip="The scale runs from 0 to 100. Only confirmed and reported events move it; bigger and newer events count more."><div class="ds-big">'+T.score+'</div><div><div class="ds-lv">'+cap(lv.name)+'</div><div class="ds-say">'+esc(lv.say)+'</div></div></div>'+
+      '<div class="ds-scale">'+D.LEVELS.map(function(l,i){ return '<span class="'+(i===i0?'on':'')+'" style="--c:var('+l.col+')" data-tip="'+esc(cap(l.name)+': '+(i?D.LEVELS[i-1].max:0)+' to '+Math.min(100,l.max-1)+'. '+l.say)+'">'+cap(l.name)+'</span>'; }).join('')+'</div>'+
+      '<p class="ds-meta">'+(X.cmp?'<b>'+(d>0?'Up '+d+' points':d<0?'Down '+(-d)+' points':'No change')+'</b> in 7 days. ':'')+'Built from '+T.counted+' confirmed or reported events.'+(X.cmp?'':' There is no 7-day comparison yet: the ledger began on '+esc(X.since?fdate(new Date(X.since).toISOString()):'this week')+'.')+'</p></div>'; };
+  B.areas = function(X){ var u=U(); return Object.keys(D.DOMAIN).map(function(k){ var v=X.T.dom[k], d=v-X.T7.dom[k]; return '<button class="ds-row'+(u.dom===k?' on':'')+'" style="--c:var('+DCOL[k]+');--w:'+v+'%" data-dom="'+k+'" onclick="D.dash.dom(\''+k+'\')"><span>'+esc(D.DOMAIN[k].label)+'</span><span class="ds-bar"><b></b></span><span class="n">'+v+'</span><span class="ds-d'+(X.cmp&&d>0?' up':X.cmp&&d<0?' dn':'')+'">'+(X.cmp?(d>0?'+'+d:d<0?d:'0'):'')+'</span></button>'; }).join('')+'<p class="ds-meta">'+(X.cmp?'Score now, and the change over 7 days. ':'Score now. Changes over 7 days will show once the ledger is a week old. ')+'Click an area to filter the map and the panels.</p>'; };
+  B.trend = function(X){ var tr=H.tr=D.trend(45), n=tr.length-1, W=600, Hh=170, x=function(i){ return 8+(W-16)*i/n; }, y=function(v){ return 10+(Hh-34)*(1-v/100); };
+    return '<svg id="ds-tr" viewBox="0 0 '+W+' '+Hh+'" role="img" aria-label="Threat score over the last 45 days">'+D.LEVELS.map(function(l,i){ var lo=i?D.LEVELS[i-1].max:0, hi=Math.min(100,l.max); return '<rect x="8" y="'+y(hi).toFixed(1)+'" width="'+(W-16)+'" height="'+(y(lo)-y(hi)).toFixed(1)+'" fill="var('+l.col+')" opacity=".07"/>'; }).join('')+
+      '<polyline points="'+tr.map(function(p,i){ return x(i).toFixed(1)+','+y(p.v).toFixed(1); }).join(' ')+'" fill="none" stroke="var('+X.T.level.col+')" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><line id="ds-trl" x1="0" x2="0" y1="10" y2="'+(Hh-24)+'" stroke="var(--txh)" stroke-width="1" opacity="0"/><circle id="ds-trc" r="4.5" fill="var(--txh)" opacity="0"/>'+
+      '<text x="8" y="'+(Hh-6)+'" fill="var(--txf)" font-size="12">'+esc(fdate(tr[0].d))+'</text><text x="'+(W-8)+'" y="'+(Hh-6)+'" fill="var(--txf)" font-size="12" text-anchor="end">Today</text></svg>'+
+      '<p class="ds-meta">Move over the line to read any day. The ledger began on '+esc(X.since?fdate(new Date(X.since).toISOString()):'this week')+'; earlier days are rebuilt from event dates and understate activity, so do not read the climb as a real jump.</p>'; };
+  B.pred = function(X){ var u=U(), open=X.open.filter(fin), b=D.brier(), done=D.S.forecasts.filter(function(f){ return f.outcome!=null; }).length, t0=dnum(today()), t1=open.length?Math.max(t0+14*DAY,dnum(open[open.length-1].due)):t0+30*DAY;
+    return (open.length?'<div class="ds-tl" aria-hidden="true"><span style="left:0">Today</span><span style="right:0">'+esc(fdate(new Date(t1).toISOString()))+'</span>'+open.map(function(f){ var px=Math.max(0,Math.min(100,100*(dnum(f.due)-t0)/(t1-t0))); return '<button tabindex="-1" style="left:'+px.toFixed(1)+'%;--s:'+(12+Math.round(f.p*14))+'px;--c:var('+(DCOL[f.dom]||'--cyan')+')" data-fc="'+esc(f.id)+'" onclick="D.dash.inv(\''+esc(f.id)+'\')"></button>'; }).join('')+'</div>'
+      +open.map(function(f){ var A=(D.S.fcAI||{})[f.id]; return '<button class="ds-li" style="--c:var('+(DCOL[f.dom]||'--cyan')+');--w:'+pct(f.p)+'%" data-fc="'+esc(f.id)+'" onclick="D.dash.inv(\''+esc(f.id)+'\')"><span class="ds-pct">'+pct(f.p)+'%</span><span>'+esc(f.q)+'<small>'+likely(f.p)+'. Decided '+esc(days(f.due))+'.'+(A?' Claude has analysed this.':'')+'</small><span class="ds-bar" style="margin-top:6px;height:6px"><b></b></span></span><span class="ds-chip">Investigate</span></button>'; }).join(''):'<p class="ds-txt">No open predictions'+(u.dom?' in this area':'')+'.</p>')+
+      '<p class="ds-meta">'+(b==null?'No prediction has been scored yet, so there is no track record.':'Track record on '+done+' scored: Brier score '+b.toFixed(3)+' (0 is perfect, 0.25 is a coin flip).')+' The dots show when each one is decided; bigger means more likely.</p>'+
+      '<div class="ds-ask"><input id="ds-askq" aria-label="Ask about the future" placeholder="Ask about the future, for example: will Brent close above $100 before January?" value="'+esc(u.askQ||'')+'" oninput="D.ui.dash.askQ=this.value" onkeydown="if(event.key===\'Enter\')D.dash.ask()"><button class="ds-btn pri" onclick="D.dash.ask()">Analyse with Claude</button><button class="ds-btn" onclick="D.dash.board()" data-tip="Add, edit, score or delete predictions by hand">Manage predictions</button></div>'; };
+  B.drivers = function(X){ var l=X.dr.filter(function(x){ return inDom(x.e); }).slice(0,7); return l.length?l.map(function(x){ var s=D.STATUS[x.e.status]; return '<button class="ds-li" style="--c:var('+s.col+')" data-ev="'+esc(x.e.id)+'" onclick="D.pick(\''+esc(x.e.id)+'\')"><span class="ds-dot"></span><span>'+esc(x.e.title)+'<small>'+esc(s.label+', '+fdate(x.e.date))+'</small></span><span class="ds-d">'+Math.round(100*x.w/X.tot)+'%</span></button>'; }).join('')+'<p class="ds-meta">Share of the threat score each event carries today. Click one to see it on the map.</p>':'<p class="ds-txt">Nothing confirmed or reported is counting here.</p>'; };
+  B.update = function(){ var fd=D.S.feed, r=fd&&fd.run, items=D.runItems(), ed=D.paperEdition(), top=ed&&ed.lead&&ed.lead.headline;
+    return (r?'<p class="ds-meta" style="margin-top:0"><b>'+esc(fdate(r.date||r.at))+'</b>, '+((r.added||[]).length+(r.changed||[]).length)+' items added or changed</p><p class="ds-txt ds-clamp" data-tip="'+esc(String(r.summary||''))+'">'+esc(String(r.summary||''))+'</p>'+(r.threat_note?'<p class="ds-meta"><b>Direction:</b> '+esc(r.threat_note)+'</p>':'')+(items.length?'<div class="ds-chips">'+items.slice(0,14).map(function(e){ return '<button class="ds-chip" data-ev="'+esc(e.id)+'" onclick="D.pick(\''+esc(e.id)+'\')">'+esc(e.id)+'</button>'; }).join('')+(items.length>14?'<span class="ds-meta" style="margin:2px 0 0 4px">and '+(items.length-14)+' more</span>':'')+'</div>':''):'<p class="ds-txt">No update has been published yet. The scheduled update runs daily at 1600 Eastern.</p>')+
+      (top?'<p class="ds-meta"><b>Top story:</b> '+esc(top)+'</p>':'')+'<p class="ds-meta">'+esc(D.rfLine?D.rfLine():'')+'</p><div class="ds-acts"><button class="ds-btn" onclick="D.refreshNow()">Check for updates</button><button class="ds-btn" onclick="D.open(\'news\')">Read the edition</button></div>'; };
+  B.noise = function(X){ var c=D.counts(), T=X.T, weak=c.UNVERIFIED+c.SPECULATION+c.DISPUTED, now=Date.now(), loud=D.S.events.filter(function(e){ return !(D.STATUS[e.status]||{}).w&&(now-dnum(e.date))/DAY<=14&&inDom(e); }).sort(function(a,b){ return (b.sev||1)-(a.sev||1)||dnum(b.date)-dnum(a.date); }).slice(0,4);
+    return '<div class="ds-split"><i style="flex:'+c.CONFIRMED+'" data-tip="'+c.CONFIRMED+' confirmed: two or more independent outlets, or a primary source. Counts in full."></i><i class="r" style="flex:'+c.REPORTED+'" data-tip="'+c.REPORTED+' reported: one outlet or unnamed officials. Counts at 40%."></i><i class="u" style="flex:'+weak+'" data-tip="'+weak+' not proven: unverified claims, opinion and disputed items. They count for nothing."></i></div>'+
+      '<p class="ds-meta"><b>'+c.CONFIRMED+'</b> confirmed, <b>'+c.REPORTED+'</b> reported, <b>'+weak+'</b> not proven. In the past 14 days, <b>'+Math.round(T.noise*100)+'%</b> of new items ('+T.noiseN+' of '+T.recent+') were not established.</p>'+
+      (loud.length?'<p class="ds-meta"><b>Loud, but not proven</b></p>'+loud.map(function(e){ return '<button class="ds-li" style="--c:var('+(D.STATUS[e.status]||D.STATUS.UNVERIFIED).col+')" data-ev="'+esc(e.id)+'" onclick="D.pick(\''+esc(e.id)+'\')"><span class="ds-dot h"></span><span>'+esc(e.title)+'</span><span></span></button>'; }).join(''):'')+'<div class="ds-acts"><button class="ds-btn" onclick="D.open(\'verify\')">Open the Verification Desk</button></div>'; };
+  B.outlook = function(){ return '<pre class="out" id="brief-ai">'+esc(D.S.brief||'No outlook written yet. Claude writes it from the ledger: the bottom line, what is established, what is loud but unproven, and what to watch in the next 7 days.')+'</pre><p class="ds-meta">'+(D.S.briefAt?'Written '+esc(fdate(D.S.briefAt))+'. ':'')+'Written by Claude from the ledger only. It cannot see live news in this view.</p><div class="ds-acts"><button class="ds-btn pri" onclick="D.briefAI()"'+(D.engine()==='none'?' disabled data-tip="Connect Claude in Settings first"':'')+'>'+(D.S.brief?'Rewrite the outlook':'Write the outlook with Claude')+'</button></div>'; };
+  B.events = function(){ var l=D.S.events.filter(inDom).sort(function(a,b){ return dnum(b.date)-dnum(a.date)||(b.sev||1)-(a.sev||1); }).slice(0,8); return l.map(function(e){ var s=D.STATUS[e.status]||D.STATUS.UNVERIFIED; return '<button class="ds-li" style="--c:var('+s.col+')" data-ev="'+esc(e.id)+'" onclick="D.pick(\''+esc(e.id)+'\')"><span class="ds-dot'+(s.w?'':' h')+'"></span><span>'+esc(e.title)+'<small>'+esc(s.label+', '+(D.CAT[e.cat]||'')+(e.region?', '+e.region:''))+'</small></span><span class="ds-d">'+esc(fdate(e.date).replace(/, \d{4}$/,''))+'</span></button>'; }).join('')+'<div class="ds-acts"><button class="ds-btn" onclick="D.open(\'ledger\')">Open the Event Ledger</button></div>'; };
+  H.count = function(id,X){ var u=U(); return id==='pred'?X.open.filter(fin).length+' open':id==='events'?D.S.events.filter(inDom).length+(u.dom?' in this area':' in the ledger'):id==='threat'?cap(X.T.level.name):''; };
+  H.grid = function(X){ var g=$('ds-grid'); if(!g||H.drag) return; X=X||H.X(); var s=Ly(), u=U();
+    g.innerHTML=s.order.map(function(id,i){ var p=PANELS.filter(function(q){ return q.id===id; })[0], c=H.count(id,X);
+      return '<section class="ds-p'+(s.wide[id]?' wide':'')+(s.shut[id]?' shut':'')+'" id="ds-p-'+id+'" data-p="'+id+'"><div class="ds-ph" draggable="true"><span class="ds-pt">'+esc(p.t)+(c?'<span class="ds-pc">'+esc(c)+'</span>':'')+'</span>'+
+        '<button class="ds-pb" onclick="D.dash.move(\''+id+'\',-1)" aria-label="Move earlier" data-tip="Move this panel earlier. You can also drag the title."'+(i?'':' disabled')+'>'+ICO.lf+'</button><button class="ds-pb" onclick="D.dash.move(\''+id+'\',1)" aria-label="Move later" data-tip="Move this panel later"'+(i<s.order.length-1?'':' disabled')+'>'+ICO.rt+'</button>'+
+        '<button class="ds-pb" onclick="D.dash.wide(\''+id+'\')" aria-label="'+(s.wide[id]?'Make narrower':'Make wider')+'" data-tip="'+(s.wide[id]?'Make this panel narrower':'Make this panel wider')+'">'+ICO.wd+'</button><button class="ds-pb cl" onclick="D.dash.shut(\''+id+'\')" aria-expanded="'+!s.shut[id]+'" aria-label="'+(s.shut[id]?'Open the panel':'Close the panel')+'" data-tip="'+(s.shut[id]?'Open this panel':'Close this panel')+'">'+ICO.cl+'</button></div>'+
+        '<div class="ds-pbody">'+(s.shut[id]?'':B[id](X))+'</div></section>'; }).join('');
+    var sv=$('ds-tr'); if(sv){ sv.onmousemove=H.trMove; sv.onmouseleave=function(){ $('ds-trl').setAttribute('opacity',0); $('ds-trc').setAttribute('opacity',0); H.tipAt(''); }; } };
+  H.trMove = function(ev){ var sv=$('ds-tr'), tr=H.tr; if(!sv||!tr) return; var r=sv.getBoundingClientRect(), n=tr.length-1, i=Math.max(0,Math.min(n,Math.round(((ev.clientX-r.left)/r.width*600-8)/(600-16)*n))), p=tr[i], x=8+(600-16)*i/n, y=10+(170-34)*(1-p.v/100), lv=D.LEVELS.filter(function(l){ return p.v<l.max; })[0];
+    $('ds-trl').setAttribute('x1',x); $('ds-trl').setAttribute('x2',x); $('ds-trl').setAttribute('opacity',.5); var c=$('ds-trc'); c.setAttribute('cx',x); c.setAttribute('cy',y); c.setAttribute('opacity',1);
+    ev.stopPropagation(); H.tipAt('<b>'+esc(fdate(p.d))+'</b><div class="t">'+p.v+' of 100, '+cap(lv.name)+'</div><div class="m">'+(i?(p.v-tr[i-1].v>0?'Up '+(p.v-tr[i-1].v):p.v-tr[i-1].v<0?'Down '+(tr[i-1].v-p.v):'No change')+' from the day before.':'Start of the window.')+'</div>',ev.clientX,ev.clientY); };
+  H.draw = function(){ if(!$('dash')) return; var X=H.X(); H.tiles(); H.top(X); H.grid(X); if($('ds-inv').classList.contains('on')) H.invDraw(); };
+
+  /* ── layout actions ── */
+  H.dom = function(k){ var u=U(); u.dom=u.dom===k?null:k; H.draw(); D.mapEvents(); };
+  H.move = function(id,d){ var s=Ly(), i=s.order.indexOf(id), j=i+d; if(i<0||j<0||j>=s.order.length) return; s.order.splice(i,1); s.order.splice(j,0,id); D.save(); H.grid(); };
+  H.wide = function(id){ var s=Ly(); s.wide[id]=s.wide[id]?0:1; D.save(); H.grid(); };
+  H.shut = function(id){ var s=Ly(); s.shut[id]=s.shut[id]?0:1; D.save(); H.grid(); };
+  H.reset = function(){ D.S.dash=null; U().dom=null; D.save(); H.fit(); H.draw(); D.mapEvents(); D.toast('Layout reset','ok'); };
+  H.fit = function(){ var s=Ly(), m=$('ds-map'); if(!m) return; m.classList.toggle('tall',!!s.tall); m.classList.toggle('noside',!!s.noside); setTimeout(function(){ if(D.map) D.map.invalidateSize(); },60); };
+  H.mapSize = function(){ var s=Ly(); s.tall=!s.tall; D.save(); H.fit(); H.top(H.X()); };
+  H.side = function(show){ var s=Ly(); s.noside=show===true?false:!s.noside; D.save(); H.fit(); H.top(H.X()); };
+  H.focus = function(id){ var hs=$('hub-scroll'); if(id==='map'){ hs.scrollTo({top:0,behavior:'smooth'}); return; } var s=Ly(); if(s.shut[id]){ s.shut[id]=0; H.grid(); } var el=$('ds-p-'+id); if(!el) return; setTimeout(function(){ hs.scrollTo({top:Math.max(0,el.getBoundingClientRect().top-hs.getBoundingClientRect().top+hs.scrollTop-12),behavior:'smooth'}); el.classList.add('flash'); setTimeout(function(){ el.classList.remove('flash'); },1400); },D.ui.open?420:0); };
+  H.dnd = function(){ var g=$('ds-grid'), from=null, at=function(n){ while(n&&n!==g){ if(n.classList&&n.classList.contains('ds-p')) return n; n=n.parentNode; } return null; }, clear=function(){ [].forEach.call(g.querySelectorAll('.over'),function(x){ x.classList.remove('over'); }); };
+    g.addEventListener('dragstart',function(ev){ var p=ev.target.classList&&ev.target.classList.contains('ds-ph')?at(ev.target):null; if(!p){ ev.preventDefault(); return; } from=p.getAttribute('data-p'); H.drag=true; try{ ev.dataTransfer.setData('text/plain',from); ev.dataTransfer.effectAllowed='move'; }catch(e){} });
+    g.addEventListener('dragover',function(ev){ if(!from) return; var p=at(ev.target); if(p){ ev.preventDefault(); clear(); if(p.getAttribute('data-p')!==from) p.classList.add('over'); } });
+    g.addEventListener('drop',function(ev){ var p=at(ev.target), to=p&&p.getAttribute('data-p'); ev.preventDefault(); if(from&&to&&to!==from){ var s=Ly(), i=s.order.indexOf(from); s.order.splice(i,1); s.order.splice(s.order.indexOf(to)+(i<=s.order.indexOf(to)?1:0),0,from); D.save(); } });
+    g.addEventListener('dragend',function(){ from=null; H.drag=false; H.grid(); }); };
+
+  /* ── investigating a prediction: the facts on the board, then Claude's analysis written from the ledger ── */
+  H.prompt = function(f,q){ var T=D.threat(), NL='\n', shape='{"bottom_line":"two plain sentences","estimate":whole number from 1 to 99 (your own chance that the answer is yes),"confidence":"low, medium or high","for":["up to 4 short reasons it could happen, each naming the ledger ids it rests on"],"against":["up to 4 short reasons it might not"],"evidence":[{"id":"a ledger id","note":"one sentence on what it shows"}],"unproven":["claims in the ledger that bear on this but are not established"],"watch":["up to 4 concrete signals that would move the odds, saying which way"],"base_rate":"one sentence on how often things like this happen, or say that the ledger gives no basis for one"';
+    return (q?'A reader of the Damus dashboard asks about the future: "'+q+'"'+NL+'First restate it as one yes or no question that a neutral observer could score on a stated date within the next 6 months. Then analyse it.':'A reader is investigating one prediction on the Damus dashboard. Analyse it.')+' Use only the ledger below. Reply with one JSON object and nothing else:'+NL+shape+(q?',"question":"the restated yes or no question, with its date","due":"YYYY-MM-DD","area":"conflict, homeland, cyber, climate, economic or political","basis":["ledger ids it rests on"],"up":"what would raise the odds","down":"what would lower them"':'')+'}'+NL+
+      'Rules: give up to 6 evidence items, strongest first, and only ids that are in the ledger. Do not use Unverified, Speculation or Disputed items as evidence; list them under unproven. If the ledger says little about the question, say so and set confidence to low. Plain English, no jargon. Do not inflate fear and do not offer false comfort.'+NL+NL+'Today is '+today()+'.'+NL+
+      (f?'PREDICTION '+f.id+': '+f.q+NL+'Odds on the board: '+pct(f.p)+'%. Decided by '+f.due+'. Area: '+(D.DOMAIN[f.dom]?D.DOMAIN[f.dom].label:f.dom)+'.'+(f.up?NL+'Raises it: '+f.up:'')+(f.down?NL+'Lowers it: '+f.down:'')+((f.basis||[]).length?NL+'Rests on: '+f.basis.join(', '):'')+NL+NL:'')+
+      'THREAT LEVEL: '+T.level.name+', '+T.score+' of 100. By area: '+Object.keys(D.DOMAIN).map(function(k){ return D.DOMAIN[k].label+' '+T.dom[k]; }).join(', ')+'.'+NL+NL+'OTHER OPEN PREDICTIONS:'+NL+(D.S.forecasts.filter(function(x){ return x.outcome==null&&(!f||x.id!==f.id); }).map(function(x){ return x.id+' | '+pct(x.p)+'% | due '+x.due+' | '+x.q; }).join(NL)||'none')+NL+NL+'LEDGER (id | date | status | category | severity | title):'+NL+D.digest(70); };
+  H.clean = function(j,q){ var s=function(v,n){ return D.NP.clean(v).slice(0,n); }, arr=function(a,n,m){ return (Array.isArray(a)?a:[]).map(function(v){ return s(v,m||260); }).filter(Boolean).slice(0,n); }, e=+(j&&j.estimate); if(!j||typeof j!=='object') throw new Error('Claude did not return an analysis');
+    var out={bottom_line:s(j.bottom_line,520),estimate:e>=1&&e<=99?Math.round(e):(e>0&&e<1?Math.round(e*100):null),confidence:/^(low|medium|high)/i.test(String(j.confidence||''))?String(j.confidence).toLowerCase().match(/low|medium|high/)[0]:'low','for':arr(j['for'],4),against:arr(j.against,4),
+      evidence:(Array.isArray(j.evidence)?j.evidence:[]).map(function(x){ var id=s(x&&x.id,24); return D.ev(id)?{id:id,note:s(x.note,260)}:null; }).filter(Boolean).slice(0,6),unproven:arr(j.unproven,5),watch:arr(j.watch,4),base_rate:s(j.base_rate,300)};
+    if(!out.bottom_line) throw new Error('Claude’s reply had no bottom line');
+    if(q){ out.question=s(j.question||q,240); out.due=/^\d{4}-\d{2}-\d{2}$/.test(String(j.due||''))?String(j.due):new Date(Date.now()+30*DAY).toISOString().slice(0,10); out.area=D.DOMAIN[String(j.area||'').toLowerCase()]?String(j.area).toLowerCase():'political'; out.basis=arr(j.basis,8,24).filter(function(i){ return D.ev(i); }); out.up=s(j.up,240); out.down=s(j.down,240); }
+    return out; };
+  H.run = function(f,q,done){ var u=U(); if(D.engine()==='none'){ D.toast('Connect Claude in Settings first','warn'); return; } if(D.ai.busy){ D.toast('Claude is busy with another request. Try again in a moment.','warn'); return; }
+    D.ai.busy=true; u.busy=f?f.id:'ask'; u.err=null; H.invDraw();
+    D.ask({system:D.RULES,prompt:H.prompt(f,q),max:1600,tier:'complex'}).then(function(r){ done(H.clean(D.json(r.text),q)); },function(e){ u.err=(e&&e.message)||'Claude request failed'; })
+      .catch(function(e){ u.err=(e&&e.message)||'Claude’s reply could not be read'; }).then(function(){ D.ai.busy=false; u.busy=null; H.invDraw(); H.grid(); }); };
+  H.analyse = function(id){ var f=fc(id); if(!f) return; H.run(f,null,function(a){ (D.S.fcAI=D.S.fcAI||{})[id]={at:new Date().toISOString(),sig:D.NP.sig(),p:f.p,a:a}; D.save(); }); };
+  H.inv = function(id){ var u=U(), f=fc(id); if(!f) return; u.inv={id:id}; u.err=null; H.invDraw(); $('ds-inv').classList.add('on'); H.tipAt('');
+    if(f.outcome==null&&!(D.S.fcAI||{})[id]&&D.engine()!=='none'&&!D.ai.busy) H.analyse(id); };
+  H.ask = function(){ var u=U(), q=D.NP.clean(u.askQ||($('ds-askq')||{}).value||'').slice(0,300); if(q.length<8){ D.toast('Type a question about the future first','warn'); return; } u.inv={ask:q,a:null}; u.err=null; H.invDraw(); $('ds-inv').classList.add('on');
+    H.run(null,q,function(a){ if(u.inv&&u.inv.ask===q) u.inv.a=a; }); };
+  H.addAsk = function(){ var u=U(), a=u.inv&&u.inv.a; if(!a) return; D.S.fseq=(D.S.fseq||D.S.forecasts.length)+1; var id='F-'+String(D.S.fseq).padStart(2,'0'); while(fc(id)){ D.S.fseq++; id='F-'+String(D.S.fseq).padStart(2,'0'); }
+    D.S.forecasts.push({id:id,q:a.question,p:Math.max(.01,Math.min(.99,(a.estimate==null?50:a.estimate)/100)),due:a.due,dom:a.area,basis:a.basis||[],up:a.up||'',down:a.down||'',made:today(),by:'Claude',outcome:null});
+    (D.S.fcAI=D.S.fcAI||{})[id]={at:new Date().toISOString(),sig:D.NP.sig(),p:(a.estimate==null?50:a.estimate)/100,a:a}; u.inv={id:id}; u.askQ=''; D.refresh(); H.invDraw(); D.toast('Added to the predictions as '+id,'ok',3400); };
+  H.use = function(id){ var A=(D.S.fcAI||{})[id]; if(!A||A.a.estimate==null) return; D.setP(id,A.a.estimate); H.invDraw(); D.toast('The board now shows Claude’s estimate','ok'); };
+  H.invClose = function(){ $('ds-inv').classList.remove('on'); U().inv=null; };
+  H.analysis = function(a,A,f){ var list=function(t,l){ return l&&l.length?'<div class="ds-is"><h3>'+t+'</h3><ul>'+l.map(function(x){ return '<li>'+esc(x)+'</li>'; }).join('')+'</ul></div>':''; }, stale=A&&A.sig!==D.NP.sig(), diff=f&&a.estimate!=null?a.estimate-pct(f.p):0;
+    return '<div class="ds-ai"><div class="ds-is"><h3>Claude’s analysis</h3><p class="ds-bl">'+esc(a.bottom_line)+'</p></div>'+
+      '<div class="ds-est"><div class="ds-pct" style="font-size:30px;min-width:0">'+(a.estimate==null?'n/a':a.estimate+'%')+'</div><div class="ds-meta" style="margin:0;flex:1"><b>Claude’s estimate</b>, confidence '+esc(a.confidence)+'.'+(f&&a.estimate!=null?' The board says '+pct(f.p)+'%'+(Math.abs(diff)>=5?', so Claude is '+Math.abs(diff)+' points '+(diff>0?'higher.':'lower.'):', about the same.'):'')+'</div>'+(f&&f.outcome==null&&a.estimate!=null&&Math.abs(diff)>=1?'<button class="ds-btn" onclick="D.dash.use(\''+esc(f.id)+'\')">Use Claude’s estimate</button>':'')+'</div>'+
+      list('Why it could happen',a['for'])+list('Why it might not',a.against)+
+      (a.evidence.length?'<div class="ds-is"><h3>Evidence in the ledger</h3>'+a.evidence.map(function(x){ var e=D.ev(x.id); return '<button class="ds-li" style="--c:var('+(D.STATUS[e.status]||D.STATUS.UNVERIFIED).col+')" data-ev="'+esc(x.id)+'" onclick="D.dash.see(\''+esc(x.id)+'\')"><span class="ds-chip">'+esc(x.id)+'</span><span>'+esc(x.note||e.title)+'</span><span></span></button>'; }).join('')+'</div>':'')+
+      list('Bears on it, but not proven',a.unproven)+list('What to watch',a.watch)+(a.base_rate?'<div class="ds-is"><h3>How often this kind of thing happens</h3><p>'+esc(a.base_rate)+'</p></div>':'')+
+      '<p class="ds-meta" style="margin:0">Written by Claude from the Damus ledger only'+(A?', '+esc(D.stamp(A.at)):'')+'. It cannot see live news in this view, and its estimate is an opinion, not a fact.'+(stale?' <b>The ledger has changed since this was written.</b>':'')+'</p></div>'; };
+  H.see = function(id){ H.invClose(); D.pick(id); };
+  H.invDraw = function(){ var u=U(), v=u.inv, box=$('ds-inv'); if(!v||!box){ return; } var f=v.id?fc(v.id):null, A=f?(D.S.fcAI||{})[f.id]:null, busy=u.busy===(f?f.id:'ask'), eng=D.engine(), body='';
+    var wait='<div class="banner">Claude is reading the ledger and writing its analysis. This can take a minute.</div>', err=u.err?'<div class="banner"><b>The analysis did not work.</b> '+esc(u.err)+'</div>':'';
+    if(f){ var b=(f.basis||[]).map(D.ev).filter(Boolean), done=f.outcome!=null;
+      body='<div><p class="ds-meta" style="margin:0 0 6px">'+esc((D.DOMAIN[f.dom]?D.DOMAIN[f.dom].label:'')+', '+f.id+', set by '+(f.by||'the board'))+'</p><h2 class="ds-iq">'+esc(f.q)+'</h2></div>'+
+        '<div class="ds-est" style="--c:var('+(DCOL[f.dom]||'--cyan')+')"><div class="ds-pct" style="font-size:40px;min-width:0">'+(done?(f.outcome?'Yes':'No'):pct(f.p)+'%')+'</div><div style="flex:1;min-width:160px"><div class="ds-lv" style="font-size:16px">'+(done?(f.outcome?'It happened.':'It did not happen.'):likely(f.p))+'</div><div class="ds-meta" style="margin:2px 0 6px">'+(done?'Scored '+esc(f.resolved||''):'Decided '+esc(days(f.due))+', '+esc(fdate(f.due)))+'</div>'+(done?'':'<span class="ds-bar" style="--w:'+pct(f.p)+'%"><b></b></span>')+'</div></div>'+
+        (done?'':'<div class="row"><label class="note" for="ds-odds">Your odds</label><input id="ds-odds" type="number" min="1" max="99" value="'+pct(f.p)+'" style="width:78px" onchange="D.setP(\''+esc(f.id)+'\',this.value);D.dash.invDraw()"><button class="btn sg sm" onclick="D.resolveF(\''+esc(f.id)+'\',1);D.dash.invDraw()">It happened</button><button class="btn sm" onclick="D.resolveF(\''+esc(f.id)+'\',0);D.dash.invDraw()">It did not</button></div>')+
+        ((f.up||f.down||f.upd)?'<div class="ds-is">'+(f.upd?'<p><b>Daily update:</b> '+esc(f.upd)+'</p>':'')+(f.up?'<p><b>Raises it:</b> '+esc(f.up)+'</p>':'')+(f.down?'<p><b>Lowers it:</b> '+esc(f.down)+'</p>':'')+'</div>':'')+
+        (b.length?'<div class="ds-is"><h3>What it rests on</h3>'+b.map(function(e){ var s=D.STATUS[e.status]||D.STATUS.UNVERIFIED; return '<button class="ds-li" style="--c:var('+s.col+')" data-ev="'+esc(e.id)+'" onclick="D.dash.see(\''+esc(e.id)+'\')"><span class="ds-dot'+(s.w?'':' h')+'"></span><span>'+esc(e.title)+'<small>'+esc(s.label+', '+fdate(e.date))+'</small></span><span></span></button>'; }).join('')+'</div>':'')+
+        (busy?wait:err)+(A&&!busy?H.analysis(A.a,A,f):'')+(busy?'':'<div class="ds-acts" style="margin:0"><button class="ds-btn pri" onclick="D.dash.analyse(\''+esc(f.id)+'\')"'+(eng==='none'?' disabled':'')+'>'+(A?'Refresh Claude’s analysis':'Analyse with Claude')+'</button>'+(eng==='none'?'<span class="ds-meta" style="margin:0">Claude is not connected in this view. Open Settings to connect.</span>':'')+'</div>'); }
+    else { body='<div><p class="ds-meta" style="margin:0 0 6px">Your question</p><h2 class="ds-iq">'+esc(v.a&&v.a.question?v.a.question:v.ask)+'</h2>'+(v.a&&v.a.question&&v.a.question!==v.ask?'<p class="ds-meta">You asked: '+esc(v.ask)+'</p>':'')+'</div>'+(busy?wait:err)+
+        (v.a?H.analysis(v.a,null,null)+'<div class="ds-acts" style="margin:0"><button class="ds-btn pri" onclick="D.dash.addAsk()">Add to the predictions</button><span class="ds-meta" style="margin:0">Decided by '+esc(fdate(v.a.due))+', filed under '+esc(D.DOMAIN[v.a.area].label)+'.</span></div>':(busy?'':'<div class="ds-acts" style="margin:0"><button class="ds-btn pri" onclick="D.dash.ask()"'+(eng==='none'?' disabled':'')+'>Try again</button></div>')); }
+    box.innerHTML='<div class="ds-ih"><span class="ds-pt">'+(f?'Investigating a prediction':'Asking about the future')+'</span><button class="ds-pb" onclick="D.dash.invClose()" aria-label="Close">'+ICO.x+'</button></div><div class="ds-ib">'+body+'</div>'; };
+  H.board = function(){ H.invClose(); H.open0.call(D,'forecast'); };
+
+  /* ── build once: move the analyst out of the dock, put the map and the panels on the hub ── */
+  H.mount = function(){ var hc=$('hub-center'), pk=document.createElement('div'); pk.id='chat-park'; pk.hidden=true; document.body.appendChild(pk); pk.appendChild($('chat'));
+    var c=$('dock-caret'); c.querySelector('.vt').textContent='TILES'; c.setAttribute('aria-label','Show or hide the tiles panel');
+    var d=document.createElement('div'); d.id='dash';
+    d.innerHTML='<div class="ds-top" id="ds-top"></div><div class="ds-map" id="ds-map"><div id="map-wrap"><div class="map-bar" id="map-bar"></div><div id="mapbox"></div><div class="map-legend" id="map-legend"></div><div class="map-note" id="map-note"></div><div class="map-time"><button class="btn sm" id="map-play" onclick="D.mapPlay()">Play</button><input type="range" id="map-range" min="0" max="60" value="60" oninput="D.mapTime(+this.value)" aria-label="Show events up to date"><span id="map-date" style="min-width:92px;text-align:right"></span></div></div><div class="ov-side"><div class="ov-scroll" id="map-side"></div></div></div><div class="ds-grid" id="ds-grid"></div>';
+    hc.appendChild(d); ['ds-tip','ds-inv'].forEach(function(id){ var x=document.createElement('div'); x.id=id; if(id==='ds-inv') x.setAttribute('aria-label','Prediction analysis'); document.body.appendChild(x); });
+    try{ D.mapInit(); $('map-date').textContent='All to today'; D.map.scrollWheelZoom.disable(); D.map.on('click',function(){ D.map.scrollWheelZoom.enable(); }); $('mapbox').addEventListener('mouseleave',function(){ D.map.scrollWheelZoom.disable(); }); D.mapBar(); D.mapSide(); }
+    catch(e){ $('ds-map').innerHTML='<p class="note" style="padding:16px">The map could not start in this view.</p>'; }
+    H.fit(); H.hover(); H.dnd(); window.addEventListener('resize',function(){ if(D.map) D.map.invalidateSize(); }); document.addEventListener('keydown',function(ev){ if(ev.key==='Escape'&&$('ds-inv').classList.contains('on')) H.invClose(); }); };
+  return H;
+})();
+(function(){ var H=D.dash;
+  /* the map draws from the dashboard now: richer hover text, and it dims what the area filter leaves out */
+  D.mapEvents = function(){ if(!D.map||!D.evLayer) return; D.evLayer.clearLayers(); var cut=D.mapUI.upTo==null?Infinity:D.mapUI.upTo+DAY/2, dom=(D.ui.dash||{}).dom, CATD={}; Object.keys(D.DOMAIN).forEach(function(k){ D.DOMAIN[k].cats.forEach(function(c){ CATD[c]=k; }); });
+    D.S.events.filter(function(e){ return e.lat!=null&&e.lon!=null&&dnum(e.date)<=cut; }).sort(function(a,b){ return a.sev-b.sev; }).forEach(function(e){ var s=D.STATUS[e.status]||D.STATUS.UNVERIFIED, col=D.css(s.col), solid=s.w>0, sel=e.id===D.ui.sel, dim=!!dom&&CATD[e.cat]!==dom;
+      L.circleMarker([e.lat,e.lon],{radius:5+e.sev*2.2,color:sel?D.css('--txh'):col,weight:sel?3:solid?1.5:2,dashArray:solid?null:'4 3',fillColor:col,fillOpacity:dim?.03:solid?.55:.12,opacity:dim?.22:1}).bindTooltip(H.evTip(e),{direction:'top',className:'ds-mtip',opacity:1}).on('click',function(){ D.pick(e.id); }).addTo(D.evLayer); }); };
+  D.render.map = function(){ D.mapBar(); D.mapEvents(); D.mapSide(); };
+  var pick0=D.pick; D.pick = function(id){ if(D.ui.open) return pick0.apply(this,arguments); D.ui.sel=id; H.side(true); D.mapSide(); D.mapEvents(); var e=D.ev(id); if(e&&e.lat!=null&&D.map) D.map.panTo([e.lat,e.lon]); $('hub-scroll').scrollTo({top:0,behavior:'smooth'}); };
+  D.showOnMap = function(id){ var e=D.ev(id); if(!e||e.lat==null){ D.toast('This event has no coordinates','warn'); return; } var was=D.ui.open; if(was) D.close(); D.ui.sel=id; $('map-range').value=60; D.mapTime(60); H.side(true); D.mapSide(); $('hub-scroll').scrollTo({top:0}); setTimeout(function(){ if(D.map){ D.map.invalidateSize(); D.map.setView([e.lat,e.lon],5); } },was?460:60); };
+  D.applySide = function(){};
+  H.open0=D.open;
+  /* tiles that moved into the dashboard still answer to their old names: they scroll to the matching panel */
+  D.open = function(id){ var go={map:'map',threat:'threat',brief:'update',forecast:'pred'}[id]; if(go){ if(D.ui.open) D.close(); H.focus(go); return; } H.invClose(); return H.open0.apply(this,arguments); };
+  var dock0=D.toggleDock; D.toggleDock = function(){ var r=dock0.apply(this,arguments); setTimeout(function(){ if(D.map) D.map.invalidateSize(); },380); return r; };
+  var hub0=D.renderHub; D.renderHub = function(){ hub0.apply(this,arguments); try{ H.draw(); }catch(e){ if(window.console) console.error(e); } };
+  H.mount(); D.renderHub(); D.mapEvents(); if(window.innerWidth>860){ $('dock').classList.remove('closed'); document.body.classList.remove('dock-closed'); }
+  setTimeout(function(){ if(D.map) D.map.invalidateSize(); },400);
 })();
 </script>
 </body>
